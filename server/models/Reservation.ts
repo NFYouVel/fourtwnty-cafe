@@ -1,6 +1,6 @@
 import { Table, Column, Model, DataType, PrimaryKey, BelongsTo, CreatedAt, UpdatedAt, DeletedAt, HasMany } from 'sequelize-typescript';
 import { Users } from './Users.js';
-import { Table_Information } from './TableInformation.js';
+import { TableInformation } from './TableInformation.js'
 
 @Table({
     tableName: 'Reservation',
@@ -53,6 +53,6 @@ export class Reservation extends Model {
     @BelongsTo(() => Users, 'userId') //jadi diambil dari Users, kuncinya userId
     user!: Users;
 
-    @BelongsTo(() => Table_Information, 'tableId') 
-    table_information!: Table_Information;
+    @BelongsTo(() => TableInformation, 'tableId') 
+    tableInformation!: TableInformation;
 }

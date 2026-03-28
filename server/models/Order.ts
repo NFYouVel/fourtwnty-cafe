@@ -49,6 +49,6 @@ export class Order extends Model {
     @DeletedAt
     declare deletedAt: Date;
 
-    @BelongsTo(() => Order, 'userId')
-    order!: Order;
+    @BelongsTo(() => Users, 'userId')
+    user!: Users;
 }
