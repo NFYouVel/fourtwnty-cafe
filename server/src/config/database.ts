@@ -1,16 +1,16 @@
-import { Sequelize } from 'sequelize';
-import dotenv from "dotenv";
-
+import { Sequelize } from 'sequelize-typescript';
+import { Users } from '../../models/Users.js';
+import { Order } from '../../models/Order.js';
+import { Reservation } from '../../models/Reservation.js';
+import { TableInformation } from '../../models/TableInformation.js';
+import dotenv from 'dotenv';
 dotenv.config();
 
-const sequelize = new Sequelize(
-    process.env.DB_NAME as string,
-    process.env.DB_USER as string,
-    process.env.DB_PASSWORD as string,
-    {
-        host: process.env.DB_HOST as string,
-        dialect: 'postgres',
-    }
-)
-
-export default sequelize
+export const sequelize = new Sequelize({
+    database: process.env.DB_NAME as string,
+    username: process.env.DB_USER as string,
+    password: process.env.DB_PASS as string,
+    host: process.env.DB_HOST as string,
+    dialect: 'postgres',
+    models: [Users, Order, Reservation, TableInformation]
+});

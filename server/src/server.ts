@@ -1,7 +1,7 @@
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import sequelize from './config/database.js';
+import { sequelize } from './config/database.js';
 import userRoutes from './routes/ProtectedRoutes.js';
 import cors from "cors";
 import dotenv from "dotenv";
@@ -20,7 +20,7 @@ app.use(express.json());
 
 app.use("/api", userRoutes) // Ini buat ngambil API dari USERS
 
-app.use(express.static(clientPath)) 
+app.use(express.static(clientPath)) // https://hansyulian.space/api/books
 
 app.get(/.*/, (req, res) => { // Ini buat ngambil build dari client
   res.sendFile(path.join(clientPath, "index.html"));

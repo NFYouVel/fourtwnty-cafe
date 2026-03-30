@@ -35,7 +35,7 @@ export class Order extends Model {
     total_price!: number;
 
     @Column({
-        type: DataType.UUIDV4,
+        type: DataType.UUID,
         allowNull: false,
     })
     userId!: string;
