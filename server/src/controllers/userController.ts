@@ -4,45 +4,45 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 export const loginUser = async (req: Request, res: Response) => {
-  try {
-    const { email, password } = req.body;
+    try {
+        const { email, password } = req.body;
 
-    //  1. Search User
-    const user = await Users.findOne({ where: { email } });
-    if (!user) {
-      return res.status(404).json({ message: "User with that email not found!" });
+        //  1. Search User
+        const user = await Users.findOne({ where: { email } });
+        if (!user) {
+            return res.status(404).json({ message: "User with that email not found!" });
+        }
+
+        // 2. Compare password
+        const isMatch = await bcrypt.compare(password, user.getDataValue("password"));
+        if (!isMatch) {
+            return res.status(401).json({ message: "Wrong password" });
+        }
+
+        // 3. Create token
+        if (!process.env.JWT_SECRET) {
+            throw new Error("JWT_SECRET not defined");
+        }
+        const token = jwt.sign(
+            {
+                id: user.getDataValue("id"),
+                email: user.getDataValue("email"),
+                role: user.getDataValue("role")
+            },
+            process.env.JWT_SECRET, // nanti kita pindahin ke .env
+            { expiresIn: "1d" }
+        );
+
+        // 4. response
+        res.json({
+            message: "Login success",
+            token
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Login error" });
     }
-
-    // 2. Compare password
-    const isMatch = await bcrypt.compare(password, user.getDataValue("password"));
-    if (!isMatch) {
-      return res.status(401).json({ message: "Wrong password" });
-    }
-
-    // 3. Create token
-    if (!process.env.JWT_SECRET) {
-      throw new Error("JWT_SECRET not defined");
-    }
-    const token = jwt.sign(
-      {
-        id: user.getDataValue("id"),
-        email: user.getDataValue("email"),
-        role: user.getDataValue("role")
-      },
-      process.env.JWT_SECRET, // nanti kita pindahin ke .env
-      { expiresIn: "1d" }
-    );
-
-    // 4. response
-    res.json({
-      message: "Login success",
-      token
-    });
-
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Login error" });
-  }
 };
 
 // GET /users
@@ -57,23 +57,23 @@ export const getUsers = async (req: Request, res: Response) => {
 
 // POST /users
 export const createUser = async (req: Request, res: Response) => {
-  try {
-    console.log("BODY:", req.body);
+    try {
+        console.log("BODY:", req.body);
 
-    const { name, email, password } = req.body;
-    const hashedPassword = await bcrypt.hash(password, 10);
+        const { name, email, password } = req.body;
+        const hashedPassword = await bcrypt.hash(password, 10);
 
-    const user = await Users.create({
-      name,
-      email,
-      password: hashedPassword
-    });
+        const user = await Users.create({
+            name,
+            email,
+            password: hashedPassword
+        });
 
-    console.log("CREATED:", user.toJSON()); // 👈 HARUS MUNCUL
+        console.log("CREATED:", user.toJSON()); // 👈 HARUS MUNCUL
 
-    res.status(201).json(user);
-  } catch (error) {
-    console.error("ERROR DETAIL:", error); // 🔥 INI PENTING
-    res.status(500).json({ message: "Error creating user" });
-  }
+        res.status(201).json(user);
+    } catch (error) {
+        console.error("ERROR DETAIL:", error); // 🔥 INI PENTING
+        res.status(500).json({ message: "Error creating user" });
+    }
 };

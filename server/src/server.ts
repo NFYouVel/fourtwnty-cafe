@@ -5,7 +5,6 @@ import { sequelize } from './config/database.js';
 import GlobalApi from './routes/GlobalApi.js';
 import cors from "cors";
 import dotenv from "dotenv";
-import { authMiddleware } from './middlewares/authMiddleware.js';
 
 dotenv.config();
 

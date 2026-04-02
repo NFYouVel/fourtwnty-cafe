@@ -43,7 +43,8 @@ body {
 }
 
 .wrapper-form {
-    background-color: rgb(147, 147, 147);
+    background-color: rgb(58, 21, 21);
+    color: white;
     display: flex;
     height: 100%;
     width: 60%;
@@ -60,16 +61,14 @@ body {
     display: flex;
     justify-content: center;
     height: 25%;
-    padding: 20px;
 }
 
 .login-logo {
     background-image: url("../assets/Icon Coffee.png");
     width: 30%;
     height: 100%;
-    background-position: center;
+    background-position: 60% 10%;
     background-repeat: no-repeat;
     background-size: cover;
     display: flex;
 }
-

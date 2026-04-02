@@ -5,6 +5,7 @@ import { loginRequest } from "../services/api";
 import BackgroundLogin from "../components/BackgroundLogin";
 
 import "../styles/login.css"
+import TextField from "@mui/material/TextField";
 
 function Login() {
 
@@ -43,15 +44,18 @@ function Login() {
                     </div>
                     <div className="wrapper-login-form">
                         <div className="form-login">
-                            <input
-                                type="email"
-                                placeholder="ENTER EMAIL"
+                            <TextField
+                                id="outlined-basic"
+                                label="E-mail"
+                                variant="outlined"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
-                            <input
+                            <TextField
+                                id="outlined-password-input"
+                                label="Password"
                                 type="password"
-                                placeholder="YOUR PASSWORD"
+                                autoComplete="current-password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
