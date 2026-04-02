@@ -2,9 +2,10 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { sequelize } from './config/database.js';
-import userRoutes from './routes/ProtectedRoutes.js';
+import GlobalApi from './routes/GlobalApi.js';
 import cors from "cors";
 import dotenv from "dotenv";
+import { authMiddleware } from './middlewares/authMiddleware.js';
 
 dotenv.config();
 
@@ -18,7 +19,7 @@ app.use(cors())
 
 app.use(express.json());
 
-app.use("/api", userRoutes) // Ini buat ngambil API dari USERS
+app.use("/api", GlobalApi) // Ini buat ngambil API dari USERS
 
 app.use(express.static(clientPath)) // https://hansyulian.space/api/books
 

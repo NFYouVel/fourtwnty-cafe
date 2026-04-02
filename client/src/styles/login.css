@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Cinzel', serif;
+}
+
+:root {
+    --primary-color: #D9B08C;
+}
+
+body {
+    margin: 0;
+}
+
+.login-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.wrapper-login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 85%;
+    height: 90%;
+    border-radius: 50px;
+    overflow: hidden;
+}
+
+.container-coffee {
+    display: flex;
+    width: 40%;
+    height: 100%;
+    background-image: url("../assets/Kopi Container.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.wrapper-form {
+    background-color: rgb(147, 147, 147);
+    display: flex;
+    height: 100%;
+    width: 60%;
+    flex-direction: column;
+}
+
+.wrapper-login-form {
+    display: flex;
+    justify-content: center;
+    height: 25%;
+}
+
+.wrapper-login-logo {
+    display: flex;
+    justify-content: center;
+    height: 25%;
+    padding: 20px;
+}
+
+.login-logo {
+    background-image: url("../assets/Icon Coffee.png");
+    width: 30%;
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+}
+
