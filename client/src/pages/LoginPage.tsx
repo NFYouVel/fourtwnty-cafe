@@ -9,6 +9,12 @@ import BackgroundLogin from "../components/BackgroundLogin";
 
 import "../styles/login.css"
 import TextField from "@mui/material/TextField";
+import { Link } from "react-router";
+import { Button } from "@mui/material";
+// import { useSelector } from "react-redux";
+// import type { RootState } from "../hooks/store";
+import { useAppDispatch } from "../hooks/useAppDispatch";
+import { authAction } from "../hooks/authSlice";
 
 function Login() {
 
@@ -21,13 +27,14 @@ function Login() {
     // Selector
     // const userDetails = useSelector((state: RootState) => state.auth.user);
     // Dispatch
-    // const dispatch = useAppDispatch();
+    const dispatch = useAppDispatch();
 
     const handleLogin = async () => {
         try {
             const res = await loginRequest(email, password);
-            // dispatch(authAction.setUser(res));
+            dispatch(authAction.setUser(res));
             console.log(res);
+            // navigate("/home")
         } catch (error) {
             console.error(error);
         }
@@ -52,20 +59,22 @@ function Login() {
                     </div>
                     {/* Title */}
                     <div className="title-login">
-                        <p>Welcome back Twntiers. Please Login To See Our Cafe's Feature</p>
+                        <p>Welcome back, Twntiers</p>
+                        <span>Log in to explore our cafe features and enjoy your experience</span>
                     </div>
 
                     {/* Form */}
                     <div className="wrapper-login-form">
                         <div className="form-login">
                             <TextField
-                                label="E-mail"
+                                label="E-Mail"
                                 variant="outlined"
                                 fullWidth
+                                required
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 sx={{
-                                    marginBottom: "16px",
+                                    marginBottom: "20px",
                                     input: { color: "#fff" },
                                     label: { color: "#f5e6d3" },
                                     "& label.Mui-focused": {
@@ -92,6 +101,7 @@ function Login() {
                                 label="Password"
                                 type={showPassword ? "text" : "password"}
                                 fullWidth
+                                required
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 sx={{
@@ -133,11 +143,35 @@ function Login() {
 
                         </div>
                     </div>
+                    <div className="user-services">
+                        <div className="wrapper-remember-me">
+                            <input type="checkbox" name="remember-me" className="remember-me" />
+                            <p>Remember me</p>
+                        </div>
+                        <p className="forgot-password"><Link to={"/forgot-password"}>Forgot Password?</Link></p>
+                    </div>
 
                     <div className="login-actions">
-                        <a className="logincard-navigation" onClick={handleRegisterNavigation}>REGISTER NOW</a>
-                        <button onClick={handleLogin} className="button-login">ENTER</button>
-                        <a className="logincard-navigation">FORGOT PASSWORD?</a>
+                        <div className="wrapper-login-button">
+                            <Button
+                                variant="contained"
+                                onClick={handleLogin}
+                                className="button-login"
+                                sx={{
+                                    transition: "all 0.2s ease",
+                                    backgroundColor: "white",
+                                    color: "black",
+                                    borderRadius: "10px",
+                                    "&:hover": {
+                                        transform: "scale(1.03)",
+                                        backgroundColor: "var(--pumpkin-essence)"
+                                    }
+                                }}
+                            >
+                                Sign In
+                            </Button>
+                        </div>
+                        <p className="title-register">Don't have an account?&nbsp;<a className="register-navigation" onClick={handleRegisterNavigation}> REGISTER NOW</a></p>
                     </div>
                 </div>
             </div>
