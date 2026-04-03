@@ -27,7 +27,7 @@ export const loginUser = async (req: Request, res: Response) => {
             {
                 id: user.getDataValue("id"),
                 email: user.getDataValue("email"),
-                role: user.getDataValue("role")
+                role: user.getDataValue("user_role")
             },
             process.env.JWT_SECRET, // nanti kita pindahin ke .env
             { expiresIn: "1d" }
@@ -49,6 +49,10 @@ export const loginUser = async (req: Request, res: Response) => {
 export const getUsers = async (req: Request, res: Response) => {
     try {
         const users = await Users.findAll(); // Find All itu bawaan dari express buat ngambil semua datanya
+        // users.forEach(u => {
+        //     console.log("RAW:", u.getDataValue("name"));
+        //     console.log("DIRECT:", u.name);
+        // });
         res.json(users); // Ini buat return semua users dalam bentuk objek 
     } catch (error) {
         res.status(500).json({ message: "Error fetching all users." });
