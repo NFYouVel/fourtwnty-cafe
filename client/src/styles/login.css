@@ -40,6 +40,7 @@ body {
     overflow: hidden;
 }
 
+/* Left Container */
 .container-coffee {
     display: flex;
     width: 40%;
@@ -50,20 +51,15 @@ body {
     background-size: cover;
 }
 
+/* Right Container */
 .wrapper-form {
-    background-color: rgb(58, 21, 21);
+    background-color: var(--terracota-pot);
     color: white;
     display: flex;
     height: 100%;
     width: 60%;
     flex-direction: column;
     padding: 0 25px 25px 25px;
-}
-
-.wrapper-login-form {
-    display: flex;
-    justify-content: center;
-    height: 25%;
 }
 
 .wrapper-login-logo {
@@ -81,3 +77,14 @@ body {
     background-size: cover;
     display: flex;
 }
+
+.wrapper-login-form {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.form-login {
+    display: flex;
+    flex-direction: column;
+}
+
