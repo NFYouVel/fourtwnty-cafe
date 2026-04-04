@@ -29,6 +29,19 @@ export class Reservation extends Model {
     jumlah_orang!: number;
 
     @Column({
+        type: DataType.ENUM('Pending', 'Approved', 'Reschedule', 'Rejected'),
+        allowNull: false,
+        defaultValue: 'Pending'
+    })
+    status_reservation!: 'Pending'| 'Approved'| 'Reschedule'| 'Rejected';
+
+    @Column({
+        type: DataType.DATE,
+        allowNull: true,
+    })
+    tanggal_reschedule!: Date;
+
+    @Column({
         type: DataType.UUIDV4,
         allowNull: false,
     })
