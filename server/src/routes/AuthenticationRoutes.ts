@@ -3,8 +3,8 @@ import { getUsers, createUser, loginUser } from "../controllers/userController.j
 
 const router: Router = Router();
 
-router.post("/auth/register", createUser);
-router.post("/auth/login", loginUser);
+router.post("/register", createUser);
+router.post("/login", loginUser);
 router.get("/user", getUsers);
 
 export default router; 
