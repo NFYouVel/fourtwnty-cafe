@@ -1,11 +1,25 @@
 import { Reservation } from '../../models/Reservation.js';
 import { Request, Response } from "express";
 import { v4 as uuidv4 } from 'uuid';
+import { TableInformation } from '../../models/TableInformation.js';
+import { Users } from '../../models/Users.js';
 
 
 export const getAllReservation = async (req:Request, res:Response) => {
     try {
-        const reservation = await Reservation.findAll();
+        const reservation = await Reservation.findAll({
+            //buat ambil nama sama no meja
+            include: [
+                {
+                    model: Users,
+                    attributes: ['name']
+                },
+                {
+                    model: TableInformation,
+                    attributes: ['table_number']
+                }
+            ]
+        });
         res.json(reservation);
     } catch (error: any) {
         console.error(error);
@@ -19,7 +33,7 @@ export const createReservation = async (req: Request, res: Response) => {
         payload.id = uuidv4();
         const userId = (req as any).user.id;
 
-        const { tanggal_reservation, jumlah_orang, tableId } = payload;
+        const { tanggal_reservation, jumlah_orang, table_number } = payload;
         if (!tanggal_reservation || !jumlah_orang) {
             return res.status(500).json({
                 status: "Fail",
@@ -27,12 +41,26 @@ export const createReservation = async (req: Request, res: Response) => {
             })
         }
 
+        const table = await TableInformation.findOne({
+            where: {
+                table_number: table_number
+            }
+        })
+
+        if (!table) {
+            return res.status(404).json({
+                status: "Fail",
+                message: `Meja nomor #${table_number} tidak di temukan`
+            })
+        }
+
+
         const newReservation = await Reservation.create({
             id: payload.id,
             userId: userId,
             tanggal_reservation,
             jumlah_orang,
-            tableId,
+            tableId: table.id,
             status_reservation: 'Pending'
         })
 

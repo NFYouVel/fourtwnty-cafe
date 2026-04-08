@@ -53,24 +53,18 @@
 }
 
 .status-available {
-    background-color: var(--mocha-mousse) !important;
+    background-color: var(--pepper-rice) !important;
     cursor: pointer;
 }
 
 .status-available:hover {
-    background-color: var(--terracota-pot) !important;
+    background-color: var(--pepper-rice) !important;
     transform: scale(1.05);
 }
 
 .status-booked {
-    background-color: var(--pepper-rice) !important;
+    background-color: var(--mocha-mousse) !important;
     cursor: not-allowed;
-}
-
-.status-broken {
-    background-color: var(--spicy-coffee) !important;
-    cursor: not-allowed;
-    opacity: 0.7;
 }
 
 .table-number {
@@ -80,4 +74,8 @@
 .table-sub-info {
     font-size: 0.75rem !important;
     opacity: 0.9;
+}
+
+.table-grid {
+    min-height: 400px; 
 }

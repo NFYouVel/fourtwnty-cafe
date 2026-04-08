@@ -16,6 +16,6 @@ router.use("/auth", AuthenticationRoutes);
 router.use("/tableInformation", TableInformationRoutes)
 router.use("/stock", authMiddleware, StockRoutes)
 router.use("/staff", CreateStaffRoutes)
-router.use("reservation", ReservationRoutes)
+router.use("/reservation", ReservationRoutes)
 
 export default router; 

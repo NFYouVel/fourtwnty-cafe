@@ -7,7 +7,10 @@ import { Reservation } from "../../models/Reservation.js";
 export const getAllTable = async (req: Request, res: Response) => {
     try {
         const table = await TableInformation.findAll({
-            paranoid: false //ini biar tanggal deletedatnya muncul
+            // paranoid: false, //ini biar tanggal deletedatnya muncul
+            order: [
+                ['table_number', 'ASC']
+            ]
         });
         res.json(table);
     } catch (error) {
@@ -79,7 +82,7 @@ export const updateTable = async (req: Request, res: Response) => {
         // await table.update(safePayload);
 
         //ini buat ubah semuanya
-        const {table_number, seat_count, area, status} = req.body;
+        const { table_number, seat_count, area, status } = req.body;
 
         const table = await TableInformation.findByPk(id as string);
 
@@ -90,13 +93,13 @@ export const updateTable = async (req: Request, res: Response) => {
             })
         }
 
-        await table.update({table_number, seat_count, area, status});
+        await table.update({ table_number, seat_count, area, status });
         return res.json({
             success: true,
             message: "Data Table berhasil di update",
             data: table
         })
-        
+
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Get Table by ID error" })
@@ -140,16 +143,23 @@ export const getTableAvailability = async (req: Request, res: Response) => {
             })
         }
 
-        const tables = await TableInformation.findAll();
+        const tables = await TableInformation.findAll({
+            order: [
+                ['table_number', 'ASC']
+            ]
+        });
 
         const activeReservations = await Reservation.findAll({
             where: {
                 tanggal_reservation: tanggal,
                 status_reservation: {
-                    [Op.ne] : 'Rejected'
+                    [Op.ne]: 'Rejected'
                 }
             }
         });
+        console.log(`--- CEK TANGGAL: ${tanggal} ---`);
+        console.log(`Jumlah booking ketemu: ${activeReservations.length}`);
+        //console.log(`ID meja yang ter-booking:`, bookedTableId);
 
         const bookedTableId = activeReservations.map(res => res.tableId);
         const result = tables.map(table => {

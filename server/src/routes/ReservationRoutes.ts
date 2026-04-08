@@ -1,11 +1,12 @@
 import { Router } from "express";
 import { createReservation, getAllReservation, requestReschedule, staffUpdateReservationStatus } from "../controllers/reservationController.js";
+import { authMiddleware } from "../middlewares/authMiddleware.js";
 
 const router: Router = Router();
 
 router.get("/all", getAllReservation);
-router.post("/create", createReservation);
-router.put("/updateStatus", staffUpdateReservationStatus);
-router.put("/reschedule", requestReschedule) 
+router.post("/create", authMiddleware, createReservation);
+router.put("/:id", staffUpdateReservationStatus);
+router.put("/:id", requestReschedule) 
 
 export default router;
