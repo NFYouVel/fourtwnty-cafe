@@ -11,6 +11,6 @@ router.use("/auth", AuthenticationRoutes);
 
 // Private
 router.use("/tableInformation", authMiddleware, TableInformationRoutes)
-router.use("/stock", authMiddleware, StockRoutes)
+router.use("/stock", StockRoutes)
 
 export default router; 
