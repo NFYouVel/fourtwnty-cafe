@@ -1,6 +1,8 @@
 import { Routes, Route } from "react-router"
 import Login from "../pages/LoginPage"
 import TableInformation from "../pages/TableInformationPage"
+import Stock from "../pages/StockPage"
+import StockForm from "../pages/StockForm"
 import ForgotPasswordPage from "../pages/ForgotPasswordPage"
 import RegisterPage from "../pages/RegisterPage"
 import HomePage from "../pages/HomePage"
@@ -26,6 +28,9 @@ const Router = () => {
       <Route path="/reservation" element={<ReservationPage />} />
       <Route path="/staff/listReservation" element={<StaffListReservationPage />} />
       
+      <Route path= "/stock" element={<Stock />} />
+      <Route path="/stock/create" element={<StockForm />} />
+      <Route path="/stock/update/:id" element={<StockForm />} />
     </Routes>
   )
 }
