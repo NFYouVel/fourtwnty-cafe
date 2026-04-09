@@ -10,12 +10,7 @@ import AddIcon from '@mui/icons-material/Add';
 
 import "../styles/stockPage.css";
 import { useNavigate } from "react-router";
-
-type Stock = {
-    id: string;
-    ingredient_name: string;
-    amount: number;
-};
+import type { Stock } from "../type/stockAttribute";
 
 export default function StockPage() {
     const [stocks, setStock] = useState<Stock[]>([]);

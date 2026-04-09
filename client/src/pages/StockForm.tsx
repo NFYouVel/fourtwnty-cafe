@@ -7,6 +7,7 @@ import {
 import { useNavigate, useParams } from 'react-router';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import SaveIcon from '@mui/icons-material/Save';
+import type { Stock } from '../type/stockAttribute';
 
 
 export default function StockForm() {
@@ -28,7 +29,7 @@ export default function StockForm() {
             try {
                 const res = await fetch("http://localhost:5000/api/stock/all");
                 const data = await res.json();
-                const found = data.find((s: any) => s.id === id);
+                const found = data.find((s: Stock) => s.id === id);
                 if (found) {
                     setFormStock({
                         ingredient_name: found.ingredient_name,

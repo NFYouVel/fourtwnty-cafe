@@ -99,6 +99,7 @@ function Login() {
 
                             <TextField
                                 label="Password"
+                                variant="outlined"
                                 type={showPassword ? "text" : "password"}
                                 fullWidth
                                 required
