@@ -14,7 +14,7 @@ router.use("/auth", AuthenticationRoutes);
 // Private
 //router.use("/tableInformation", authMiddleware, TableInformationRoutes)
 router.use("/tableInformation", TableInformationRoutes)
-router.use("/stock", authMiddleware, StockRoutes)
+router.use("/stock", StockRoutes)
 router.use("/staff", CreateStaffRoutes)
 router.use("/reservation", ReservationRoutes)
 

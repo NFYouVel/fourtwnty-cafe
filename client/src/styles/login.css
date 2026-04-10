@@ -88,9 +88,9 @@ body {
 
 .login-logo {
     background-image: url("../assets/Icon Coffee.png");
-    width: 45%;
+    width: 36%;
     height: 100%;
-    background-position: 60% 22%;
+    background-position: 60% 36%;
     background-repeat: no-repeat;
     background-size: cover;
     display: flex;
