@@ -72,11 +72,16 @@ export default function () {
         }
     }
 
-    const handleDelete = async (e: React.MouseEvent, id: string) => {
+    const handleDelete = async (e: React.MouseEvent, table: TableInformation) => {
         e.stopPropagation(); //kotak mejanya jadi ga akan ikut ke pencet
+        if (table.status === 'Unavailable') {
+            alert("Meja berstatus Unavailable tidak boleh dihapus!");
+            return;
+        }
+
         if (window.confirm("Yakin ingin menghapus meja ini?")) {
             try {
-                await fetch(`http://localhost:5000/api/tableInformation/${id}`, { method: 'DELETE' });
+                await fetch(`http://localhost:5000/api/tableInformation/${table.id}`, { method: 'DELETE' });
                 fetchTables(selectedDate);
             } catch (error) {
                 alert("gagal menghapus")
@@ -119,7 +124,7 @@ export default function () {
                 let isNotAvailable = table.is_booked || table.status === 'Unavailable';
                 let statusClass = isNotAvailable ? 'status-booked' : 'status-available';
                 //let statusClass = table.is_booked ? 'status-booked' : 'status-available';
-                
+
                 return (
                     <Paper
                         key={table.id}
@@ -132,7 +137,15 @@ export default function () {
                             <IconButton size='small' onClick={(e) => handleEdit(e, table)} sx={{ color: 'white' }}>
                                 <EditIcon fontSize="small" />
                             </IconButton>
-                            <IconButton size='small' onClick={(e) => handleDelete(e, table.id)} sx={{ color: 'white' }}>
+                            <IconButton
+                                size='small'
+                                onClick={(e) => handleDelete(e, table)} 
+                                disabled={table.status === 'Unavailable'}
+                                sx={{
+                                    color: 'white',
+                                    '&.Mui-disabled': { color: 'rgba(255, 255, 255, 0.3)' }
+                                }}
+                            >
                                 <DeleteIcon fontSize="small" />
                             </IconButton>
                         </Box>

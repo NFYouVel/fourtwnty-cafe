@@ -2,24 +2,38 @@ import { useEffect, useState } from "react";
 import { Container, Typography, TextField, Button, Paper, Stack, Box, FormControl, InputLabel, Select, MenuItem, ListSubheader } from "@mui/material";
 import { useNavigate } from "react-router";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import { Popover } from "@mui/material";
 
 export default function ReservationPage() {
     const navigate = useNavigate();
     const [form, setForm] = useState({
-        tanggal_reservation: '',
+        tanggal_reservation: new Date().toISOString().split('T')[0],
         jumlah_orang: '',
         table_number: ''
     });
-    const [availableTables, setAvailableTables] = useState<any[]>([]);
+
+    const [tables, setTables] = useState<any[]>([]);
+    const [loading, setLoading] = useState(false);
+
+    const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null);
 
     useEffect(() => {
         const fetchTables = async () => {
-            const response = await fetch("http://localhost:5000/api/tableInformation/all");
-            const data = await response.json();
-            setAvailableTables(data.filter((t: any) => t.status === 'Available'));
+            setLoading(true);
+            try {
+                const response = await fetch(`http://localhost:5000/api/tableInformation/availability?tanggal=${form.tanggal_reservation}`);
+                const data = await response.json();
+                if (Array.isArray(data)) {
+                    setTables(data);
+                }
+            } catch (error) {
+                console.error("Gagal load status meja:", error);
+            } finally {
+                setLoading(false);
+            }
         }
         fetchTables();
-    }, [])
+    }, [form.tanggal_reservation]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -47,8 +61,24 @@ export default function ReservationPage() {
         }
     };
 
-    const indoorTables = availableTables.filter(t => t.area === 'Indoor');
-    const outdoorTables = availableTables.filter(t => t.area === 'Outdoor');
+    const indoorTables = tables.filter(t => t.area === 'Indoor');
+    const outdoorTables = tables.filter(t => t.area === 'Outdoor');
+
+    const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const handleSelectTable = (tableNumber: string) => {
+        setForm({ ...form, table_number: tableNumber });
+        handleClose();
+    };
+
+    const open = Boolean(anchorEl);
+    const id = open ? 'table-popover' : undefined;
 
     return (
         <Container maxWidth="sm" sx={{ py: 10 }}>
@@ -73,96 +103,123 @@ export default function ReservationPage() {
                             onChange={(e) => setForm({ ...form, jumlah_orang: e.target.value })}
                         />
 
-                        <FormControl fullWidth>
-                            <InputLabel>Pilih Nomor Meja</InputLabel>
-
-                            <Select
-                                value={form.table_number}
+                        <Box onClick={handleClick} sx={{ cursor: 'pointer' }}>
+                            <TextField
                                 label="Pilih Nomor Meja"
-                                onChange={(e) => setForm({ ...form, table_number: e.target.value })}
+                                fullWidth
+                                value={form.table_number ? `Meja #${form.table_number}` : ''}
+                                placeholder="Klik untuk memilih meja"
+                                slotProps={{ input: { readOnly: true, sx: { pointerEvents: 'none' } } }}
+                                required
+                            />
+                        </Box>
 
-                                MenuProps={{
-                                    PaperProps: {
-                                        sx: {
-                                            maxHeight: 400,
-                                            borderRadius: 3,
-                                            mt: 1,
-                                        }
-                                    },
-                                    MenuListProps: {
-                                        sx: {
-                                            display: 'grid',
-                                            gridTemplateColumns: 'repeat(4, 1fr)',
-                                            gap: 1.5,
-                                            p: 2,
-                                        }
-                                    }
-                                }}
-                            >
-                                {/* INDOOR */}
-                                <ListSubheader sx={{ gridColumn: 'span 4', fontWeight: 'bold' }}>
-                                    INDOOR AREA
-                                </ListSubheader>
+                        <Popover
+                            id={id}
+                            open={open}
+                            anchorEl={anchorEl}
+                            onClose={handleClose}
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'center', 
+                            }}
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'center',
+                            }}
+                            PaperProps={{
+                                sx: { 
+                                    maxWidth: '100%', 
+                                    maxHeight: 320,
+                                    borderRadius: 3, 
+                                    p: 2,
+                                    mt: 2, 
+                                    overflowY: 'auto' 
+                                }
+                            }}
+                        >
+                            <ListSubheader sx={{ fontWeight: 'bold', bgcolor: '#f5f5f5', textAlign: 'center', borderRadius: 1, mb: 2, lineHeight: '40px' }}>
+                                INDOOR AREA
+                            </ListSubheader>
 
-                                {indoorTables.map((table) => (
-                                    <MenuItem
-                                        key={table.id}
-                                        value={table.table_number}
-                                        sx={{
-                                            justifyContent: 'center',
-                                            borderRadius: 2,
-                                            aspectRatio: '1 / 1',
+                            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '10px', mb: 4, justifyContent: 'center', maxWidth: 300, margin: '0 auto' }}>
+                                {indoorTables.map((table) => {
+                                    const isLocked = table.is_booked || table.status === 'Unavailable';
+                                    const isSelected = form.table_number === String(table.table_number);
+                                    
+                                    return (
+                                        <Button
+                                            key={table.id}
+                                            variant="contained"
+                                            disabled={isLocked}
+                                            onClick={() => handleSelectTable(String(table.table_number))}
+                                            sx={{
+                                                width: '60px', 
+                                                height: '60px',
+                                                minWidth: '60px',
+                                                borderRadius: 2,
+                                                fontSize: '1rem',
+                                                fontWeight: 'bold',
+                                                p: 0, 
+                                                bgcolor: isSelected ? 'var(--potting-soil)' : 'var(--mocha-mousse)',
+                                                color: 'white',
+                                                '&:hover': {
+                                                    bgcolor: isSelected ? 'var(--potting-soil)' : 'var(--pepper-rice)'
+                                                },
+                                                '&.Mui-disabled': {
+                                                    bgcolor: '#e0e0e0',
+                                                    color: '#9e9e9e'
+                                                }
+                                            }}
+                                        >
+                                            #{table.table_number}
+                                        </Button>
+                                    );
+                                })}
+                            </Box>
 
-                                            bgcolor:
-                                                form.table_number === table.table_number
-                                                    ? 'var(--potting-soil)'
-                                                    : 'var(--mocha-mousse)',
+                            <ListSubheader sx={{ fontWeight: 'bold', bgcolor: '#f5f5f5', textAlign: 'center', borderRadius: 1, mb: 2, mt: 1, lineHeight: '40px' }}>
+                                🌿 OUTDOOR AREA
+                            </ListSubheader>
 
-                                            color: 'white',
-                                            fontWeight: 'bold',
+                            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '10px', mb: 2, justifyContent: 'center', maxWidth: 300, margin: '0 auto' }}>
+                                {outdoorTables.map((table) => {
+                                    const isLocked = table.is_booked || table.status === 'Unavailable';
+                                    const isSelected = form.table_number === String(table.table_number);
+                                    
+                                    return (
+                                        <Button
+                                            key={table.id}
+                                            variant="contained"
+                                            disabled={isLocked}
+                                            onClick={() => handleSelectTable(String(table.table_number))}
+                                            sx={{
+                                                width: '60px',
+                                                height: '60px',
+                                                minWidth: '60px',
+                                                borderRadius: 2,
+                                                fontSize: '1rem',
+                                                fontWeight: 'bold',
+                                                p: 0,
+                                                bgcolor: isSelected ? 'var(--potting-soil)' : 'var(--mocha-mousse)',
+                                                color: 'white',
+                                                '&:hover': {
+                                                    bgcolor: isSelected ? 'var(--potting-soil)' : 'var(--pepper-rice)'
+                                                },
+                                                '&.Mui-disabled': {
+                                                    bgcolor: '#e0e0e0',
+                                                    color: '#9e9e9e'
+                                                }
+                                            }}
+                                        >
+                                            #{table.table_number}
+                                        </Button>
+                                    );
+                                })}
+                            </Box>
+                        </Popover>
 
-                                            '&:hover': {
-                                                bgcolor: 'var(--pepper-rice)',
-                                            }
-                                        }}
-                                    >
-                                        {table.table_number}
-                                    </MenuItem>
-                                ))}
-
-                                {/* OUTDOOR */}
-                                <ListSubheader sx={{ gridColumn: 'span 4', fontWeight: 'bold' }}>
-                                    OUTDOOR AREA
-                                </ListSubheader>
-
-                                {outdoorTables.map((table) => (
-                                    <MenuItem
-                                        key={table.id}
-                                        value={table.table_number}
-                                        sx={{
-                                            justifyContent: 'center',
-                                            borderRadius: 2,
-                                            aspectRatio: '1 / 1',
-
-                                            bgcolor:
-                                                form.table_number === table.table_number
-                                                    ? 'var(--potting-soil)'
-                                                    : 'var(--mocha-mousse)',
-
-                                            color: 'white',
-                                            fontWeight: 'bold',
-
-                                            '&:hover': {
-                                                bgcolor: 'var(--pepper-rice)',
-                                            }
-                                        }}
-                                    >
-                                        {table.table_number}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-
+                        
                         <Button
                             type="submit" variant="contained" size="large"
                             sx={{ bgcolor: 'var(--potting-soil)', py: 1.5 }}
@@ -172,6 +229,6 @@ export default function ReservationPage() {
                     </Stack>
                 </form>
             </Paper>
-        </Container>
+        </Container >
     )
 }
