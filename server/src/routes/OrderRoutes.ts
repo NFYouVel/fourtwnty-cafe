@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { getMenuCategory } from "../controllers/orderController.js";
+import { getAllMenu } from "../controllers/orderController.js";
 
 const router: Router = Router();
 
-router.get("/category", getMenuCategory)
+router.get("/menu", getAllMenu)
 
 export default router;

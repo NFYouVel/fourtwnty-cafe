@@ -18,6 +18,16 @@ export async function loginRequest(email: string, password: string) {
     return message
 }
 
+export async function getAllMenuRequest() {
+    const response = await fetch(`${BASE_URL}/order/menu`);
+
+    if (!response.ok) {
+        throw new Error("Failed get menu");
+    }
+
+    const data = await response.json();
+    return data;
+}
 // export async function getPostsRequest() {
 //     const response = await fetch(`${BASE_URL}/post`, {
 //         method: "GET",

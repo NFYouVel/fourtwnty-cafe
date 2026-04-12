@@ -109,13 +109,143 @@
     flex: 1;
     background: white;
     border-radius: 18px;
-    box-shadow: 0 8px 18px rgba(0,0,0,0.06);
+    padding: 24px;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.05);
+    flex-direction: column;
 }
 
-/* PAYMENT */
+.menu-heading {
+    font-size: 22px;
+    color: var(--potting-soil);
+    margin-bottom: 20px;
+}
+
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 18px;
+}
+
+.menu-card {
+    background: #faf8f6;
+    border-radius: 16px;
+    padding: 18px;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+.menu-card:hover {
+    transform: translateY(-4px);
+}
+
+.menu-card h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.menu-category {
+    font-size: 13px;
+    color: var(--pepper-rice);
+    margin-bottom: 10px;
+}
+
+.menu-description {
+    font-size: 13px;
+    color: gray;
+    min-height: 42px;
+}
+
+.menu-price {
+    display: block;
+    margin-top: 14px;
+    font-weight: bold;
+    color: var(--potting-soil);
+}
+
 .section-payment {
     width: 340px;
     background: white;
     border-radius: 18px;
-    box-shadow: 0 8px 18px rgba(0,0,0,0.06);
+    padding: 24px;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.05);
+
+    display: flex;
+    flex-direction: column;
+}
+
+.payment-title {
+    font-size: 22px;
+    color: var(--potting-soil);
+    margin-bottom: 20px;
+}
+
+.payment-order-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 25px;
+}
+
+.payment-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background: #faf8f6;
+    padding: 14px;
+    border-radius: 14px;
+}
+
+.payment-item h4 {
+    font-size: 15px;
+    margin-bottom: 4px;
+}
+
+.payment-item p {
+    font-size: 13px;
+    color: gray;
+}
+
+.payment-item span {
+    font-weight: bold;
+    color: var(--potting-soil);
+}
+
+.payment-summary {
+    border-top: 1px solid #eee;
+    padding-top: 18px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+}
+
+.summary-row.total {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--potting-soil);
+}
+
+.checkout-button {
+    margin-top: auto;
+    border: none;
+    padding: 14px;
+    border-radius: 14px;
+    background: var(--potting-soil);
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+.checkout-button:hover {
+    transform: translateY(-2px);
+    background: var(--spicy-coffee);
 }
