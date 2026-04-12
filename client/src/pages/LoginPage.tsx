@@ -30,15 +30,16 @@ function Login() {
     const dispatch = useAppDispatch();
 
     const handleLogin = async () => {
-        try {
-            const res = await loginRequest(email, password);
-            dispatch(authAction.setUser(res));
-            console.log(res);
-            // navigate("/home")
-        } catch (error) {
-            console.error(error);
-        }
-    };
+    try {
+        const res = await loginRequest(email, password);
+        dispatch(authAction.setUser(res));
+        localStorage.setItem("token", res.token);
+        console.log(res);
+        navigate("/home");
+    } catch (error) {
+        console.error(error);
+    }
+};
 
     const handleRegisterNavigation = () => {
         navigate("/register")

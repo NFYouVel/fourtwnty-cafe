@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Cinzel', serif;
+}
+
+:root {
+    --mocha-mousse: #A47864;
+    --pepper-rice: #BE6E58;
+    --potting-soil: #5A3D2E;
+    --spicy-coffee: #6C4E3E;
+    --peanut-butter: #C8A48A;
+    --dry-creek: #E0BFA2;
+    --pumpkin-essence: #F2D9C3;
+    --terracota-pot: #A07761;
+    --froth: #FAEADC;
+}
+
+.wrapper-order-menu-list {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    background: white;
+}
+
+.section-categorized,.section-menu,.section-payment {
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+
+.wrapper-order-menu-list {
+    display: flex;
+    gap: 20px;
+    padding: 24px;
+    min-height: 100vh;
+    background: var(--froth);
+}
+
+/* CATEGORY */
+.section-categorized {
+    width: 260px;
+    background: white;
+    border-radius: 18px;
+    padding: 22px;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.06);
+    display: flex;
+    flex-direction: column;
+}
+
+.category-heading {
+    font-size: 20px;
+    color: var(--potting-soil);
+    margin-bottom: 20px;
+}
+
+.category-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.category-item,
+.category-parent,
+.subcategory-item {
+    padding: 12px 15px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.25s ease;
+    font-size: 14px;
+}
+
+.category-item:hover,
+.category-parent:hover,
+.subcategory-item:hover {
+    background: var(--pumpkin-essence);
+}
+
+.category-item.active {
+    background: var(--potting-soil);
+    color: white;
+    font-weight: 600;
+}
+
+.category-parent {
+    font-weight: 700;
+    color: var(--spicy-coffee);
+    margin-top: 6px;
+}
+
+.subcategory-list {
+    margin-left: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.subcategory-item {
+    background: #faf8f6;
+    font-size: 13px;
+}
+
+/* MENU */
+.section-menu {
+    flex: 1;
+    background: white;
+    border-radius: 18px;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.06);
+}
+
+/* PAYMENT */
+.section-payment {
+    width: 340px;
+    background: white;
+    border-radius: 18px;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.06);
+}

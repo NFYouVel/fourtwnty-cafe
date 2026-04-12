@@ -29,6 +29,19 @@ export class Menu extends Model {
     price!: number;
 
     @Column({
+        type: DataType.ENUM("Main","Appetizer", "Side", "Dessert", "Drink"),
+        allowNull: false,
+        defaultValue: 'Process',
+    })
+    category!: 'Main' | 'Appetizer' | 'Side' | 'Dessert' | 'Drink';
+
+    @Column({
+        type: DataType.ENUM("Coffee", "Non-Coffee", "Tea", "Frappe", "Juice", "Other"),
+        allowNull: false,
+    })
+    drink_category!: 'Coffee' | 'Non-Coffee' | 'Tea' | 'Frappe' | 'Juice' | 'Other';
+
+    @Column({
         type: DataType.STRING,
         unique: true,
         allowNull: false,

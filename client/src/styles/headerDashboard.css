@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Cinzel', serif;
+}
+
+:root {
+    --mocha-mousse: #A47864;
+    --pepper-rice: #BE6E58;
+    --potting-soil: #5A3D2E;
+    --spicy-coffee: #6C4E3E;
+    --peanut-butter: #C8A48A;
+    --dry-creek: #E0BFA2;
+    --pumpkin-essence: #F2D9C3;
+    --terracota-pot: #A07761;
+    --froth: #FAEADC;
+}
+
+
+.wrapper-dashboard-header {
+    width: 100%;
+    padding: 18px 28px;
+    background: var(--froth);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    border-top: 1px solid #aaa;
+    border-bottom: 1px solid #aaa;
+
+    font-family: "Cinzel", serif;
+}
+
+/* LEFT */
+.dashboard-left {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+.profile-info h4 {
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 3px;
+}
+.profile-info p {
+    font-size: 17px;
+    color: rgb(69, 69, 69);
+}
+
+.divider {
+    width: 1px;
+    height: 45px;
+    background: #aaa;
+}
+
+.dashboard-title h2 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.dashboard-title span {
+    font-size: 17px;
+    color: rgb(69, 69, 69);
+}
+
+/* RIGHT */
+.dashboard-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.dashboard-right button {
+    border: 1px solid #818181;
+    background: white;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.dashboard-right button:hover {
+    transform: translateY(-2px);
+}
+
+.btn-new {
+    background: #ff8a00 !important;
+    color: white;
+    border: none !important;
+    font-weight: 600;
+}
