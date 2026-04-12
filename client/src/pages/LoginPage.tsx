@@ -1,10 +1,10 @@
 import { useState } from "react"
 import { useNavigate } from "react-router";
 import { loginRequest } from "../services/api";
-import IconButton from "@mui/material/IconButton";
-import InputAdornment from "@mui/material/InputAdornment";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
+// import IconButton from "@mui/material/IconButton";
+// import InputAdornment from "@mui/material/InputAdornment";
+// import Visibility from "@mui/icons-material/Visibility";
+// import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import BackgroundLogin from "../components/BackgroundLogin";
 
 import "../styles/login.css"
@@ -19,7 +19,7 @@ import { authAction } from "../hooks/authSlice";
 function Login() {
 
     const [email, setEmail] = useState("")
-    const [showPassword, setShowPassword] = useState(false);
+    // const [showPassword, setShowPassword] = useState(false);
     const [password, setPassword] = useState("")
 
     // Navigate
@@ -99,7 +99,8 @@ function Login() {
 
                             <TextField
                                 label="Password"
-                                type={showPassword ? "text" : "password"}
+                                variant="outlined"
+                                // type={showPassword ? "text" : "password"}
                                 fullWidth
                                 required
                                 value={password}
@@ -126,19 +127,19 @@ function Login() {
                                     },
                                 }}
 
-                                InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <IconButton
-                                                onClick={() => setShowPassword(!showPassword)}
-                                                edge="end"
-                                                sx={{ color: "#f5e6d3" }}
-                                            >
-                                                {showPassword ? <VisibilityOff /> : <Visibility />}
-                                            </IconButton>
-                                        </InputAdornment>
-                                    ),
-                                }}
+                                // InputProps={{
+                                //     endAdornment: (
+                                //         <InputAdornment position="end">
+                                //             <IconButton
+                                //                 onClick={() => setShowPassword(!showPassword)}
+                                //                 edge="end"
+                                //                 sx={{ color: "#f5e6d3" }}
+                                //             >
+                                //                 {showPassword ? <VisibilityOff /> : <Visibility />}
+                                //             </IconButton>
+                                //         </InputAdornment>
+                                //     ),
+                                // }}
                             />
 
                         </div>

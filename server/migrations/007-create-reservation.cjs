@@ -19,6 +19,17 @@ module.exports = {
                 allowNull: false
             },
 
+            status_reservation: {
+                type: Sequelize.ENUM('Pending', 'Approved', 'Reschedule', 'Rejected'),
+                allowNull: false,
+                defaultValue: 'Pending'
+            },
+
+            tanggal_reschedule: {
+                type:Sequelize.DATE,
+                allowNull: true
+            },
+
             createdAt: {
                 type: Sequelize.DATE,
                 allowNull: false,
