@@ -25,9 +25,7 @@ function OrderMenuListPage() {
         <>
             <Header />
             <HeaderDashboard />
-
             <div className="wrapper-order-menu-list">
-
                 {/* LEFT CATEGORY */}
                 <div className="section-categorized">
                     <h2 className="category-heading">Category</h2>
@@ -76,65 +74,65 @@ function OrderMenuListPage() {
                 </div>
 
                 {/* RIGHT PAYMENT */}
-<div className="section-payment">
+                <div className="section-payment">
 
-    <h2 className="payment-title">Current Order</h2>
+                    <h2 className="payment-title">Current Order</h2>
 
-    <div className="payment-order-list">
+                    <div className="payment-order-list">
 
-        <div className="payment-item">
-            <div>
-                <h4>Americano</h4>
-                <p>1 x Rp 25.000</p>
-            </div>
+                        <div className="payment-item">
+                            <div>
+                                <h4>Americano</h4>
+                                <p>1 x Rp 25.000</p>
+                            </div>
 
-            <span>Rp 25.000</span>
-        </div>
+                            <span>Rp 25.000</span>
+                        </div>
 
-        <div className="payment-item">
-            <div>
-                <h4>French Fries</h4>
-                <p>2 x Rp 30.000</p>
-            </div>
+                        <div className="payment-item">
+                            <div>
+                                <h4>French Fries</h4>
+                                <p>2 x Rp 30.000</p>
+                            </div>
 
-            <span>Rp 60.000</span>
-        </div>
+                            <span>Rp 60.000</span>
+                        </div>
 
-        <div className="payment-item">
-            <div>
-                <h4>Ice Chocolate</h4>
-                <p>1 x Rp 30.000</p>
-            </div>
+                        <div className="payment-item">
+                            <div>
+                                <h4>Ice Chocolate</h4>
+                                <p>1 x Rp 30.000</p>
+                            </div>
 
-            <span>Rp 30.000</span>
-        </div>
+                            <span>Rp 30.000</span>
+                        </div>
 
-    </div>
+                    </div>
 
-    <div className="payment-summary">
+                    <div className="payment-summary">
 
-        <div className="summary-row">
-            <p>Subtotal</p>
-            <span>Rp 115.000</span>
-        </div>
+                        <div className="summary-row">
+                            <p>Subtotal</p>
+                            <span>Rp 115.000</span>
+                        </div>
 
-        <div className="summary-row">
-            <p>Tax</p>
-            <span>Rp 11.500</span>
-        </div>
+                        <div className="summary-row">
+                            <p>Tax</p>
+                            <span>Rp 11.500</span>
+                        </div>
 
-        <div className="summary-row total">
-            <p>Total</p>
-            <span>Rp 126.500</span>
-        </div>
+                        <div className="summary-row total">
+                            <p>Total</p>
+                            <span>Rp 126.500</span>
+                        </div>
 
-    </div>
+                    </div>
 
-    <button className="checkout-button">
-        Checkout
-    </button>
+                    <button className="checkout-button">
+                        Checkout
+                    </button>
 
-</div>
+                </div>
 
 
             </div>

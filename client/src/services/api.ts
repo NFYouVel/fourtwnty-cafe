@@ -18,6 +18,27 @@ export async function loginRequest(email: string, password: string) {
     return message
 }
 
+export async function getUser(email: string) {
+    const response = await fetch(`${BASE_URL}/auth/user?email=${encodeURIComponent(email)}`,{
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        }
+    );
+
+    if (!response.ok) {
+        throw new Error("Get user failed");
+    }
+
+    const message = await response.json();
+
+    console.log(message);
+
+    return message;
+}
+
+
 export async function getAllMenuRequest() {
     const response = await fetch(`${BASE_URL}/order/menu`);
 
@@ -28,17 +49,25 @@ export async function getAllMenuRequest() {
     const data = await response.json();
     return data;
 }
-// export async function getPostsRequest() {
-//     const response = await fetch(`${BASE_URL}/post`, {
-//         method: "GET",
-//         headers: {
-//             "Content-Type": "application/json",
-//         },
-//     })
 
-//     if (!response.ok) {
-//         throw new Error("Get posts failed")
-//     }
+export async function registerRequest(name: string, email: string, password: string, phone: string) {
+    const response = await fetch(`${BASE_URL}/auth/register`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            name,
+            email,
+            password,
+            phone
+        }),
+    });
 
-//     return response.json()
-// }
+    const data = await response.json();
+
+    if (!response.ok) {
+        throw new Error(data.message || "Register failed");
+    }
+
+}

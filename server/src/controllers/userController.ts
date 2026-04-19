@@ -46,38 +46,50 @@ export const loginUser = async (req: Request, res: Response) => {
 };
 
 // GET /users
-export const getUsers = async (req: Request, res: Response) => {
+export const getUserByEmail = async (req: Request, res: Response) => {
     try {
-        const users = await Users.findAll(); // Find All itu bawaan dari express buat ngambil semua datanya
-        // users.forEach(u => {
-        //     console.log("RAW:", u.getDataValue("name"));
-        //     console.log("DIRECT:", u.name);
-        // });
-        res.json(users); // Ini buat return semua users dalam bentuk objek 
+        const { email } = req.query;
+
+        const user = await Users.findOne({
+            where: { email },
+            attributes: {
+                exclude: ["password"]
+            }
+        });
+
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found"
+            });
+        }
+        res.json(user);
     } catch (error) {
-        res.status(500).json({ message: "Error fetching all users." });
+        res.status(500).json({
+            message: "Server error"
+        });
     }
-}
+};
 
 // POST /users
 export const createUser = async (req: Request, res: Response) => {
     try {
         console.log("BODY:", req.body);
 
-        const { name, email, password } = req.body;
+        const { name, email, password, phone } = req.body;
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const user = await Users.create({
             name,
             email,
-            password: hashedPassword
+            password: hashedPassword,
+            phone,
         });
 
-        console.log("CREATED:", user.toJSON()); // 👈 HARUS MUNCUL
+        console.log("CREATED:", user.toJSON());
 
         res.status(201).json(user);
     } catch (error) {
-        console.error("ERROR DETAIL:", error); // 🔥 INI PENTING
+        console.error("ERROR DETAIL:", error);
         res.status(500).json({ message: "Error creating user" });
     }
 };
