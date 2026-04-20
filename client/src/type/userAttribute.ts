@@ -1,4 +1,4 @@
-export type userAttribute = {
+export type User = {
     id: string,
     name: string,
     email: string,

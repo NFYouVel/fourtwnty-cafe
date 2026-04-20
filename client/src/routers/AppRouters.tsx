@@ -25,6 +25,7 @@ const Router = () => {
       // Home Routes
       <Route path="/home" element={<HomePage />} />
       <Route path="/menu-list" element={<MenuListPage />} />
+      <Route path="/menu-list/:tableNumber" element={<MenuListPage />} />
 
       // Table Information Routes
       <Route path='/tableInformation' element={<TableInformation />} />

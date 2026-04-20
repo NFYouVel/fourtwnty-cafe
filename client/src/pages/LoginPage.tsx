@@ -15,41 +15,37 @@ import { Button } from "@mui/material";
 // import type { RootState } from "../hooks/store";
 import { useAppDispatch } from "../hooks/useAppDispatch";
 import { authAction } from "../hooks/authSlice";
-import { useSelector } from "react-redux";
-import type { RootState } from "../hooks/store";
+// import { useSelector } from "react-redux";
+// import type { RootState } from "../hooks/store";
 
 function Login() {
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const userDetails = useSelector((state: RootState) => state.auth.user);
+    // const userDetails = useSelector((state: RootState) => state.auth.user);
 
     // Navigate
     const navigate = useNavigate();
-    // Selector
+
     // Dispatch
     const dispatch = useAppDispatch();
 
     const handleLogin = async () => {
         try {
             const res = await loginRequest(email, password);
+
             dispatch(authAction.setUser(res));
             localStorage.setItem("token", res.token);
-            console.log(res);
-            if (res) {
-                const resUserDetails = await getUser(email);
-                dispatch(authAction.setUserDetails(resUserDetails));
-                console.log(resUserDetails)
-            } else {
-                throw new Error("Login failed");
-            }
 
-            console.log(userDetails?.user_role);
-            if (userDetails?.user_role === "Customer") {
+            const resUserDetails = await getUser(email);
+            dispatch(authAction.setUserDetails(resUserDetails));
+
+            if (resUserDetails.user_role === "Customer") {
                 navigate("/home");
             } else {
                 navigate("/menu-list");
             }
+
         } catch (error) {
             console.error(error);
         }
