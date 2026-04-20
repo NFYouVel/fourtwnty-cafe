@@ -6,5 +6,6 @@ export type userAttribute = {
     phone: string,
     createdAt: string,
     updatedAt: string,
-    deletedAt: null
+    deletedAt: null,
+    token: string
 }

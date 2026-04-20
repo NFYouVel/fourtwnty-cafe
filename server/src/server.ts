@@ -26,6 +26,7 @@ app.get(/.*/, (req, res) => { // Ini buat ngambil build dari client
   res.sendFile(path.join(clientPath, "index.html"));
 });
 
+
 sequelize.authenticate()
   .then(() => console.log("DB Successfully Connected"))
   .catch(err => console.error("DB Error: ", err));
@@ -33,5 +34,5 @@ sequelize.authenticate()
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log("Server is Running")
+  console.log("Server is Running on port", PORT);
 });

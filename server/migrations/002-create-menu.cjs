@@ -19,6 +19,16 @@ module.exports = {
                 allowNull: false,
             },
 
+            category: {
+                type: Sequelize.ENUM("Main","Appetizer", "Side", "Dessert", "Drink"),
+                allowNull: false,
+            },
+
+            drink_category: {
+                type: Sequelize.ENUM("Coffee", "Non-Coffee", "Tea", "Frappe", "Juice", "Other"),
+                allowNull: true,
+            },
+
             description: {
                 type: Sequelize.STRING,
                 allowNull: false,

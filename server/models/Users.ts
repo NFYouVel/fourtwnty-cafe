@@ -20,33 +20,33 @@ export class Users extends Model {
         type: DataType.STRING,
         allowNull: false,
     })
-    name!: string;
+    declare name: string;
 
     @Column({
         type: DataType.STRING,
         unique: true,
         allowNull: false,
     })
-    email!: string;
+    declare email: string;
 
     @Column({
         type: DataType.STRING,
         allowNull: false,
     })
-    password!: string;
+    declare password: string;
 
     @Column({
         type: DataType.STRING,
         allowNull: false,
     })
-    phone!: string;
+    declare phone: string;
 
     @Column({
         type: DataType.ENUM('Customer', 'Staff', 'Manager'),
         allowNull: false,
         defaultValue: 'Customer',
     })
-    user_role!: 'Customer' | 'Staff' | 'Manager';
+    declare user_role: 'Customer' | 'Staff' | 'Manager';
 
     @CreatedAt
     declare createdAt: Date;
