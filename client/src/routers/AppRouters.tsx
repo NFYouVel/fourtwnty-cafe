@@ -12,6 +12,7 @@ import CreateStaffPage from "../pages/CreateStaffPage"
 import EditStaffPage from "../pages/EditStaffPage"
 import ReservationPage from "../pages/ReservationPage"
 import StaffListReservationPage from "../pages/StaffListReservationPage"
+import MenuListPage from "../pages/OrderMenuListPage"
 
 const Router = () => {
   return (
@@ -23,6 +24,7 @@ const Router = () => {
 
       // Home Routes
       <Route path="/home" element={<HomePage />} />
+      <Route path="/menu-list" element={<MenuListPage />} />
 
       // Table Information Routes
       <Route path='/tableInformation' element={<TableInformation />} />

@@ -4,7 +4,9 @@ import TableInformationRoutes from "./TableInformationRoutes.js"
 import StockRoutes from "./StockRoutes.js"
 import CreateStaffRoutes from './CreateStaffRoutes.js'
 import ReservationRoutes from './ReservationRoutes.js'
+import OrderRoutes from './OrderRoutes.js'
 import { authMiddleware } from "../middlewares/authMiddleware.js";
+
 
 const router: Router = Router();
 
@@ -13,6 +15,7 @@ router.use("/auth", AuthenticationRoutes);
 
 // Private
 //router.use("/tableInformation", authMiddleware, TableInformationRoutes)
+router.use("/order", OrderRoutes)
 router.use("/tableInformation", TableInformationRoutes)
 router.use("/stock", StockRoutes)
 router.use("/staff", CreateStaffRoutes)
