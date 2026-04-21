@@ -5,6 +5,7 @@ import StockForm from "../pages/StockForm"
 import ForgotPasswordPage from "../pages/ForgotPasswordPage"
 import RegisterPage from "../pages/RegisterPage"
 import HomePage from "../pages/HomePage"
+import ReportPage from "../pages/ReportPage"
 
 const Router = () => {
   return (
@@ -16,6 +17,7 @@ const Router = () => {
       <Route path= "/stock" element={<Stock />} />
       <Route path="/stock/create" element={<StockForm />} />
       <Route path="/stock/update/:id" element={<StockForm />} />
+      <Route path="/report" element={<ReportPage />} />
     </Routes>
   )
 }

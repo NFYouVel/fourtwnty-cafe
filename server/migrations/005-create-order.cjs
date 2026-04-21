@@ -1,6 +1,6 @@
 module.exports = {
     up: async (queryInterface, Sequelize) => {
-        
+
         await queryInterface.createTable('Order', {
             id: {
                 type: Sequelize.UUID,
@@ -21,7 +21,7 @@ module.exports = {
             },
 
             total_price: {
-                type: Sequelize.DECIMAL(10,2),
+                type: Sequelize.DECIMAL(10, 2),
                 allowNull: false,
             },
 
@@ -47,13 +47,24 @@ module.exports = {
             type: Sequelize.UUID,
             defaultValue: Sequelize.UUIDV4,
             allowNull: false,
-            references: { 
+            references: {
                 model: 'Users',
                 key: 'id'
             },
             onUpdate: 'CASCADE',
             onDelete: 'CASCADE'
         })
+
+        await queryInterface.addColumn('Order', 'tableId', {
+            type: Sequelize.UUID,
+            allowNull: true,
+            references: {
+                model: 'TableInformation',
+                key: 'id'
+            },
+            onUpdate: 'CASCADE',
+            onDelete: 'SET NULL'
+        });
 
     },
 

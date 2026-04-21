@@ -1,5 +1,6 @@
 import { Table, Column, Model, DataType, PrimaryKey, BelongsTo, CreatedAt, UpdatedAt, DeletedAt, HasMany } from 'sequelize-typescript';
 import { Users } from './Users.js';
+import { TableInformation } from './TableInformation.js';
 
 @Table({
     tableName: 'Order',
@@ -40,6 +41,12 @@ export class Order extends Model {
     })
     userId!: string;
 
+    @Column({
+        type: DataType.UUID,
+        allowNull: true,
+    })
+    tableId!: string | null;
+
     @CreatedAt
     declare createdAt: Date;
 
@@ -51,4 +58,7 @@ export class Order extends Model {
 
     @BelongsTo(() => Users, 'userId')
     user!: Users;
+
+    @BelongsTo(() => TableInformation, 'tableId')
+    table!: TableInformation;
 }
