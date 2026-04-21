@@ -51,7 +51,8 @@ function HeaderDashboard() {
                 <div className={`dashboard-right ${openMenu ? "active-menu" : ""}`}>
                     {isCustomer ? (
                         <>
-                            <button className="btn-new">🛒 Order Now</button>
+                        {/* ganti yg ini */}
+                            <button className="btn-new">🛒 Order Now</button> 
                             <button>☕ Coffee Menu</button>
                             <button>🍰 Desserts</button>
                             <button>⭐ Favorites</button>

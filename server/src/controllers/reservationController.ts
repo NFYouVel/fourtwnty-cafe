@@ -140,3 +140,29 @@ export const requestReschedule = async (req: Request, res: Response) => {
     }
 }
 
+export const getUserReservations = async (req:Request, res: Response) => {
+    try {
+        const userId = (req as any).user.id;
+
+        const reservations = await Reservation.findAll({
+            where: {
+                userId: userId,
+            },
+            include: [
+                {
+                    model:TableInformation,
+                    attributes: ['table_number', 'area']
+                }
+            ],
+            order: [['tanggal_reservation', 'DESC']]
+        })
+
+        res.json({
+            status: "Success",
+            data: reservations
+        });
+    } catch (error: any) {
+        console.error(error);
+        res.status(500).json({ message: "Gagal Memuat Reservation ", detail: error.message })
+    }
+}
