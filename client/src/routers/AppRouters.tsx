@@ -13,6 +13,7 @@ import EditStaffPage from "../pages/EditStaffPage"
 import ReservationPage from "../pages/ReservationPage"
 import StaffListReservationPage from "../pages/StaffListReservationPage"
 import MenuListPage from "../pages/OrderMenuListPage"
+import CustomerReservation from "../pages/ShowReservationCustomer"
 
 const Router = () => {
   return (
@@ -39,6 +40,7 @@ const Router = () => {
 
       // Customer Routes
       <Route path="/reservation" element={<ReservationPage />} />
+      <Route path="/reservation/myReservation" element={<CustomerReservation />} />
       
       // Stock Routes
       <Route path= "/stock" element={<Stock />} />

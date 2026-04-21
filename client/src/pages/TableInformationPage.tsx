@@ -16,6 +16,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import "../styles/tableInformation.css";
 import { useNavigate } from "react-router";
 import AddIcon from '@mui/icons-material/Add';
+import Header from "../components/Header";
+import HeaderDashboard from "../components/HeaderDashboard";
 
 type TableInformation = {
     id: string;
@@ -72,11 +74,16 @@ export default function () {
         }
     }
 
-    const handleDelete = async (e: React.MouseEvent, id: string) => {
+    const handleDelete = async (e: React.MouseEvent, table: TableInformation) => {
         e.stopPropagation(); //kotak mejanya jadi ga akan ikut ke pencet
+        if (table.status === 'Unavailable') {
+            alert("Meja berstatus Unavailable tidak boleh dihapus!");
+            return;
+        }
+
         if (window.confirm("Yakin ingin menghapus meja ini?")) {
             try {
-                await fetch(`http://localhost:5000/api/tableInformation/${id}`, { method: 'DELETE' });
+                await fetch(`http://localhost:5000/api/tableInformation/${table.id}`, { method: 'DELETE' });
                 fetchTables(selectedDate);
             } catch (error) {
                 alert("gagal menghapus")
@@ -119,7 +126,7 @@ export default function () {
                 let isNotAvailable = table.is_booked || table.status === 'Unavailable';
                 let statusClass = isNotAvailable ? 'status-booked' : 'status-available';
                 //let statusClass = table.is_booked ? 'status-booked' : 'status-available';
-                
+
                 return (
                     <Paper
                         key={table.id}
@@ -132,7 +139,15 @@ export default function () {
                             <IconButton size='small' onClick={(e) => handleEdit(e, table)} sx={{ color: 'white' }}>
                                 <EditIcon fontSize="small" />
                             </IconButton>
-                            <IconButton size='small' onClick={(e) => handleDelete(e, table.id)} sx={{ color: 'white' }}>
+                            <IconButton
+                                size='small'
+                                onClick={(e) => handleDelete(e, table)}
+                                disabled={table.status === 'Unavailable'}
+                                sx={{
+                                    color: 'white',
+                                    '&.Mui-disabled': { color: 'rgba(255, 255, 255, 0.3)' }
+                                }}
+                            >
                                 <DeleteIcon fontSize="small" />
                             </IconButton>
                         </Box>
@@ -149,138 +164,142 @@ export default function () {
     );
 
     return (
-        <div className='layout-page'>
-            <Container sx={{ py: 4 }}>
-                <Box sx={{ position: 'relative', mb: 6, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    <Typography
-                        variant='h4'
-                        className='page-title'
-                        sx={{ fontWeight: 'bold', textAlign: 'center', color: 'var(--potting-soil)' }}
-                    >
-                        Fourtwnty Cafe Table Information
-                    </Typography>
+        <>
+            <Header />
+            <HeaderDashboard />
+            <div className='layout-page'>
+                <Container sx={{ py: 4 }}>
+                    <Box sx={{ position: 'relative', mb: 6, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <Typography
+                            variant='h4'
+                            className='page-title'
+                            sx={{ fontWeight: 'bold', textAlign: 'center', color: 'var(--potting-soil)' }}
+                        >
+                            Fourtwnty Cafe Table Information
+                        </Typography>
 
-                    <Button
-                        variant="contained"
-                        startIcon={<AddIcon />}
-                        onClick={() => navigate("/tableInformation/create")}
+                        <Button
+                            variant="contained"
+                            startIcon={<AddIcon />}
+                            onClick={() => navigate("/tableInformation/create")}
+                            sx={{
+                                position: 'absolute',
+                                right: 0,
+                                bgcolor: 'var(--potting-soil)',
+                                textTransform: 'none',
+                                borderRadius: '8px',
+                                '&:hover': { bgcolor: 'var(--pepper-rice)' }
+                            }}
+                        >
+                            Add Table
+                        </Button>
+                    </Box>
+
+                    <Paper
+                        elevation={0}
                         sx={{
-                            position: 'absolute',
-                            right: 0,
-                            bgcolor: 'var(--potting-soil)',
-                            textTransform: 'none',
-                            borderRadius: '8px',
-                            '&:hover': { bgcolor: 'var(--pepper-rice)' }
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            gap: 3,
+                            mb: 4,
+                            p: 2,
+                            bgcolor: 'rgba(0,0,0,0.03)',
+                            borderRadius: '12px'
                         }}
                     >
-                        Add Table
-                    </Button>
-                </Box>
-
-                <Paper
-                    elevation={0}
-                    sx={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        gap: 3,
-                        mb: 4,
-                        p: 2,
-                        bgcolor: 'rgba(0,0,0,0.03)',
-                        borderRadius: '12px'
-                    }}
-                >
-                    {/* <Box className='date-container'>
+                        {/* <Box className='date-container'>
                         <TextField className='date-input' label='Reservation Date' type='date' value={selectedDate} onChange={(e) => setSelectedDate(e.target.value)} slotProps={{ inputLabel: { shrink: true } }} />
                     </Box> */}
 
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                        <Typography variant="body2" sx={{ fontWeight: 'bold', color: 'var(--potting-soil)' }}>
-                            VIEW DATE:
-                        </Typography>
-                        <TextField
-                            type='date'
-                            size="small"
-                            value={selectedDate}
-                            onChange={(e) => setSelectedDate(e.target.value)}
-                            sx={{ bgcolor: 'white', borderRadius: '4px' }}
-                        />
-                    </Box>
-
-                    <Divider orientation="vertical" flexItem />
-
-                    <Stack direction="row" spacing={2} sx={{ alignItems: 'center' }}>
-                        <Chip
-                            label='Available'
-                            size="small"
-                            sx={{ bgcolor: 'var(--pepper-rice)', color: 'white', fontWeight: 'bold' }}
-                        />
-                        <Chip
-                            label='Unavailable'
-                            size="small"
-                            sx={{ bgcolor: 'var(--mocha-mousse)', color: 'white', fontWeight: 'bold' }}
-                        />
-                    </Stack>
-
-                </Paper>
-
-
-                <Divider sx={{ mb: 4, color: 'var(--potting-soil)' }}>SITTING AREA</Divider>
-
-                {loading ? (
-                    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                        <CircularProgress sx={{ color: 'var(--pepper-rice)' }} />
-                    </Box>
-                ) : (
-                    <>
-                        <Divider sx={{ mb: 4 }}>
-                            <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-                                <WeekendIcon sx={{ color: 'var(--potting-soil)' }} />
-                                <Typography sx={{ fontWeight: 'bold', color: 'var(--potting-soil)' }}>
-                                    INDOOR AREA (AC & No Smoking)
-                                </Typography>
-                            </Stack>
-                        </Divider>
-                        {renderTableGrid('Indoor')}
-
-                        <Divider sx={{ mt: 6, mb: 4 }}>
-                            <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-                                <DeckIcon sx={{ color: 'var(--pepper-rice)' }} />
-                                <Typography sx={{ fontWeight: 'bold', color: 'var(--pepper-rice)' }}>
-                                    OUTDOOR AREA (Smoking Allowed)
-                                </Typography>
-                            </Stack>
-                        </Divider>
-                        {renderTableGrid('Outdoor')}
-                    </>
-                )}
-
-                <Dialog open={openEdit} onClose={() => setOpenEdit(false)} fullWidth maxWidth="xs">
-                    <DialogTitle sx={{ fontWeight: 'bold' }}>Edit Table #{editData?.table_number}</DialogTitle>
-                    <DialogContent>
-                        <Box sx={{ mt: 2 }}>
-                            <FormControl fullWidth>
-                                <InputLabel>Status Meja</InputLabel>
-                                <Select
-                                    value={editData?.status || ''}
-                                    label="Status Meja"
-                                    onChange={(e) => setEditData(prev => prev ? { ...prev, status: e.target.value as any } : null)}
-                                >
-                                    <MenuItem value="Available">Available</MenuItem>
-                                    <MenuItem value="Unavailable">Unavailable</MenuItem>
-                                </Select>
-                            </FormControl>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                            <Typography variant="body2" sx={{ fontWeight: 'bold', color: 'var(--potting-soil)' }}>
+                                VIEW DATE:
+                            </Typography>
+                            <TextField
+                                type='date'
+                                size="small"
+                                value={selectedDate}
+                                onChange={(e) => setSelectedDate(e.target.value)}
+                                sx={{ bgcolor: 'white', borderRadius: '4px' }}
+                            />
                         </Box>
-                    </DialogContent>
-                    <DialogActions sx={{ p: 3 }}>
-                        <Button onClick={() => setOpenEdit(false)} color="inherit">Batal</Button>
-                        <Button onClick={handleEditStatus} variant="contained" sx={{ bgcolor: 'var(--potting-soil)' }}>
-                            Save
-                        </Button>
-                    </DialogActions>
-                </Dialog>
 
-            </Container>
-        </div>
+                        <Divider orientation="vertical" flexItem />
+
+                        <Stack direction="row" spacing={2} sx={{ alignItems: 'center' }}>
+                            <Chip
+                                label='Available'
+                                size="small"
+                                sx={{ bgcolor: 'var(--pepper-rice)', color: 'white', fontWeight: 'bold' }}
+                            />
+                            <Chip
+                                label='Unavailable'
+                                size="small"
+                                sx={{ bgcolor: 'var(--mocha-mousse)', color: 'white', fontWeight: 'bold' }}
+                            />
+                        </Stack>
+
+                    </Paper>
+
+
+                    <Divider sx={{ mb: 4, color: 'var(--potting-soil)' }}>SITTING AREA</Divider>
+
+                    {loading ? (
+                        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                            <CircularProgress sx={{ color: 'var(--pepper-rice)' }} />
+                        </Box>
+                    ) : (
+                        <>
+                            <Divider sx={{ mb: 4 }}>
+                                <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
+                                    <WeekendIcon sx={{ color: 'var(--potting-soil)' }} />
+                                    <Typography sx={{ fontWeight: 'bold', color: 'var(--potting-soil)' }}>
+                                        INDOOR AREA (AC & No Smoking)
+                                    </Typography>
+                                </Stack>
+                            </Divider>
+                            {renderTableGrid('Indoor')}
+
+                            <Divider sx={{ mt: 6, mb: 4 }}>
+                                <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
+                                    <DeckIcon sx={{ color: 'var(--pepper-rice)' }} />
+                                    <Typography sx={{ fontWeight: 'bold', color: 'var(--pepper-rice)' }}>
+                                        OUTDOOR AREA (Smoking Allowed)
+                                    </Typography>
+                                </Stack>
+                            </Divider>
+                            {renderTableGrid('Outdoor')}
+                        </>
+                    )}
+
+                    <Dialog open={openEdit} onClose={() => setOpenEdit(false)} fullWidth maxWidth="xs">
+                        <DialogTitle sx={{ fontWeight: 'bold' }}>Edit Table #{editData?.table_number}</DialogTitle>
+                        <DialogContent>
+                            <Box sx={{ mt: 2 }}>
+                                <FormControl fullWidth>
+                                    <InputLabel>Status Meja</InputLabel>
+                                    <Select
+                                        value={editData?.status || ''}
+                                        label="Status Meja"
+                                        onChange={(e) => setEditData(prev => prev ? { ...prev, status: e.target.value as any } : null)}
+                                    >
+                                        <MenuItem value="Available">Available</MenuItem>
+                                        <MenuItem value="Unavailable">Unavailable</MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </Box>
+                        </DialogContent>
+                        <DialogActions sx={{ p: 3 }}>
+                            <Button onClick={() => setOpenEdit(false)} color="inherit">Batal</Button>
+                            <Button onClick={handleEditStatus} variant="contained" sx={{ bgcolor: 'var(--potting-soil)' }}>
+                                Save
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
+
+                </Container>
+            </div>
+        </>
     )
 }

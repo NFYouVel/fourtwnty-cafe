@@ -7,6 +7,8 @@ import {
 import { useNavigate } from 'react-router';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import SaveIcon from '@mui/icons-material/Save';
+import Header from "../components/Header";
+import HeaderDashboard from "../components/HeaderDashboard";
 
 
 export default function CreateTableInformation() {
@@ -45,80 +47,84 @@ export default function CreateTableInformation() {
     };
 
     return (
-        <div className='create-page-bg'>
-            <Container maxWidth="sm" sx={{ py: 8 }}>
-                <Button
-                    startIcon={<ArrowBackIcon />}
-                    onClick={() => navigate(-1)}
-                    className='back-button'>
-                    Back
-                </Button>
+        <>
+            <Header />
+            <HeaderDashboard />
+            <div className='create-page-bg'>
+                <Container maxWidth="sm" sx={{ py: 8 }}>
+                    <Button
+                        startIcon={<ArrowBackIcon />}
+                        onClick={() => navigate(-1)}
+                        className='back-button'>
+                        Back
+                    </Button>
 
-                <Paper elevation={6} className='form-container'>
-                    <Typography variant="h4" className='form-title'>
-                        Create Table
-                    </Typography>
+                    <Paper elevation={6} className='form-container'>
+                        <Typography variant="h4" className='form-title'>
+                            Create Table
+                        </Typography>
 
-                    <form onSubmit={handleCreate}>
-                        <Stack spacing={3} sx={{ mt: 4 }}>
-                            <TextField
-                                label="Table Number"
-                                type="number"
-                                fullWidth
-                                required
-                                value={formTable.table_number}
-                                onChange={(e) => setFromTable({ ...formTable, table_number: e.target.value })}
-                            />
+                        <form onSubmit={handleCreate}>
+                            <Stack spacing={3} sx={{ mt: 4 }}>
+                                <TextField
+                                    label="Table Number"
+                                    type="number"
+                                    fullWidth
+                                    required
+                                    value={formTable.table_number}
+                                    onChange={(e) => setFromTable({ ...formTable, table_number: e.target.value })}
+                                />
 
-                            <TextField
-                                label="Kapasitas Meja"
-                                type="number"
-                                fullWidth
-                                required
-                                value={formTable.seat_count}
-                                onChange={(e) => setFromTable({ ...formTable, seat_count: e.target.value })}
-                            />
+                                <TextField
+                                    label="Kapasitas Meja"
+                                    type="number"
+                                    fullWidth
+                                    required
+                                    value={formTable.seat_count}
+                                    onChange={(e) => setFromTable({ ...formTable, seat_count: e.target.value })}
+                                />
 
-                            <FormControl fullWidth required>
-                                <InputLabel id="area-label">Area</InputLabel>
-                                <Select
-                                    labelId='area-label'
-                                    value={formTable.area}
-                                    label="Area"
-                                    onChange={(e) => setFromTable({ ...formTable, area: e.target.value })}
+                                <FormControl fullWidth required>
+                                    <InputLabel id="area-label">Area</InputLabel>
+                                    <Select
+                                        labelId='area-label'
+                                        value={formTable.area}
+                                        label="Area"
+                                        onChange={(e) => setFromTable({ ...formTable, area: e.target.value })}
+                                    >
+                                        <MenuItem value="Indoor">Indoor (AC & No Smoking)</MenuItem>
+                                        <MenuItem value="Outdoor">Outdoor (Smoking Allowed)</MenuItem>
+                                    </Select>
+                                </FormControl>
+
+                                <FormControl fullWidth>
+                                    <InputLabel id="status-label">Status Awal</InputLabel>
+                                    <Select
+                                        labelId="status-label"
+                                        value={formTable.status}
+                                        label="Status Awal"
+                                        onChange={(e) => setFromTable({ ...formTable, status: e.target.value })}
+                                    >
+                                        <MenuItem value="Available">Available</MenuItem>
+                                        <MenuItem value="Unavailable">Unavailable</MenuItem>
+                                    </Select>
+                                </FormControl>
+
+                                <Button
+                                    type="submit"
+                                    variant="contained"
+                                    size="large"
+                                    startIcon={<SaveIcon />}
+                                    className="submit-button"
                                 >
-                                    <MenuItem value="Indoor">Indoor (AC & No Smoking)</MenuItem>
-                                    <MenuItem value="Outdoor">Outdoor (Smoking Allowed)</MenuItem>
-                                </Select>
-                            </FormControl>
+                                    Create Table
+                                </Button>
+                            </Stack>
+                        </form>
+                    </Paper>
 
-                            <FormControl fullWidth>
-                                <InputLabel id="status-label">Status Awal</InputLabel>
-                                <Select
-                                    labelId="status-label"
-                                    value={formTable.status}
-                                    label="Status Awal"
-                                    onChange={(e) => setFromTable({...formTable, status: e.target.value})}
-                                >
-                                    <MenuItem value="Available">Available</MenuItem>
-                                    <MenuItem value="Unavailable">Unavailable</MenuItem>
-                                </Select>
-                            </FormControl>
-
-                            <Button 
-                                type="submit" 
-                                variant="contained" 
-                                size="large"
-                                startIcon={<SaveIcon />}
-                                className="submit-button"
-                            >
-                                Create Table
-                            </Button>
-                        </Stack>
-                    </form>
-                </Paper>
-
-            </Container>
-        </div>
+                </Container>
+            </div>
+        </>
     );
 }
