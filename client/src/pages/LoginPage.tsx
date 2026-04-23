@@ -33,23 +33,38 @@ function Login() {
     const handleLogin = async () => {
         try {
             const res = await loginRequest(email, password);
-
-            dispatch(authAction.setUser(res));
-            localStorage.setItem("token", res.token);
-
             const resUserDetails = await getUser(email);
-            dispatch(authAction.setUserDetails(resUserDetails));
 
-            if (resUserDetails.user_role === "Customer") {
+            const finalUser = {
+                ...res,
+                ...resUserDetails
+            };
+
+            dispatch(authAction.setUser(finalUser));
+
+            localStorage.setItem("token", res.token);
+            localStorage.setItem(
+                "userData",
+                JSON.stringify(finalUser)
+            );
+
+            document.cookie =
+                `token=${res.token}; path=/; max-age=86400`;
+
+            if (finalUser.user_role === "Customer") {
                 navigate("/home");
-            } else {
+            } else if (finalUser.user_role === "Staff"){
                 navigate("/menu-list");
+            } else {
+                navigate("/staff");
             }
 
         } catch (error) {
             console.error(error);
         }
     };
+
+
 
     const handleRegisterNavigation = () => {
         navigate("/register")

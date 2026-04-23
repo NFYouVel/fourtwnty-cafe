@@ -1,3 +1,5 @@
+import type { OrderItem } from "../type/OrderItem";
+
 const BASE_URL = "http://localhost:5000/api"
 
 export async function loginRequest(email: string, password: string) {
@@ -69,5 +71,30 @@ export async function registerRequest(name: string, email: string, password: str
     if (!response.ok) {
         throw new Error(data.message || "Register failed");
     }
+}
+export async function createNewOrder(cartItems: OrderItem[]) {
 
+    console.log("Cart items:", cartItems);
+    try {
+        const response = await fetch(`${BASE_URL}/order/create`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                // "Authorization": `Bearer ${token}`
+            },
+            // Langsung kirim array-nya
+            body: JSON.stringify(cartItems), 
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || "Gagal membuat order");
+        }
+
+        return data;
+    } catch (error) {
+        console.error("Error saat kirim order:", error);
+        throw error;
+    }
 }

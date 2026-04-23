@@ -37,6 +37,20 @@ export default function ReservationPage() {
         fetchTables();
     }, [form.tanggal_reservation]);
 
+    const handleWhatsappBooking = () => {
+        if (!form.table_number) {
+            alert("Pilih meja dulu terlebih dahulu");
+            return;
+        }
+        const phoneNumber = "6287871123725";
+        const message = `Hi, saya ingin booking meja nomor ${form.table_number} pada tanggal ${form.tanggal_reservation} untuk ${form.jumlah_orang} orang.`;
+
+        const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
+        window.open(url, "_blank");
+    };
+
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         const token = localStorage.getItem("token");
@@ -54,6 +68,7 @@ export default function ReservationPage() {
             const result = await response.json();
             if (response.ok) {
                 alert("Reservasi Berhasil!");
+                handleWhatsappBooking(); // buka WA
                 navigate("/home");
             } else {
                 alert(result.message || "Reservasi Gagal")

@@ -11,7 +11,7 @@
 }
 
 .layout-page {
-    background-color: var(--froth);
+    background-color: rgb(237 227 216);
     min-height: 100vh;
     padding-top: 2rem;
     padding-bottom: 2rem;

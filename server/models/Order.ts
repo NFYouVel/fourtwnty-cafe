@@ -1,5 +1,7 @@
-import { Table, Column, Model, DataType, PrimaryKey, BelongsTo, CreatedAt, UpdatedAt, DeletedAt, HasMany } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, PrimaryKey, BelongsTo, CreatedAt, UpdatedAt, DeletedAt, HasMany, ForeignKey } from 'sequelize-typescript';
 import { Users } from './Users.js';
+import { OrderMenu } from './OrderMenu.js';
+import { TableInformation } from './TableInformation.js';
 
 @Table({
     tableName: 'Order',
@@ -29,7 +31,7 @@ export class Order extends Model {
     status!: 'Process' | 'Cancelled' | 'Closed';
 
     @Column({
-        type: DataType.DECIMAL(10,2),
+        type: DataType.DECIMAL(10, 2),
         allowNull: false,
     })
     total_price!: number;
@@ -51,4 +53,11 @@ export class Order extends Model {
 
     @BelongsTo(() => Users, 'userId')
     user!: Users;
+
+    @HasMany(() => OrderMenu)
+    orderMenus!: OrderMenu[];
+
+    @ForeignKey(() => TableInformation)
+    @Column(DataType.UUID)
+    declare tableId: string;
 }

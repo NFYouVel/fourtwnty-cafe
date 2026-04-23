@@ -1,23 +1,23 @@
 import "../styles/headerDashboard.css";
-import { useSelector } from "react-redux";
-import type { RootState } from "../hooks/store";
 import { useState } from "react";
-import { useNavigate } from "react-router";
-// import { Link } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
 function HeaderDashboard() {
-    const user = useSelector((state: RootState) => state.auth.user);
+    const user = JSON.parse(localStorage.getItem("userData") || "null");
+
     const isCustomer = user?.user_role === "Customer";
+    const isManager = user?.user_role === "Manager";
 
     const [openMenu, setOpenMenu] = useState(false);
+    const [showTablePopup, setShowTablePopup] = useState(false);
 
-    // popup staff
-    const [showPopup, setShowPopup] = useState(false);
-    const [tableNumber, setTableNumber] = useState("");
+    const location = useLocation();
     const navigate = useNavigate();
 
+    const [tableNumber, setTableNumber] = useState("");
+
     const handleNewOrder = () => {
-        setShowPopup(true);
+        setShowTablePopup(true);
     };
 
     const handleStartOrder = () => {
@@ -27,18 +27,18 @@ function HeaderDashboard() {
         }
 
         localStorage.setItem("tableNumber", tableNumber);
-        setShowPopup(false)
-        navigate("/menu-list/" + tableNumber)
+        setShowTablePopup(false);
 
+        navigate("/menu-list/" + tableNumber);
     };
 
     return (
         <>
-            {/* POPUP STAFF */}
-            {showPopup && (
+            {/* POPUP */}
+            {showTablePopup && (
                 <div className="popup-overlay">
                     <div className="popup-box">
-                        <h2>New Order</h2>
+                        <h2>Add The Table Number</h2>
 
                         <input
                             type="number"
@@ -49,15 +49,19 @@ function HeaderDashboard() {
                             }
                         />
 
-                        <button onClick={handleStartOrder}>
-                            Start Order
-                        </button>
+                        <div className="popup-actions">
+                            <button
+                                onClick={() =>
+                                    setShowTablePopup(false)
+                                }
+                            >
+                                Cancel
+                            </button>
 
-                        <button
-                            onClick={() => setShowPopup(false)}
-                        >
-                            Cancel
-                        </button>
+                            <button onClick={handleStartOrder}>
+                                Start Order
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}
@@ -78,12 +82,23 @@ function HeaderDashboard() {
                         {isCustomer ? (
                             <>
                                 <h2>Good Coffee, Good Mood ☕</h2>
-                                <span>Welcome back! Ready for today?</span>
+                                <span>
+                                    Welcome back! Ready for today?
+                                </span>
+                            </>
+                        ) : isManager ? (
+                            <>
+                                <h2>Manager Dashboard</h2>
+                                <span>
+                                    Monitor your cafe performance.
+                                </span>
                             </>
                         ) : (
                             <>
                                 <h2>Welcome to Twntiers Café</h2>
-                                <span>Manage your store beautifully.</span>
+                                <span>
+                                    Manage your store beautifully.
+                                </span>
                             </>
                         )}
                     </div>
@@ -93,20 +108,63 @@ function HeaderDashboard() {
                 {/* BURGER */}
                 <div
                     className="burger-menu"
-                    onClick={() => setOpenMenu(!openMenu)}
+                    onClick={() =>
+                        setOpenMenu(!openMenu)
+                    }
                 >
                     ☰
                 </div>
 
-                {/* RIGHT */}
-                <div className={`dashboard-right ${openMenu ? "active-menu" : ""}`}>
+                {/* RIGHT MENU */}
+                <div
+                    className={`dashboard-right ${
+                        openMenu ? "active-menu" : ""
+                    }`}
+                >
                     {isCustomer ? (
                         <>
-                        {/* ganti yg ini */}
-                            <button className="btn-new">🛒 Order Now</button> 
-                            <button>☕ Coffee Menu</button>
-                            <button>🍰 Desserts</button>
-                            <button>⭐ Favorites</button>
+                            <button
+                                className="btn-new"
+                                onClick={() =>
+                                    navigate("/menu-list")
+                                }
+                            >
+                                Coffee Menu
+                            </button>
+
+                            <button
+                                onClick={() =>
+                                    navigate("/reservation")
+                                }
+                            >
+                                Booking Table
+                            </button>
+                        </>
+                    ) : isManager ? (
+                        <>
+                            <button
+                                onClick={() =>
+                                    navigate("/staff")
+                                }
+                            >
+                                Staff
+                            </button>
+
+                            <button
+                                onClick={() =>
+                                    navigate("/stock")
+                                }
+                            >
+                                Stock
+                            </button>
+
+                            <button
+                                onClick={() =>
+                                    navigate("/tableInformation")
+                                }
+                            >
+                                Table Information
+                            </button>
                         </>
                     ) : (
                         <>
@@ -117,35 +175,46 @@ function HeaderDashboard() {
                                 + New Order
                             </button>
 
-                            <button>📄 Order List</button>
-                            <button>Table Status</button>
+                            <button>
+                                📄 Order List
+                            </button>
+
+                            <button>
+                                Table Status
+                            </button>
                         </>
                     )}
                 </div>
-
             </div>
 
             {/* HERO CUSTOMER */}
-            {isCustomer && (
-                <>
+            {isCustomer &&
+                location.pathname === "/home" && (
                     <div className="hero-section">
                         <div className="hero-content">
-                            <h1>Fresh Coffee, Better Day ☕</h1>
+                            <h1>
+                                Fresh Coffee, Better Day ☕
+                            </h1>
 
                             <p>
-                                Enjoy premium coffee, cozy vibes,
-                                and delicious moments every day.
+                                Enjoy premium coffee,
+                                cozy vibes, and delicious
+                                moments every day.
                             </p>
 
-                            <button className="hero-btn">
+                            <button
+                                className="hero-btn"
+                                onClick={() =>
+                                    navigate("/menu-list")
+                                }
+                            >
                                 Explore Menu
                             </button>
                         </div>
 
                         <div className="hero-image"></div>
                     </div>
-                </>
-            )}
+                )}
         </>
     );
 }

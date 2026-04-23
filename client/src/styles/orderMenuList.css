@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap');
 
 * {
     margin: 0;
@@ -522,4 +521,27 @@
     .wrapper-order-menu-list .payment-title {
         font-size: 20px;
     }
+}
+
+.qty-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.qty-box button {
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 8px;
+    background: var(--potting-soil);
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.qty-box span {
+    min-width: 20px;
+    text-align: center;
+    font-weight: bold;
 }

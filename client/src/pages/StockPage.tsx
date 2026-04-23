@@ -11,6 +11,8 @@ import AddIcon from '@mui/icons-material/Add';
 import "../styles/stockPage.css";
 import { useNavigate } from "react-router";
 import type { Stock } from "../type/stockAttribute";
+import Header from "../components/Header";
+import HeaderDashboard from "../components/HeaderDashboard";
 
 export default function StockPage() {
     const [stocks, setStock] = useState<Stock[]>([]);
@@ -87,46 +89,51 @@ export default function StockPage() {
     );
 
     return (
-        <div className='layout-page'>
-            <Container sx={{ py: 4 }}>
+        <>
+            <Header />
+            <HeaderDashboard />
 
-                {/* TITLE (SAMA KAYA TEMEN LU) */}
-                <Box sx={{ position: 'relative', mb: 6, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    <Typography
-                        variant='h4'
-                        className='page-title'
-                        sx={{ fontWeight: 'bold', textAlign: 'center', color: 'var(--potting-soil)' }}
-                    >
-                        Stock Management
-                    </Typography>
+            <div className='layout-page'>
+                <Container sx={{ py: 4 }}>
 
-                    <Button
-                        variant="contained"
-                        startIcon={<AddIcon />}
-                        onClick={() => navigate("/stock/create")}
-                        sx={{
-                            position: 'absolute',
-                            right: 0,
-                            bgcolor: 'var(--potting-soil)',
-                            textTransform: 'none',
-                            borderRadius: '8px'
-                        }}
-                    >
-                        Add Stock
-                    </Button>
-                </Box>
+                    {/* TITLE (SAMA KAYA TEMEN LU) */}
+                    <Box sx={{ position: 'relative', mb: 6, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <Typography
+                            variant='h4'
+                            className='page-title'
+                            sx={{ fontWeight: 'bold', textAlign: 'center', color: 'var(--potting-soil)' }}
+                        >
+                            Stock Management
+                        </Typography>
 
-                <Divider sx={{ mb: 4 }}>STOCK LIST</Divider>
-
-                {loading ? (
-                    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                        <CircularProgress />
+                        <Button
+                            variant="contained"
+                            startIcon={<AddIcon />}
+                            onClick={() => navigate("/stock/create")}
+                            sx={{
+                                position: 'absolute',
+                                right: 0,
+                                bgcolor: 'var(--potting-soil)',
+                                textTransform: 'none',
+                                borderRadius: '8px'
+                            }}
+                        >
+                            Add Stock
+                        </Button>
                     </Box>
-                ) : (
-                    renderTableGrid()
-                )}
 
-            </Container>
-        </div>
+                    <Divider sx={{ mb: 4 }}>STOCK LIST</Divider>
+
+                    {loading ? (
+                        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                            <CircularProgress />
+                        </Box>
+                    ) : (
+                        renderTableGrid()
+                    )}
+
+                </Container>
+            </div>
+        </>
     );
 }
