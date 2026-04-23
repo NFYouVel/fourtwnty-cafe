@@ -1,0 +1,87 @@
+:root {
+    --mocha-mousse: #A47864;
+    --pepper-rice: #BE6E58;
+    --potting-soil: #5A3D2E;
+    --spicy-coffee: #6C4E3E;
+    --peanut-butter: #C8A48A;
+    --dry-creek: #E0BFA2;
+    --pumpkin-essence: #F2D9C3;
+    --terracota-pot: #A07761;
+    --froth: #FAEADC;
+}
+
+.unauth-page {
+    min-height: 100vh;
+    background: linear-gradient(
+        135deg,
+        var(--potting-soil),
+        var(--spicy-coffee)
+    );
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.unauth-card {
+    background: var(--froth);
+    padding: 50px;
+    border-radius: 20px;
+    text-align: center;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+}
+
+.unauth-card h1 {
+    font-size: 90px;
+    margin: 0;
+    color: var(--pepper-rice);
+}
+
+.unauth-card h2 {
+    margin-top: 10px;
+    color: var(--potting-soil);
+    font-size: 32px;
+}
+
+.unauth-card p {
+    margin-top: 15px;
+    color: var(--spicy-coffee);
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+.unauth-actions {
+    margin-top: 30px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.unauth-actions button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+    transition: 0.2s ease;
+    background: var(--peanut-butter);
+    color: white;
+}
+
+.unauth-actions button:hover {
+    transform: translateY(-2px);
+    background: var(--terracota-pot);
+}
+
+.home-btn {
+    background: var(--pepper-rice) !important;
+}
+
+.home-btn:hover {
+    background: var(--mocha-mousse) !important;
+}

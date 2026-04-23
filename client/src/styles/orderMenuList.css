@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 
 * {
     margin: 0;
@@ -9,230 +8,246 @@
 }
 
 :root {
-    --mocha-mousse: #A47864;
-    --pepper-rice: #BE6E58;
-    --potting-soil: #5A3D2E;
-    --spicy-coffee: #6C4E3E;
-    --peanut-butter: #C8A48A;
-    --dry-creek: #E0BFA2;
-    --pumpkin-essence: #F2D9C3;
-    --terracota-pot: #A07761;
-    --froth: #FAEADC;
+    --mocha-mousse: #8f624e;
+    --pepper-rice: #9f533e;
+    --potting-soil: #2f1b14;
+    --spicy-coffee: #4a2b21;
+    --peanut-butter: #b88d74;
+    --dry-creek: #d6aa8b;
+    --pumpkin-essence: #e5c3ae;
+    --terracota-pot: #7e5642;
+    --froth: #e8d3c4;
+    --card-bg: #fff7f2;
+    --soft-bg: #f4e4d8;
+    --text-soft: #70584e;
 }
+
+/* =========================
+   ORDER MENU LIST ONLY
+   tidak nabrak headerDashboard.css
+========================= */
 
 .wrapper-order-menu-list {
     display: flex;
-    width: 100%;
-    height: 100vh;
-    background: white;
-}
-
-.section-categorized,.section-menu,.section-payment {
-    display: flex;
-    height: 100%;
-    width: 100%;
-}
-
-.wrapper-order-menu-list {
-    display: flex;
-    gap: 20px;
+    gap: 22px;
     padding: 24px;
     min-height: 100vh;
-    background: var(--froth);
+    background: linear-gradient(135deg, #f3e5da, #ead5c8);
 }
 
-/* CATEGORY */
-.section-categorized {
+/* =========================
+   LEFT CATEGORY
+========================= */
+.wrapper-order-menu-list .section-categorized {
     width: 260px;
-    background: white;
+    background: #fffaf7;
     border-radius: 18px;
     padding: 22px;
-    box-shadow: 0 8px 18px rgba(0,0,0,0.06);
+    box-shadow: 0 10px 22px rgba(90, 61, 46, 0.08);
     display: flex;
     flex-direction: column;
 }
 
-.category-heading {
-    font-size: 20px;
+.wrapper-order-menu-list .category-heading {
+    font-size: 22px;
     color: var(--potting-soil);
-    margin-bottom: 20px;
+    margin-bottom: 22px;
+    font-weight: 700;
 }
 
-.category-list {
+.wrapper-order-menu-list .category-list {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-.category-item,
-.category-parent,
-.subcategory-item {
+.wrapper-order-menu-list .category-item,
+.wrapper-order-menu-list .category-parent,
+.wrapper-order-menu-list .subcategory-item {
     padding: 12px 15px;
     border-radius: 12px;
     cursor: pointer;
     transition: 0.25s ease;
     font-size: 14px;
+    color: var(--potting-soil);
 }
 
-.category-item:hover,
-.category-parent:hover,
-.subcategory-item:hover {
-    background: var(--pumpkin-essence);
+.wrapper-order-menu-list .category-item:hover,
+.wrapper-order-menu-list .subcategory-item:hover,
+.wrapper-order-menu-list .category-parent:hover {
+    background: #f0d8c7;
 }
 
-.category-item.active {
+.wrapper-order-menu-list .category-item.active,
+.wrapper-order-menu-list .subcategory-item.active {
     background: var(--potting-soil);
     color: white;
     font-weight: 600;
 }
 
-.category-parent {
+.wrapper-order-menu-list .category-parent {
+    margin-top: 12px;
+    margin-bottom: 4px;
+    background: #f6e4d7;
     font-weight: 700;
-    color: var(--spicy-coffee);
-    margin-top: 6px;
+    color: #6a4736;
 }
 
-.subcategory-list {
+.wrapper-order-menu-list .subcategory-list {
     margin-left: 18px;
+    margin-top: 4px;
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
-.subcategory-item {
-    background: #faf8f6;
+.wrapper-order-menu-list .subcategory-item {
+    background: #f8eee8;
     font-size: 13px;
 }
 
-/* MENU */
-.section-menu {
+/* =========================
+   CENTER MENU
+========================= */
+.wrapper-order-menu-list .section-menu {
     flex: 1;
-    background: white;
+    background: #fffaf7;
     border-radius: 18px;
     padding: 24px;
-    box-shadow: 0 8px 18px rgba(0,0,0,0.05);
+    box-shadow: 0 10px 22px rgba(90, 61, 46, 0.07);
+    display: flex;
     flex-direction: column;
 }
 
-.menu-heading {
-    font-size: 22px;
+.wrapper-order-menu-list .menu-heading {
+    font-size: 24px;
     color: var(--potting-soil);
-    margin-bottom: 20px;
+    margin-bottom: 22px;
+    font-weight: 700;
 }
 
-.menu-grid {
+.wrapper-order-menu-list .menu-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 18px;
 }
 
-.menu-card {
-    background: #faf8f6;
+.wrapper-order-menu-list .menu-card {
+    background: #f8ece4;
     border-radius: 16px;
     padding: 18px;
     cursor: pointer;
     transition: 0.25s ease;
+    border: 1px solid rgba(90, 61, 46, 0.06);
 }
 
-.menu-card:hover {
+.wrapper-order-menu-list .menu-card:hover {
     transform: translateY(-4px);
+    background: #eed9cc;
 }
 
-.menu-card h3 {
+.wrapper-order-menu-list .menu-card h3 {
     font-size: 18px;
+    color: var(--potting-soil);
     margin-bottom: 8px;
 }
 
-.menu-category {
+.wrapper-order-menu-list .menu-category {
     font-size: 13px;
-    color: var(--pepper-rice);
+    color: #a1644c;
     margin-bottom: 10px;
+    font-weight: 600;
 }
 
-.menu-description {
+.wrapper-order-menu-list .menu-description {
     font-size: 13px;
-    color: gray;
+    color: #6d5a50;
+    line-height: 1.5;
     min-height: 42px;
 }
 
-.menu-price {
+.wrapper-order-menu-list .menu-price {
     display: block;
     margin-top: 14px;
     font-weight: bold;
     color: var(--potting-soil);
+    font-size: 15px;
 }
 
-.section-payment {
+/* =========================
+   RIGHT PAYMENT
+========================= */
+.wrapper-order-menu-list .section-payment {
     width: 340px;
-    background: white;
+    background: #fffaf7;
     border-radius: 18px;
     padding: 24px;
-    box-shadow: 0 8px 18px rgba(0,0,0,0.05);
-
+    box-shadow: 0 10px 22px rgba(90, 61, 46, 0.07);
     display: flex;
     flex-direction: column;
 }
 
-.payment-title {
+.wrapper-order-menu-list .payment-title {
     font-size: 22px;
     color: var(--potting-soil);
-    margin-bottom: 20px;
+    margin-bottom: 22px;
+    font-weight: 700;
 }
 
-.payment-order-list {
+.wrapper-order-menu-list .payment-order-list {
     display: flex;
     flex-direction: column;
     gap: 14px;
-    margin-bottom: 25px;
+    margin-bottom: 24px;
 }
 
-.payment-item {
+.wrapper-order-menu-list .payment-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-
-    background: #faf8f6;
+    background: #f8ece4;
     padding: 14px;
     border-radius: 14px;
 }
 
-.payment-item h4 {
+.wrapper-order-menu-list .payment-item h4 {
     font-size: 15px;
     margin-bottom: 4px;
+    color: var(--potting-soil);
 }
 
-.payment-item p {
+.wrapper-order-menu-list .payment-item p {
     font-size: 13px;
-    color: gray;
+    color: #6e5d54;
 }
 
-.payment-item span {
+.wrapper-order-menu-list .payment-item span {
     font-weight: bold;
     color: var(--potting-soil);
 }
 
-.payment-summary {
-    border-top: 1px solid #eee;
+.wrapper-order-menu-list .payment-summary {
+    border-top: 1px solid #e2cfc1;
     padding-top: 18px;
-
     display: flex;
     flex-direction: column;
     gap: 14px;
 }
 
-.summary-row {
+.wrapper-order-menu-list .summary-row {
     display: flex;
     justify-content: space-between;
     font-size: 14px;
+    color: #5e4337;
 }
 
-.summary-row.total {
+.wrapper-order-menu-list .summary-row.total {
     font-size: 18px;
     font-weight: bold;
     color: var(--potting-soil);
 }
 
-.checkout-button {
+.wrapper-order-menu-list .checkout-button {
     margin-top: auto;
     border: none;
     padding: 14px;
@@ -245,7 +260,288 @@
     transition: 0.25s ease;
 }
 
-.checkout-button:hover {
+.wrapper-order-menu-list .checkout-button:hover {
+    transform: translateY(-2px);
+    background: #3f281e;
+}
+
+/* =========================
+   FIX HEIGHT WRAPPER
+   kalau isi tengah banyak -> scroll
+========================= */
+
+.wrapper-order-menu-list {
+    display: flex;
+    gap: 22px;
+    padding: 24px;
+    height: calc(100vh - 120px); /* sesuaikan tinggi header */
+    overflow: hidden;
+}
+
+/* kiri */
+.wrapper-order-menu-list .section-categorized {
+    height: 100%;
+    overflow-y: auto;
+}
+
+/* tengah */
+.wrapper-order-menu-list .section-menu {
+    flex: 1;
+    height: 100%;
+    overflow-y: auto;
+}
+
+/* kanan */
+.wrapper-order-menu-list .section-payment {
+    height: 100%;
+    overflow-y: auto;
+}
+
+/* scrollbar biar cakep */
+.wrapper-order-menu-list .section-menu::-webkit-scrollbar,
+.wrapper-order-menu-list .section-categorized::-webkit-scrollbar,
+.wrapper-order-menu-list .section-payment::-webkit-scrollbar {
+    width: 8px;
+}
+
+.wrapper-order-menu-list .section-menu::-webkit-scrollbar-thumb,
+.wrapper-order-menu-list .section-categorized::-webkit-scrollbar-thumb,
+.wrapper-order-menu-list .section-payment::-webkit-scrollbar-thumb {
+    background: var(--mocha-mousse);
+    border-radius: 20px;
+}
+
+.wrapper-order-menu-list .section-menu::-webkit-scrollbar-track,
+.wrapper-order-menu-list .section-categorized::-webkit-scrollbar-track,
+.wrapper-order-menu-list .section-payment::-webkit-scrollbar-track {
+    background: #f3e5da;
+}
+
+
+
+
+/* ===== POPUP OVERLAY ===== */
+.popup-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(25, 18, 12, 0.35);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 9999;
+    animation: fadeIn 0.25s ease;
+}
+
+/* ===== POPUP BOX ===== */
+.popup-box {
+    width: 420px;
+    max-width: 92%;
+    background: rgba(255, 255, 255, 0.78);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    border-radius: 22px;
+
+    padding: 28px;
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.15);
+
+    animation: popupUp 0.28s ease;
+}
+
+/* ===== TITLE ===== */
+.popup-box h2 {
+    font-size: 26px;
+    margin-bottom: 8px;
+    color: var(--potting-soil);
+}
+
+.popup-box p {
+    font-size: 14px;
+    color: #6d5c52;
+    margin-bottom: 18px;
+}
+
+/* ===== INPUT ===== */
+.popup-box input {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 14px;
+    border: 1px solid #ddd;
+    outline: none;
+    font-size: 15px;
+    margin-bottom: 14px;
+    background: rgba(255, 255, 255, 0.75);
+    transition: 0.2s ease;
+}
+
+.popup-box input:focus {
+    border-color: var(--potting-soil);
+    box-shadow: 0 0 0 4px rgba(90, 61, 46, 0.08);
+}
+
+/* ===== BUTTON AREA ===== */
+.popup-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+/* ===== BUTTON ===== */
+.popup-actions button {
+    flex: 1;
+    border: none;
+    padding: 13px;
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.22s ease;
+}
+
+/* cancel */
+.popup-actions button:first-child {
+    background: #ece8e4;
+    color: #5b4639;
+}
+
+.popup-actions button:first-child:hover {
+    transform: translateY(-2px);
+    background: #e2ddd8;
+}
+
+/* start */
+.popup-actions button:last-child {
+    background: var(--potting-soil);
+    color: white;
+}
+
+.popup-actions button:last-child:hover {
     transform: translateY(-2px);
     background: var(--spicy-coffee);
+}
+
+/* ===== ANIMATION ===== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes popupUp {
+    from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ===== POPUP BUTTON DEFAULT ===== */
+.popup-box button {
+    width: 100%;
+    border: none;
+    padding: 14px 18px;
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.22s ease;
+    margin-top: 10px;
+}
+
+/* ===== START ORDER BUTTON ===== */
+.popup-box button:first-of-type {
+    background: linear-gradient(135deg,
+            var(--potting-soil),
+            var(--spicy-coffee));
+    color: white;
+    box-shadow: 0 8px 18px rgba(90, 61, 46, 0.18);
+}
+
+.popup-box button:first-of-type:hover {
+    transform: translateY(-2px) scale(1.01);
+    box-shadow: 0 12px 22px rgba(90, 61, 46, 0.22);
+}
+
+/* ===== CANCEL BUTTON ===== */
+.popup-box button:last-of-type {
+    background: #f4f1ee;
+    color: var(--potting-soil);
+    border: 1px solid #e4ddd7;
+}
+
+.popup-box button:last-of-type:hover {
+    background: #ebe5df;
+    transform: translateY(-2px);
+}
+
+/* ===== ACTIVE CLICK ===== */
+.popup-box button:active {
+    transform: scale(0.98);
+}
+
+/* =========================
+   MOBILE
+========================= */
+@media (max-width: 992px) {
+    .wrapper-order-menu-list {
+        flex-direction: column;
+    }
+
+    .wrapper-order-menu-list .section-categorized,
+    .wrapper-order-menu-list .section-payment {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .wrapper-order-menu-list {
+        padding: 16px;
+        gap: 16px;
+    }
+
+    .wrapper-order-menu-list .menu-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .wrapper-order-menu-list .category-heading,
+    .wrapper-order-menu-list .menu-heading,
+    .wrapper-order-menu-list .payment-title {
+        font-size: 20px;
+    }
+}
+
+.qty-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.qty-box button {
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 8px;
+    background: var(--potting-soil);
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.qty-box span {
+    min-width: 20px;
+    text-align: center;
+    font-weight: bold;
 }
