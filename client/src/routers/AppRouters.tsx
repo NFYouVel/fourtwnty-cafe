@@ -14,17 +14,23 @@ import ReservationPage from "../pages/ReservationPage"
 import StaffListReservationPage from "../pages/StaffListReservationPage"
 import MenuListPage from "../pages/OrderMenuListPage"
 import CustomerReservation from "../pages/ShowReservationCustomer"
+import ProtectedRoutes from "./ProtectedRoutes"
 
 const Router = () => {
   return (
     <Routes>
+
+      <Route element={<ProtectedRoutes allowedRoles={["Customer"]} />}>
+        <Route path="/home" element={<HomePage />} />
+      </Route>
+
       // Auth Routes
       <Route path="/" element={<Login />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
 
       // Home Routes
-      <Route path="/home" element={<HomePage />} />
+      {/* <Route path="/home" element={<HomePage />} /> */}
       <Route path="/menu-list" element={<MenuListPage />} />
       <Route path="/menu-list/:tableNumber" element={<MenuListPage />} />
 
@@ -41,9 +47,9 @@ const Router = () => {
       // Customer Routes
       <Route path="/reservation" element={<ReservationPage />} />
       <Route path="/reservation/myReservation" element={<CustomerReservation />} />
-      
+
       // Stock Routes
-      <Route path= "/stock" element={<Stock />} />
+      <Route path="/stock" element={<Stock />} />
       <Route path="/stock/create" element={<StockForm />} />
       <Route path="/stock/update/:id" element={<StockForm />} />
     </Routes>
