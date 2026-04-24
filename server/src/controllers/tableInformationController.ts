@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import { v4 as uuidv4 } from 'uuid';
 import { Op } from "sequelize"; //query '!='
 import { Reservation } from "../../models/Reservation.js";
+import { Sequelize } from 'sequelize-typescript';
 
 export const getAllTable = async (req: Request, res: Response) => {
     try {
@@ -133,48 +134,48 @@ export const deleteTable = async (req: Request, res: Response) => {
     }
 }
 
+
 export const getTableAvailability = async (req: Request, res: Response) => {
     try {
         const { tanggal } = req.query;
+        if (!tanggal) return res.status(400).json({ message: "Tanggal diperlukan" });
 
-        if (!tanggal) {
-            return res.status(500).json({
-                message: "Parameter tanggal diperlukan"
-            })
-        }
-
-        const tables = await TableInformation.findAll({
-            order: [
-                ['table_number', 'ASC']
-            ]
-        });
+        const tables = await TableInformation.findAll({ order: [['table_number', 'ASC']] });
 
         const activeReservations = await Reservation.findAll({
-            where: {
-                tanggal_reservation: tanggal,
-                status_reservation: {
-                    [Op.ne]: 'Rejected'
-                }
-            }
+            where: Sequelize.where(
+                Sequelize.fn('DATE', Sequelize.col('tanggal_reservation')), 
+                tanggal as string
+            )
         });
-        console.log(`--- CEK TANGGAL: ${tanggal} ---`);
-        console.log(`Jumlah booking ketemu: ${activeReservations.length}`);
-        //console.log(`ID meja yang ter-booking:`, bookedTableId);
 
-        const bookedTableId = activeReservations.map(res => res.tableId);
+        const plainReservations = activeReservations.map(r => r.get({ plain: true }));
+
+        // console.log(`>>> TANGGAL DICARI: ${tanggal}`);
+        // console.log(`>>> JUMLAH RESERVASI KETEMU: ${plainReservations.length}`);
+
         const result = tables.map(table => {
-            const tableJson = table.toJSON();
+            const tableJson = table.get({ plain: true });
+            
+            const foundRes = plainReservations.find(res => 
+                String(res.tableId) === String(tableJson.id) && 
+                res.status_reservation !== 'Rejected'
+            );
+
+            if (foundRes) {
+                console.log(`✅ MEJA #${tableJson.table_number} MATCH! Status: ${foundRes.status_reservation}`);
+            }
+
             return {
                 ...tableJson,
-                is_booked: bookedTableId.includes(table.id)
-            }
-        })
+                is_booked: foundRes?.status_reservation === 'Approved',
+                is_pending: foundRes?.status_reservation === 'Pending' || foundRes?.status_reservation === 'Reschedule'
+            };
+        });
 
         return res.json(result);
-
     } catch (error: any) {
-        console.error(error);
-        res.status(500).json({ message: "Gagal cek ketersediaan meja", detail: error.message });
+        console.error("BACKEND ERROR:", error);
+        res.status(500).json({ message: "Error", detail: error.message });
     }
 }
-

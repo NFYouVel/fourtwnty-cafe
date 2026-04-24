@@ -85,3 +85,14 @@
     min-height: auto;      
     align-content: start; 
 }
+
+.status-pending {
+    background-color: #D3D3D3 !important; 
+    color: #555 !important;
+    border: 2px dashed #999;
+    cursor: not-allowed;
+}
+
+.status-pending:hover {
+    transform: none; 
+}

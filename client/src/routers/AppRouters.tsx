@@ -14,6 +14,7 @@ import ReservationPage from "../pages/ReservationPage"
 import StaffListReservationPage from "../pages/StaffListReservationPage"
 import MenuListPage from "../pages/OrderMenuListPage"
 import CustomerReservation from "../pages/ShowReservationCustomer"
+import ShowTableInforManager from "../pages/ShowTableInforManager"
 
 const Router = () => {
   return (
@@ -37,6 +38,9 @@ const Router = () => {
       <Route path="/staff/edit/:id" element={<EditStaffPage />} />
       <Route path="/staff/listReservation" element={<StaffListReservationPage />} />
 
+      //manager table information
+      <Route path="/manager/tableInformation" element={<ShowTableInforManager />} />
+      
       // Customer Routes
       <Route path="/reservation" element={<ReservationPage />} />
       <Route path="/reservation/myReservation" element={<CustomerReservation />} />
