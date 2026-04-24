@@ -81,6 +81,10 @@ export default function StockPage() {
                     <Typography variant='caption' className='table-sub-info'>
                         Qty: {stock.amount}
                     </Typography>
+
+                    <Typography variant='caption' className='table-sub-info'>
+                        Unit: {stock.unit}
+                    </Typography>
                 </Paper>
             ))}
         </Box>

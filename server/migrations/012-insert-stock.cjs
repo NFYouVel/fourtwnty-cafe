@@ -7,6 +7,7 @@ module.exports = {
                 id: uuidv4(),
                 ingredient_name: 'Coffee Beans',
                 amount: 5,
+                unit: 'Bungkus',
                 createdAt: new Date(),
                 updatedAt: new Date(),
             }

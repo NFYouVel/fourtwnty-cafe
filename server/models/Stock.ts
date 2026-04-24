@@ -27,6 +27,12 @@ export class Stock extends Model {
     })
     amount!: number;
 
+    @Column({
+        type: DataType.ENUM('Gram', 'Buah', 'Bungkus', 'Lembar', 'Mililiter'),
+        allowNull: false,
+    })
+    unit!: 'Gram' | 'Buah' | 'Bungkus' | 'Lembar' | 'Mililiter';
+
     @CreatedAt
     declare createdAt: Date;
 

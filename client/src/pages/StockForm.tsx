@@ -8,6 +8,7 @@ import { useNavigate, useParams } from 'react-router';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import SaveIcon from '@mui/icons-material/Save';
 import type { Stock } from '../type/stockAttribute';
+import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 
 
 export default function StockForm() {
@@ -18,7 +19,8 @@ export default function StockForm() {
 
     const [formStock, setFormStock] = useState({
         ingredient_name: '',
-        amount: ''
+        amount: '',
+        unit: ''
     });
 
     useEffect(() => {
@@ -33,7 +35,8 @@ export default function StockForm() {
                 if (found) {
                     setFormStock({
                         ingredient_name: found.ingredient_name,
-                        amount: found.amount.toString()
+                        amount: found.amount.toString(),
+                        unit: found.unit
                     });
                 }
             } catch (error) {
@@ -55,11 +58,13 @@ export default function StockForm() {
                     : `http://localhost:5000/api/stock/create`,
                 {
                     method: isEdit ? 'PUT' : 'POST',
-                    headers: { 
-                        "Content-Type": "application/json" },
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
                     body: JSON.stringify({
                         ingredient_name: formStock.ingredient_name,
-                        amount: Number(formStock.amount)
+                        amount: Number(formStock.amount),
+                        unit: formStock.unit
                     })
                 }
             );
@@ -120,6 +125,26 @@ export default function StockForm() {
                                     })
                                 }
                             />
+
+                            <FormControl fullWidth required>
+                                <InputLabel>Unit</InputLabel>
+                                <Select
+                                    value={formStock.unit}
+                                    label="Unit"
+                                    onChange={(e) =>
+                                        setFormStock({
+                                            ...formStock,
+                                            unit: e.target.value as Stock['unit']
+                                        })
+                                    }
+                                >
+                                    <MenuItem value="Gram">Gram (g)</MenuItem>
+                                    <MenuItem value="Buah">Buah</MenuItem>
+                                    <MenuItem value="Bungkus">Bungkus</MenuItem>
+                                    <MenuItem value="Lembar">Lembar</MenuItem>
+                                    <MenuItem value="Mililiter">Mililiter (ml)</MenuItem>
+                                </Select>
+                            </FormControl>
 
                             <Button
                                 type="submit"

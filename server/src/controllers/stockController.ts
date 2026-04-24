@@ -13,9 +13,9 @@ export const getAllStock = async (req: Request, res: Response) => {
 
 // Create Stock
 export const createStock = async (req: Request, res: Response) => {
-    const {ingredient_name, amount} = req.body;
+    const {ingredient_name, amount, unit} = req.body;
     try {
-        const newStock = await Stock.create({ ingredient_name, amount });
+        const newStock = await Stock.create({ ingredient_name, amount, unit });
         res.json(newStock);
     } catch (error) {
         res.status(500).json({ message: "Error creating stock." });
@@ -25,9 +25,9 @@ export const createStock = async (req: Request, res: Response) => {
 //Update Stock
 export const updateStock = async (req: Request, res: Response) => {
     const {id} = req.params;
-    const {ingredient_name, amount} = req.body;
+    const {ingredient_name, amount, unit} = req.body;
     try {
-        const updatedStock = await Stock.update({ ingredient_name, amount }, { where: { id } });
+        const updatedStock = await Stock.update({ ingredient_name, amount, unit }, { where: { id } });
         res.json(updatedStock);
     } catch (error) {
         res.status(500).json({ message: "Error updating stock." });
