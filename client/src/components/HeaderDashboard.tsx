@@ -139,6 +139,10 @@ function HeaderDashboard() {
                             >
                                 Booking Table
                             </button>
+             
+                            <button onClick={() => navigate("/reservation/myReservation") }>
+                                My Reservation
+                            </button>
                         </>
                     ) : isManager ? (
                         <>
@@ -164,6 +168,14 @@ function HeaderDashboard() {
                                 }
                             >
                                 Table Information
+                            </button>
+
+                            <button
+                                onClick={() =>
+                                    navigate("/staff/listReservation")
+                                }
+                            >
+                                List Reservation Table
                             </button>
                         </>
                     ) : (
