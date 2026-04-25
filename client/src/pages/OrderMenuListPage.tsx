@@ -89,19 +89,23 @@ function OrderMenuListPage() {
         navigate("/menu-list/" + inputTable);
     };
 
- const handleCreateOrder = async () => {
-    try {
-        await createNewOrder(orders);
-        localStorage.removeItem(`table_order_${tableNumber}`);
-        setOrders([]);
-        
-        alert("Pesanan berhasil dikirim ke dapur!");
-        console.log("Order submitted and local data cleared.");
+    const handleCreateOrder = async () => {
+        try {
+            await createNewOrder(orders);
+            localStorage.removeItem(`table_order_${tableNumber}`);
+            setOrders([]);
 
-    } catch (error: any) {
-        alert("Gagal mengirim pesanan: " + error.message);
+            alert("Pesanan berhasil dikirim ke dapur!");
+            console.log("Order submitted and local data cleared.");
+
+        } catch (error) {
+            if (error instanceof Error) {
+                alert("Gagal mengirim pesanan: " + error.message);
+            } else {
+                alert("Gagal mengirim pesanan");
+            }
+        }
     }
-}
 
     const confirmAddMenu = () => {
         if (!selectedItem) return;

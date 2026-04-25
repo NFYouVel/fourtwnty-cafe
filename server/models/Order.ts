@@ -1,7 +1,22 @@
-import { Table, Column, Model, DataType, PrimaryKey, BelongsTo, CreatedAt, UpdatedAt, DeletedAt, HasMany, ForeignKey } from 'sequelize-typescript';
+import {
+    Table,
+    Column,
+    Model,
+    DataType,
+    PrimaryKey,
+    CreatedAt,
+    UpdatedAt,
+    DeletedAt,
+    HasMany,
+    ForeignKey,
+    BelongsTo,
+    HasOne,
+} from 'sequelize-typescript';
+
 import { Users } from './Users.js';
 import { OrderMenu } from './OrderMenu.js';
 import { TableInformation } from './TableInformation.js';
+import { Payment } from './Payment.js';
 
 @Table({
     tableName: 'Order',
@@ -9,6 +24,7 @@ import { TableInformation } from './TableInformation.js';
     paranoid: true,
 })
 export class Order extends Model {
+
     @PrimaryKey
     @Column({
         type: DataType.UUID,
@@ -36,11 +52,38 @@ export class Order extends Model {
     })
     total_price!: number;
 
+    // 👇 USER RELATION
+    @ForeignKey(() => Users)
     @Column({
         type: DataType.UUID,
         allowNull: false,
     })
     userId!: string;
+
+    @BelongsTo(() => Users)
+    user!: Users;
+
+    // 👇 TABLE RELATION
+    @ForeignKey(() => TableInformation)
+    @Column({
+        type: DataType.UUID,
+        allowNull: false,
+    })
+    tableId!: string;
+
+    @BelongsTo(() => TableInformation)
+    table!: TableInformation;
+
+    // 👇 ORDER MENU
+    @HasMany(() => OrderMenu)
+    orderMenus!: OrderMenu[];
+
+    // 👇 PAYMENT RELATION
+    @HasOne(() => Payment, {
+        foreignKey: "orderId",
+        as: "payment"
+    })
+    payment!: Payment;
 
     @CreatedAt
     declare createdAt: Date;
@@ -50,14 +93,4 @@ export class Order extends Model {
 
     @DeletedAt
     declare deletedAt: Date;
-
-    @BelongsTo(() => Users, 'userId')
-    user!: Users;
-
-    @HasMany(() => OrderMenu)
-    orderMenus!: OrderMenu[];
-
-    @ForeignKey(() => TableInformation)
-    @Column(DataType.UUID)
-    declare tableId: string;
 }

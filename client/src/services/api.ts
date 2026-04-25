@@ -98,3 +98,88 @@ export async function createNewOrder(cartItems: OrderItem[]) {
         throw error;
     }
 }
+
+export async function getAllProcessOrder() {
+    try {
+        const response = await fetch(
+            `${BASE_URL}/order/process`
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                data.message ||
+                "Failed get process order"
+            );
+        }
+
+        return data;
+
+    } catch (error) {
+        console.error(
+            "Error get process order:",
+            error
+        );
+        throw error;
+    }
+}
+
+export async function updatePaymentOrder(orderId: string, method: string) {
+    try {
+        const response = await fetch(`${BASE_URL}/order/pay/${orderId}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ method }),
+        });
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.log("Error update payment:", error);
+    }
+}
+
+export async function getTableDineInAvailability() {
+    try {
+        const response = await fetch(`${BASE_URL}/order/table-availability`);
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                data.message ||
+                "Failed get table availability"
+            );
+        }
+
+        return data;
+
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
+export async function getAllTable() {
+    try {
+        const response = await fetch(`${BASE_URL}/tableInformation/all`);
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                data.message ||
+                "Failed get all table"
+            );
+        }
+
+        return data;
+
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}

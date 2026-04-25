@@ -10,6 +10,7 @@ import { MenuIngredient } from '../../models/MenuIngredient.js';
 import dotenv from 'dotenv';
 import { Menu } from '../../models/Menu.js';
 import { OrderMenu } from '../../models/OrderMenu.js';
+import { Payment } from '../../models/Payment.js';
 dotenv.config();
 
 export const sequelize = new Sequelize({
@@ -18,5 +19,5 @@ export const sequelize = new Sequelize({
     password: process.env.DB_PASS as string,
     host: process.env.DB_HOST as string,
     dialect: 'postgres',
-    models: [Users, Order, Reservation, TableInformation, Stock, MenuIngredient, Menu, OrderMenu]
+    models: [Users, Order, Reservation, TableInformation, Stock, MenuIngredient, Menu, OrderMenu, Payment]
 });

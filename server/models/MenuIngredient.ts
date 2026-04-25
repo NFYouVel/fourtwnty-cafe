@@ -1,51 +1,54 @@
-import { Table, Column, Model, DataType, PrimaryKey, BelongsTo, CreatedAt, UpdatedAt, DeletedAt, HasMany } from 'sequelize-typescript';
-import { Menu } from './Menu.js';
-import { Stock } from './Stock.js'
+import {Table, Column, Model, DataType, PrimaryKey, BelongsTo, CreatedAt, UpdatedAt, DeletedAt, ForeignKey} from "sequelize-typescript";
+
+import { Menu } from "./Menu.js";
+import { Stock } from "./Stock.js";
 
 @Table({
-    tableName: 'Junction_MenuIngredient',
-    timestamps: true,
-    paranoid: true,
+  tableName: "Junction_MenuIngredient",
+  timestamps: true,
+  paranoid: true
 })
 export class MenuIngredient extends Model {
-    @PrimaryKey
-    @Column({
-        type: DataType.UUID,
-        defaultValue: DataType.UUIDV4,
-        allowNull: false,
-    })
-    declare id: string;
+  @PrimaryKey
+  @Column({
+    type: DataType.UUID,
+    defaultValue: DataType.UUIDV4,
+    allowNull: false
+  })
+  declare id: string;
 
-    @Column({
-        type: DataType.INTEGER,
-        allowNull: true,
-    })
-    jumlah_pemakaian!: number;
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: false
+  })
+  declare jumlah_pemakaian: number;
 
-    @Column({
-        type: DataType.UUIDV4,
-        allowNull: false,
-    })
-    menuId!: string;
+  @ForeignKey(() => Menu)
+  @Column({
+    type: DataType.UUID,
+    allowNull: false
+  })
+  declare menuId: string;
 
-    @Column({
-        type: DataType.UUIDV4,
-        allowNull: false,
-    })
-    stockId!: string;
+  @ForeignKey(() => Stock)
+  @Column({
+    type: DataType.UUID,
+    allowNull: false
+  })
+  declare stockId: string;
 
-    @CreatedAt
-    declare createdAt: Date;
+  @CreatedAt
+  declare createdAt: Date;
 
-    @UpdatedAt
-    declare updatedAt: Date;
+  @UpdatedAt
+  declare updatedAt: Date;
 
-    @DeletedAt
-    declare deletedAt: Date;
+  @DeletedAt
+  declare deletedAt: Date;
 
-    @BelongsTo(() => Menu, 'menuId')
-    menu!: Menu;
+  @BelongsTo(() => Menu, "menuId")
+  declare menu: Menu;
 
-    @BelongsTo(() => Stock, 'stockId')
-    stock!: Stock;
+  @BelongsTo(() => Stock, "stockId")
+  declare stock: Stock;
 }

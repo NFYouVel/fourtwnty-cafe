@@ -27,7 +27,7 @@ function Header() {
 
     return (
         <div className="wrapper-header">
-            <div className="wrapper-logo"></div>
+            <div className="wrapper-logo" onClick={() => navigate(-1)}></div>
 
             <div className="wrapper-header-profile">
 
