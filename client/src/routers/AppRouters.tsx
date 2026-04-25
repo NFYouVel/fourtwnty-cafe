@@ -64,7 +64,12 @@ const Router = () => {
         <Route path="/stock" element={<Stock />} />
         <Route path="/stock/create" element={<StockForm />} />
         <Route path="/stock/update/:id" element={<StockForm />} />
+
+        {/* Daily Report */}
+        <Route path="/report" element={<ReportPage />} />
       </Route>
+
+
     </Routes>
   )
 }

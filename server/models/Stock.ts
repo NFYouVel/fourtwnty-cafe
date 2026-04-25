@@ -37,6 +37,7 @@ export class Stock extends Model {
         allowNull: false,
     })
     unit!: 'Gram' | 'Buah' | 'Bungkus' | 'Lembar' | 'Mililiter';
+    
   @Column({
     type: DataType.INTEGER,
     allowNull: false
