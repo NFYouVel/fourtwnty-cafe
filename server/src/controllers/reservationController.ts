@@ -142,7 +142,7 @@ export const requestReschedule = async (req: Request, res: Response) => {
 
 export const getUserReservations = async (req:Request, res: Response) => {
     try {
-        const userId = (req as any).user.id;
+        const userId = req.params.id;
 
         const reservations = await Reservation.findAll({
             where: {
