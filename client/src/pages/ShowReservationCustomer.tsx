@@ -12,9 +12,10 @@ export default function ShowReservationCustomer() {
     useEffect(() => {
         const fetchMyReservations = async () => {
             const token = localStorage.getItem("token");
+            const userId = JSON.parse(localStorage.getItem("userData") || "{}").id;
             try {
-                const response = await fetch("http://localhost:5000/api/reservation/myReservation", {
-                    headers: { 'Authorization': `Bearer ${token}` }
+                const response = await fetch(`http://localhost:5000/api/reservation/myReservation/${userId}`, {
+                    headers: { 'Authorization': `Bearer ${token}` },
                 });
                 const result = await response.json();
                 if (result.status === "Success") {

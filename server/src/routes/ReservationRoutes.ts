@@ -8,6 +8,6 @@ router.get("/all", getAllReservation);
 router.post("/create", authMiddleware, createReservation);
 router.put("/:id", staffUpdateReservationStatus);
 router.put("/:id", requestReschedule) 
-router.get('/myReservation', getUserReservations)
+router.get('/myReservation/:id', getUserReservations)
 
 export default router;
