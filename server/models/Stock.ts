@@ -32,6 +32,11 @@ export class Stock extends Model {
   })
   declare ingredient_name: string;
 
+    @Column({
+        type: DataType.ENUM('Gram', 'Buah', 'Bungkus', 'Lembar', 'Mililiter'),
+        allowNull: false,
+    })
+    unit!: 'Gram' | 'Buah' | 'Bungkus' | 'Lembar' | 'Mililiter';
   @Column({
     type: DataType.INTEGER,
     allowNull: false

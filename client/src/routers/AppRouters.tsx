@@ -18,6 +18,7 @@ import CustomerReservation from "../pages/ShowReservationCustomer"
 import ProtectedRoutes from "./ProtectedRoutes"
 import PaymentListPage from "../pages/PaymentListPage"
 import TableStatusPage from "../pages/TableStatusPage"
+import ReportPage from "../pages/ReportPage"
 
 const Router = () => {
   return (

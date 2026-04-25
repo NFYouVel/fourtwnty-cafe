@@ -105,6 +105,7 @@ module.exports = {
                 id: uuidv4(),
                 ingredient_name: "Air",
                 amount: 50000,
+                unit: 'Bungkus',
                 createdAt: new Date(),
                 updatedAt: new Date()
             }

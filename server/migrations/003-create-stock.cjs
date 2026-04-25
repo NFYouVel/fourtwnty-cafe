@@ -19,6 +19,11 @@ module.exports = {
                 allowNull: false,
             },
 
+            unit: {
+                type: Sequelize.ENUM('Gram', 'Buah', 'Bungkus', 'Lembar', 'Mililiter'),
+                allowNull: false,
+            },
+
             createdAt: {
                 type: Sequelize.DATE,
                 allowNull: false,

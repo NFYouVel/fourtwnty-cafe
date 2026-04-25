@@ -8,6 +8,7 @@ import { useNavigate, useParams } from 'react-router';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import SaveIcon from '@mui/icons-material/Save';
 import type { Stock } from '../type/stockAttribute';
+import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import Header from "../components/Header";
 import HeaderDashboard from "../components/HeaderDashboard";
 
@@ -19,7 +20,8 @@ export default function StockForm() {
 
     const [formStock, setFormStock] = useState({
         ingredient_name: '',
-        amount: ''
+        amount: '',
+        unit: ''
     });
 
     useEffect(() => {
@@ -34,7 +36,8 @@ export default function StockForm() {
                 if (found) {
                     setFormStock({
                         ingredient_name: found.ingredient_name,
-                        amount: found.amount.toString()
+                        amount: found.amount.toString(),
+                        unit: found.unit
                     });
                 }
             } catch (error) {
@@ -61,7 +64,8 @@ export default function StockForm() {
                     },
                     body: JSON.stringify({
                         ingredient_name: formStock.ingredient_name,
-                        amount: Number(formStock.amount)
+                        amount: Number(formStock.amount),
+                        unit: formStock.unit
                     })
                 }
             );
