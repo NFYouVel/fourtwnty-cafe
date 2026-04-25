@@ -15,45 +15,56 @@ import { Button } from "@mui/material";
 // import type { RootState } from "../hooks/store";
 import { useAppDispatch } from "../hooks/useAppDispatch";
 import { authAction } from "../hooks/authSlice";
-import { useSelector } from "react-redux";
-import type { RootState } from "../hooks/store";
+// import { useSelector } from "react-redux";
+// import type { RootState } from "../hooks/store";
 
 function Login() {
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const userDetails = useSelector((state: RootState) => state.auth.user);
+    // const userDetails = useSelector((state: RootState) => state.auth.user);
 
     // Navigate
     const navigate = useNavigate();
-    // Selector
+
     // Dispatch
     const dispatch = useAppDispatch();
 
     const handleLogin = async () => {
         try {
             const res = await loginRequest(email, password);
-            dispatch(authAction.setUser(res));
+            const resUserDetails = await getUser(email);
+
+            const finalUser = {
+                ...res,
+                ...resUserDetails
+            };
+
+            dispatch(authAction.setUser(finalUser));
+
             localStorage.setItem("token", res.token);
-            console.log(res);
-            if (res) {
-                const resUserDetails = await getUser(email);
-                dispatch(authAction.setUserDetails(resUserDetails));
-                console.log(resUserDetails)
+            localStorage.setItem(
+                "userData",
+                JSON.stringify(finalUser)
+            );
+
+            document.cookie =
+                `token=${res.token}; path=/; max-age=86400`;
+
+            if (finalUser.user_role === "Customer") {
+                navigate("/home");
+            } else if (finalUser.user_role === "Staff"){
+                navigate("/menu-list");
             } else {
-                throw new Error("Login failed");
+                navigate("/staff");
             }
 
-            console.log(userDetails?.user_role);
-            if (userDetails?.user_role === "Customer") {
-                navigate("/home");
-            } else {
-                navigate("/menu-list");
-            }
         } catch (error) {
             console.error(error);
         }
     };
+
+
 
     const handleRegisterNavigation = () => {
         navigate("/register")

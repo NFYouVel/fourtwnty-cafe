@@ -1,0 +1,156 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Cinzel', serif;
+}
+
+:root {
+    --mocha-mousse: #8f624e;
+    --pepper-rice: #9f533e;
+    --potting-soil: #2f1b14;
+    --spicy-coffee: #4a2b21;
+    --peanut-butter: #b88d74;
+    --dry-creek: #d6aa8b;
+    --pumpkin-essence: #e5c3ae;
+    --terracota-pot: #7e5642;
+    --froth: #e8d3c4;
+    --card-bg: #fff7f2;
+    --soft-bg: #f4e4d8;
+    --text-soft: #70584e;
+
+    --green: #43a047;
+    --red: #e53935;
+}
+
+/* PAGE */
+.table-status-page {
+    min-height: calc(100vh - 120px);
+    padding: 22px;
+    background: linear-gradient(135deg, var(--soft-bg), var(--froth));
+}
+
+/* HEADER */
+.table-status-header {
+    margin-bottom: 22px;
+}
+
+.table-status-header h1 {
+    font-size: 28px;
+    color: var(--potting-soil);
+    margin-bottom: 4px;
+}
+
+.table-status-header p {
+    font-size: 13px;
+    color: var(--text-soft);
+}
+
+/* SUMMARY */
+.table-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 22px;
+}
+
+.summary-card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 18px;
+    text-align: center;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, .05);
+}
+
+.summary-card h2 {
+    font-size: 28px;
+    margin-bottom: 4px;
+}
+
+.summary-card p {
+    font-size: 13px;
+    color: var(--text-soft);
+}
+
+.summary-card.available h2 {
+    color: var(--green);
+}
+
+.summary-card.busy h2 {
+    color: var(--red);
+}
+
+.summary-card.total h2 {
+    color: var(--potting-soil);
+}
+
+/* GRID */
+.table-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
+    gap: 14px;
+}
+
+/* BOX */
+.table-box {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 18px;
+    text-align: center;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, .04);
+    transition: .22s ease;
+}
+
+.table-box:hover {
+    transform: translateY(-3px);
+}
+
+.table-box h3 {
+    font-size: 18px;
+    color: var(--potting-soil);
+    margin-bottom: 10px;
+}
+
+.table-box span {
+    font-size: 12px;
+    font-weight: 700;
+    padding: 6px 12px;
+    border-radius: 18px;
+    display: inline-block;
+}
+
+/* STATUS */
+.table-box.available {
+    border-top: 4px solid var(--green);
+}
+
+.table-box.available span {
+    background: rgba(67, 160, 71, .12);
+    color: var(--green);
+}
+
+.table-box.busy {
+    border-top: 4px solid var(--red);
+}
+
+.table-box.busy span {
+    background: rgba(229, 57, 53, .12);
+    color: var(--red);
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+    .table-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .table-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .table-status-page {
+        padding: 16px;
+    }
+}

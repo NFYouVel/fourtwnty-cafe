@@ -1,7 +1,7 @@
 import { TableInformation } from "../../models/TableInformation.js"
 import { Request, Response } from "express";
 import { v4 as uuidv4 } from 'uuid';
-import { Op } from "sequelize"; //query '!='
+import { Op, where } from "sequelize"; //query '!='
 import { Reservation } from "../../models/Reservation.js";
 import { Sequelize } from 'sequelize-typescript';
 

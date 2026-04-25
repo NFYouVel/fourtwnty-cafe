@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import type { userAttribute } from "../type/userAttribute";
+import type { User } from "../type/userAttribute";
 
 type authState = {
-    user: userAttribute | null;
+    user: User | null;
 }
 
 const initialState: authState = {

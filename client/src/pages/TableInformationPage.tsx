@@ -173,7 +173,7 @@ export default function () {
                         <Typography
                             variant='h4'
                             className='page-title'
-                            sx={{ fontWeight: 'bold', textAlign: 'center', color: 'var(--potting-soil)' }}
+                            sx={{ fontWeight: 'bold', textAlign: 'center', color: 'var(--dry-creek)' }}
                         >
                             Fourtwnty Cafe Table Information
                         </Typography>

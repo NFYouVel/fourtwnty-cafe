@@ -55,10 +55,23 @@ module.exports = {
             onDelete: 'CASCADE'
         })
 
+        await queryInterface.addColumn('Order', 'tableId', {
+            type: Sequelize.UUID,
+            defaultValue: Sequelize.UUIDV4,
+            allowNull: false,
+            references: { 
+                model: 'TableInformation',
+                key: 'id'
+            },
+            onUpdate: 'CASCADE',
+            onDelete: 'CASCADE'
+        })
+
     },
 
     async down(queryInterface, Sequelize) {
         await queryInterface.removeColumn('Order', 'userId')
+        await queryInterface.removeColumn('Order', 'tableId')
         await queryInterface.dropTable('Order');
     }
 }
