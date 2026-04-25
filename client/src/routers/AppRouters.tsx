@@ -16,6 +16,8 @@ import StaffListReservationPage from "../pages/StaffListReservationPage"
 import MenuListPage from "../pages/OrderMenuListPage"
 import CustomerReservation from "../pages/ShowReservationCustomer"
 import ProtectedRoutes from "./ProtectedRoutes"
+import PaymentListPage from "../pages/PaymentListPage"
+import TableStatusPage from "../pages/TableStatusPage"
 
 const Router = () => {
   return (
@@ -35,7 +37,9 @@ const Router = () => {
 
       {/* Only Staff Can Access */}
       <Route element={<ProtectedRoutes allowedRoles={["Staff"]} />}>
+        <Route path="/payment-list" element={<PaymentListPage />} />
         <Route path="/menu-list/:tableNumber" element={<MenuListPage />} />
+        <Route path="/table-status" element={<TableStatusPage />} />
       </Route>
 
       {/* Only Customer & Staff Can Access */}

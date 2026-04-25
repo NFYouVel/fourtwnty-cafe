@@ -1,5 +1,17 @@
-import { Table, Column, Model, DataType, PrimaryKey, BelongsTo, CreatedAt, UpdatedAt, DeletedAt, HasMany } from 'sequelize-typescript';
-import { Order } from './Order.js'
+import {
+    Table,
+    Column,
+    Model,
+    DataType,
+    PrimaryKey,
+    CreatedAt,
+    UpdatedAt,
+    DeletedAt,
+    ForeignKey,
+    BelongsTo,
+} from 'sequelize-typescript';
+
+import { Order } from './Order.js';
 
 @Table({
     tableName: 'Payment',
@@ -7,6 +19,7 @@ import { Order } from './Order.js'
     paranoid: true,
 })
 export class Payment extends Model {
+
     @PrimaryKey
     @Column({
         type: DataType.UUID,
@@ -16,22 +29,29 @@ export class Payment extends Model {
     declare id: string;
 
     @Column({
-        type: DataType.INTEGER,
+        type: DataType.ENUM('Unpaid', 'Paid', 'Cancelled'),
+        allowNull: false,
+        defaultValue: 'Unpaid',
+    })
+    status!: 'Unpaid' | 'Paid' | 'Cancelled';
+
+    @Column({
+        type: DataType.ENUM('Cash', 'QRIS', 'Card'),
         allowNull: true,
     })
-    table_number!: number;
+    method!: 'Cash' | 'QRIS' | 'Card';
 
+    // 👇 FOREIGN KEY
+    @ForeignKey(() => Order)
     @Column({
-        type: DataType.ENUM('Paid', 'Cancelled'),
-        allowNull: false,
-    })
-    status!: 'Paid' | 'Cancelled';
-
-    @Column({
-        type: DataType.UUIDV4,
+        type: DataType.UUID,
         allowNull: false,
     })
     orderId!: string;
+
+    // 👇 RELATION BACK TO ORDER
+    @BelongsTo(() => Order)
+    order!: Order;
 
     @CreatedAt
     declare createdAt: Date;
@@ -41,7 +61,4 @@ export class Payment extends Model {
 
     @DeletedAt
     declare deletedAt: Date;
-
-    @BelongsTo(() => Order, 'orderId')
-    order!: Order;
 }

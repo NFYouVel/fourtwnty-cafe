@@ -1,7 +1,7 @@
 import '../styles/createTable.css';
 import { useState } from "react";
 import {
-    Container, Typography, TextField, Box, Button,
+    Container, Typography, TextField, Button,
     FormControl, InputLabel, Select, MenuItem, Paper, Stack
 } from "@mui/material";
 import { useNavigate } from 'react-router';
