@@ -117,9 +117,8 @@ function HeaderDashboard() {
 
                 {/* RIGHT MENU */}
                 <div
-                    className={`dashboard-right ${
-                        openMenu ? "active-menu" : ""
-                    }`}
+                    className={`dashboard-right ${openMenu ? "active-menu" : ""
+                        }`}
                 >
                     {isCustomer ? (
                         <>
@@ -139,8 +138,8 @@ function HeaderDashboard() {
                             >
                                 Booking Table
                             </button>
-             
-                            <button onClick={() => navigate("/reservation/myReservation") }>
+
+                            <button onClick={() => navigate("/reservation/myReservation")}>
                                 My Reservation
                             </button>
                         </>
@@ -170,13 +169,13 @@ function HeaderDashboard() {
                                 Table Information
                             </button>
 
-                            <button
+                            {/* <button
                                 onClick={() =>
                                     navigate("/staff/listReservation")
                                 }
                             >
                                 List Reservation Table
-                            </button>
+                            </button> */}
                         </>
                     ) : (
                         <>
@@ -187,12 +186,19 @@ function HeaderDashboard() {
                                 + New Order
                             </button>
 
-                            <button onClick={() => navigate("/payment-list") }>
+                            <button onClick={() => navigate("/payment-list")}>
                                 📄 Order List
                             </button>
 
-                            <button onClick={() => navigate("/table-status") }>
+                            <button onClick={() => navigate("/table-status")}>
                                 Table Status
+                            </button>
+                            <button
+                                onClick={() =>
+                                    navigate("/staff/listReservation")
+                                }
+                            >
+                                List Reservation Table
                             </button>
                         </>
                     )}

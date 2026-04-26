@@ -35,10 +35,10 @@ export default function CreateStaffPage() {
             <Box sx={{
                 minHeight: "100vh",
                 bgcolor: "#fdf8f5",
-                py: 10
+                py: 0
             }}>
-                <Container maxWidth="sm" sx={{ py: 10 }}>
-                    <Button startIcon={<ArrowBackIcon />} onClick={() => navigate(-1)} sx={{ mb: 2, color: 'var(--potting-soil)' }}>Back</Button>
+                <Container maxWidth="sm" sx={{ py: 5}}>
+                    <Button startIcon={<ArrowBackIcon />} onClick={() => navigate(-1)} sx={{ mb: 0, color: 'var(--potting-soil)' }}>Back</Button>
                     <Paper sx={{ p: 4, borderRadius: 3 }}>
                         <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 3 }}>Register New Staff</Typography>
                         <form onSubmit={handleCreate}>

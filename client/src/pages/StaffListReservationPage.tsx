@@ -87,7 +87,7 @@ export default function StaffListReservationPage() {
                             <CalendarMonthIcon sx={{ color: 'white', fontSize: 30 }} />
                         </Box>
                         <Typography variant="h4" sx={{ fontWeight: 800, color: 'var(--potting-soil)' }}>
-                            Reservation Manager
+                            List Reservation
                         </Typography>
                     </Stack>
 

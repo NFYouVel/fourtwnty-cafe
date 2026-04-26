@@ -80,9 +80,9 @@ export default function EditStaffPage() {
             <Box sx={{
                 minHeight: "100vh",
                 bgcolor: "#fdf8f5",
-                py: 10
+                py: 0
             }}>
-                <Container maxWidth="sm" sx={{ py: 8 }}>
+                <Container maxWidth="sm" sx={{ py: 4}}>
                     <Button
                         startIcon={<ArrowBackIcon />}
                         onClick={() => navigate("/staff")}

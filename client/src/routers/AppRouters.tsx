@@ -41,6 +41,7 @@ const Router = () => {
         <Route path="/payment-list" element={<PaymentListPage />} />
         <Route path="/menu-list/:tableNumber" element={<MenuListPage />} />
         <Route path="/table-status" element={<TableStatusPage />} />
+        <Route path="/staff/listReservation" element={<StaffListReservationPage />} />
       </Route>
 
       {/* Only Customer & Staff Can Access */}
@@ -51,14 +52,14 @@ const Router = () => {
       {/* Only Manager Can Access */}
       <Route element={<ProtectedRoutes allowedRoles={["Manager"]} />}>
         {/* Table Information*/}
-        <Route path='/tableInformation' element={<TableInformation />} />
+        <Route path='/tableInformation' element={<ShowTableInforManager />} />
         <Route path='/tableInformation/create' element={<CreateTableInformation />} />
 
         {/* Staff */}
         <Route path="/staff" element={<StaffPage />} />
         <Route path="/staff/create" element={<CreateStaffPage />} />
         <Route path="/staff/edit/:id" element={<EditStaffPage />} />
-        <Route path="/staff/listReservation" element={<StaffListReservationPage />} />
+
 
         {/* Stock */}
         <Route path="/stock" element={<Stock />} />

@@ -275,7 +275,7 @@ export default function ShowTableInforManager() {
                             </Divider>
                             {renderTableGrid('Indoor')}
 
-                            <Divider sx={{ mt: 6, mb: 4 }}>
+                            <Divider sx={{ mt: 1, mb: 4 }}>
                                 <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
                                     <DeckIcon sx={{ color: 'var(--pepper-rice)' }} />
                                     <Typography sx={{ fontWeight: 'bold', color: 'var(--pepper-rice)' }}>
