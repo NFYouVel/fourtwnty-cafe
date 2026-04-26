@@ -176,6 +176,14 @@ function HeaderDashboard() {
                             >
                                 List Reservation Table
                             </button> */}
+
+                            <button
+                                onClick={() =>
+                                    navigate("/report")
+                                }
+                            >
+                                Daily Report
+                            </button>
                         </>
                     ) : (
                         <>

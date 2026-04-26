@@ -8,8 +8,8 @@ import { useNavigate, useParams } from 'react-router';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import SaveIcon from '@mui/icons-material/Save';
 import type { Stock } from '../type/stockAttribute';
-import Header from "../components/Header";
-import HeaderDashboard from "../components/HeaderDashboard";
+import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
+
 
 export default function StockForm() {
     const navigate = useNavigate();
@@ -19,7 +19,8 @@ export default function StockForm() {
 
     const [formStock, setFormStock] = useState({
         ingredient_name: '',
-        amount: ''
+        amount: '',
+        unit: ''
     });
 
     useEffect(() => {
@@ -34,7 +35,8 @@ export default function StockForm() {
                 if (found) {
                     setFormStock({
                         ingredient_name: found.ingredient_name,
-                        amount: found.amount.toString()
+                        amount: found.amount.toString(),
+                        unit: found.unit
                     });
                 }
             } catch (error) {
@@ -61,7 +63,8 @@ export default function StockForm() {
                     },
                     body: JSON.stringify({
                         ingredient_name: formStock.ingredient_name,
-                        amount: Number(formStock.amount)
+                        amount: Number(formStock.amount),
+                        unit: formStock.unit
                     })
                 }
             );
@@ -79,70 +82,84 @@ export default function StockForm() {
     };
 
     return (
+        <div className='create-page-bg'>
+            <Container maxWidth="sm" sx={{ py: 8 }}>
+                <Button
+                    startIcon={<ArrowBackIcon />}
+                    onClick={() => navigate(-1)}
+                    className='back-button'>
+                    Back
+                </Button>
 
-        <>
-            <Header />
-            <HeaderDashboard />
+                <Paper elevation={6} className='form-container'>
+                    <Typography variant="h4" className='form-title'>
+                        {isEdit ? "Update Stock" : "Create Stock"}
+                    </Typography>
 
-            <div className='create-page-bg'>
-                <Container maxWidth="sm" sx={{ py: 8 }}>
-                    <Button
-                        startIcon={<ArrowBackIcon />}
-                        onClick={() => navigate(-1)}
-                        className='back-button'>
-                        Back
-                    </Button>
+                    <form onSubmit={handleSubmit}>
+                        <Stack spacing={3} sx={{ mt: 4 }}>
 
-                    <Paper elevation={6} className='form-container'>
-                        <Typography variant="h4" className='form-title'>
-                            {isEdit ? "Update Stock" : "Create Stock"}
-                        </Typography>
+                            <TextField
+                                label="Ingredient Name"
+                                fullWidth
+                                required
+                                value={formStock.ingredient_name}
+                                onChange={(e) =>
+                                    setFormStock({
+                                        ...formStock,
+                                        ingredient_name: e.target.value
+                                    })
+                                }
+                            />
 
-                        <form onSubmit={handleSubmit}>
-                            <Stack spacing={3} sx={{ mt: 4 }}>
+                            <TextField
+                                label="Amount"
+                                type="number"
+                                fullWidth
+                                required
+                                value={formStock.amount}
+                                onChange={(e) =>
+                                    setFormStock({
+                                        ...formStock,
+                                        amount: e.target.value
+                                    })
+                                }
+                            />
 
-                                <TextField
-                                    label="Ingredient Name"
-                                    fullWidth
-                                    required
-                                    value={formStock.ingredient_name}
+                            <FormControl fullWidth required>
+                                <InputLabel>Unit</InputLabel>
+                                <Select
+                                    value={formStock.unit}
+                                    label="Unit"
                                     onChange={(e) =>
                                         setFormStock({
                                             ...formStock,
-                                            ingredient_name: e.target.value
+                                            unit: e.target.value as Stock['unit']
                                         })
                                     }
-                                />
-
-                                <TextField
-                                    label="Amount"
-                                    type="number"
-                                    fullWidth
-                                    required
-                                    value={formStock.amount}
-                                    onChange={(e) =>
-                                        setFormStock({
-                                            ...formStock,
-                                            amount: e.target.value
-                                        })
-                                    }
-                                />
-
-                                <Button
-                                    type="submit"
-                                    variant="contained"
-                                    size="large"
-                                    startIcon={<SaveIcon />}
-                                    className="submit-button"
                                 >
-                                    {isEdit ? "Update Stock" : "Create Stock"}
-                                </Button>
+                                    <MenuItem value="Gram">Gram (g)</MenuItem>
+                                    <MenuItem value="Buah">Buah</MenuItem>
+                                    <MenuItem value="Bungkus">Bungkus</MenuItem>
+                                    <MenuItem value="Lembar">Lembar</MenuItem>
+                                    <MenuItem value="Mililiter">Mililiter (ml)</MenuItem>
+                                </Select>
+                            </FormControl>
 
-                            </Stack>
-                        </form>
-                    </Paper>
-                </Container>
-            </div>
-        </>
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                size="large"
+                                startIcon={<SaveIcon />}
+                                className="submit-button"
+                            >
+                                {isEdit ? "Update Stock" : "Create Stock"}
+                            </Button>
+
+                        </Stack>
+                    </form>
+                </Paper>
+            </Container>
+        </div>
     );
 }

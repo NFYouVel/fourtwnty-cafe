@@ -19,6 +19,7 @@ import ShowTableInforManager from "../pages/ShowTableInforManager"
 import ProtectedRoutes from "./ProtectedRoutes"
 import PaymentListPage from "../pages/PaymentListPage"
 import TableStatusPage from "../pages/TableStatusPage"
+import ReportPage from "../pages/ReportPage"
 
 const Router = () => {
   return (
@@ -65,7 +66,12 @@ const Router = () => {
         <Route path="/stock" element={<Stock />} />
         <Route path="/stock/create" element={<StockForm />} />
         <Route path="/stock/update/:id" element={<StockForm />} />
+
+        {/* Daily Report */}
+        <Route path="/report" element={<ReportPage />} />
       </Route>
+
+
     </Routes>
   )
 }
