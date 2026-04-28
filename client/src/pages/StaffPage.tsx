@@ -27,7 +27,7 @@ export default function StaffPage() {
     const fetchStaff = async () => {
         setLoading(true);
         try {
-            const response = await fetch("/api/staff/all");
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/staff/all`);
             const data = await response.json();
             if (Array.isArray(data)) {
                 setStaffs(data);
@@ -43,7 +43,7 @@ export default function StaffPage() {
 
     const handleDelete = async (id: string) => {
         if (window.confirm("Apakah akan menghapus staff ini?")) {
-            await fetch(`/api/staff/${id}`, {
+            await fetch(`${import.meta.env.VITE_API_URL}/api/staff/${id}`, {
                 method: 'DELETE'
             });
             fetchStaff();

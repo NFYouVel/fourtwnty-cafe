@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "../styles/forgotpassword.css";
 
-const BASE_URL = "/api/auth";
+const BASE_URL = `${import.meta.env.VITE_API_URL}/api/auth`;
 
 export default function ForgotPasswordPage() {
     const [step, setStep] = useState(1);
@@ -24,30 +24,23 @@ export default function ForgotPasswordPage() {
                 {
                     method: "POST",
                     headers: {
-                        "Content-Type":
-                            "application/json"
+                        "Content-Type": "application/json"
                     },
-                    body: JSON.stringify({
-                        email
-                    })
+                    body: JSON.stringify({ email })
                 }
             );
 
             const data = await res.json();
 
-            if (!res.ok)
-                throw new Error(data.message);
+            if (!res.ok) throw new Error(data.message);
 
-            setMessage(
-                "Verification code sent to email ✉️"
-            );
+            setMessage("Verification code sent to email ✉️");
             setStep(2);
         } catch (error: unknown) {
             if (error instanceof Error) {
                 setMessage(error.message);
             }
-        }
-        finally {
+        } finally {
             setLoading(false);
         }
     };
@@ -63,20 +56,15 @@ export default function ForgotPasswordPage() {
                 {
                     method: "POST",
                     headers: {
-                        "Content-Type":
-                            "application/json"
+                        "Content-Type": "application/json"
                     },
-                    body: JSON.stringify({
-                        email,
-                        code
-                    })
+                    body: JSON.stringify({ email, code })
                 }
             );
 
             const data = await res.json();
 
-            if (!res.ok)
-                throw new Error(data.message);
+            if (!res.ok) throw new Error(data.message);
 
             setMessage("Code verified ✅");
             setStep(3);
@@ -84,8 +72,7 @@ export default function ForgotPasswordPage() {
             if (error instanceof Error) {
                 setMessage(error.message);
             }
-        }
-        finally {
+        } finally {
             setLoading(false);
         }
     };
@@ -101,36 +88,26 @@ export default function ForgotPasswordPage() {
                 {
                     method: "POST",
                     headers: {
-                        "Content-Type":
-                            "application/json"
+                        "Content-Type": "application/json"
                     },
-                    body: JSON.stringify({
-                        email,
-                        code,
-                        password
-                    })
+                    body: JSON.stringify({ email, code, password })
                 }
             );
 
             const data = await res.json();
 
-            if (!res.ok)
-                throw new Error(data.message);
+            if (!res.ok) throw new Error(data.message);
 
-            setMessage(
-                "Password changed successfully 🎉"
-            );
+            setMessage("Password changed successfully 🎉");
 
             setTimeout(() => {
-                window.location.href =
-                    "/";
+                window.location.href = "/";
             }, 1500);
         } catch (error: unknown) {
             if (error instanceof Error) {
                 setMessage(error.message);
             }
-        }
-        finally {
+        } finally {
             setLoading(false);
         }
     };
@@ -139,40 +116,20 @@ export default function ForgotPasswordPage() {
         <div className="forgot-page">
             <div className="forgot-card">
 
-                <h1>Forgot Password</h1>
-                <p>
+                <h1 className="forgot-title">Forgot Password</h1>
+                <p className="forgot-subtitle">
                     Reset your account password
                 </p>
 
                 {/* STEP INDICATOR */}
-                <div className="steps">
-                    <span
-                        className={
-                            step >= 1
-                                ? "active"
-                                : ""
-                        }
-                    >
+                <div className="forgot-steps">
+                    <span className={`forgot-step ${step >= 1 ? "active" : ""}`}>
                         1
                     </span>
-
-                    <span
-                        className={
-                            step >= 2
-                                ? "active"
-                                : ""
-                        }
-                    >
+                    <span className={`forgot-step ${step >= 2 ? "active" : ""}`}>
                         2
                     </span>
-
-                    <span
-                        className={
-                            step >= 3
-                                ? "active"
-                                : ""
-                        }
-                    >
+                    <span className={`forgot-step ${step >= 3 ? "active" : ""}`}>
                         3
                     </span>
                 </div>
@@ -181,25 +138,18 @@ export default function ForgotPasswordPage() {
                 {step === 1 && (
                     <>
                         <input
+                            className="forgot-input"
                             type="email"
                             placeholder="Enter Email"
                             value={email}
-                            onChange={(e) =>
-                                setEmail(
-                                    e.target
-                                        .value
-                                )
-                            }
+                            onChange={(e) => setEmail(e.target.value)}
                         />
-
                         <button
-                            onClick={
-                                handleSendCode
-                            }
+                            className="forgot-btn"
+                            onClick={handleSendCode}
+                            disabled={loading}
                         >
-                            {loading
-                                ? "Sending..."
-                                : "Send Code"}
+                            {loading ? "Sending..." : "Send Code"}
                         </button>
                     </>
                 )}
@@ -208,25 +158,18 @@ export default function ForgotPasswordPage() {
                 {step === 2 && (
                     <>
                         <input
+                            className="forgot-input"
                             type="text"
                             placeholder="Enter Code"
                             value={code}
-                            onChange={(e) =>
-                                setCode(
-                                    e.target
-                                        .value
-                                )
-                            }
+                            onChange={(e) => setCode(e.target.value)}
                         />
-
                         <button
-                            onClick={
-                                handleVerifyCode
-                            }
+                            className="forgot-btn"
+                            onClick={handleVerifyCode}
+                            disabled={loading}
                         >
-                            {loading
-                                ? "Checking..."
-                                : "Verify Code"}
+                            {loading ? "Checking..." : "Verify Code"}
                         </button>
                     </>
                 )}
@@ -235,31 +178,24 @@ export default function ForgotPasswordPage() {
                 {step === 3 && (
                     <>
                         <input
+                            className="forgot-input"
                             type="password"
                             placeholder="New Password"
                             value={password}
-                            onChange={(e) =>
-                                setPassword(
-                                    e.target
-                                        .value
-                                )
-                            }
+                            onChange={(e) => setPassword(e.target.value)}
                         />
-
                         <button
-                            onClick={
-                                handleResetPassword
-                            }
+                            className="forgot-btn"
+                            onClick={handleResetPassword}
+                            disabled={loading}
                         >
-                            {loading
-                                ? "Saving..."
-                                : "Reset Password"}
+                            {loading ? "Saving..." : "Reset Password"}
                         </button>
                     </>
                 )}
 
                 {message && (
-                    <div className="msg">
+                    <div className="forgot-msg">
                         {message}
                     </div>
                 )}

@@ -43,7 +43,7 @@ export default function ReservationPage() {
 
             try {
                 const response = await fetch(
-                    `/api/tableInformation/availability?tanggal=${form.tanggal_reservation}`
+                    `${import.meta.env.VITE_API_URL}/api/tableInformation/availability?tanggal=${form.tanggal_reservation}`
                 );
 
                 const data: TableType[] = await response.json();
@@ -83,7 +83,7 @@ export default function ReservationPage() {
 
         try {
             const response = await fetch(
-                "/api/reservation/create",
+                `${import.meta.env.VITE_API_URL}/api/reservation/create`,
                 {
                     method: "POST",
                     headers: {

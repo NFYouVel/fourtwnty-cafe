@@ -228,6 +228,7 @@ export const getAllProcessOrder = async (req: Request, res: Response) => {
 
         res.json(order);
     } catch (error) {
+        console.log(error);
         res.status(500).json({
             message: "Failed get order"
         });

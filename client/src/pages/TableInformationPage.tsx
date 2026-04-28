@@ -65,7 +65,7 @@ export default function TableInformationPage() {
 
         try {
             const response = await fetch(
-                `/api/tableInformation/availability?tanggal=${date}`
+                `${import.meta.env.VITE_API_URL}/api/tableInformation/availability?tanggal=${date}`
             );
 
             const data: TableInformation[] =
@@ -126,7 +126,7 @@ export default function TableInformationPage() {
         ) {
             try {
                 await fetch(
-                    `/api/tableInformation/${table.id}`,
+                    `${import.meta.env.VITE_API_URL}/api/tableInformation/${table.id}`,
                     {
                         method: "DELETE"
                     }
@@ -160,7 +160,7 @@ export default function TableInformationPage() {
             try {
                 const response =
                     await fetch(
-                        `/api/tableInformation/${editData.id}`,
+                        `${import.meta.env.VITE_API_URL}/api/tableInformation/${editData.id}`,
                         {
                             method: "PUT",
                             headers: {

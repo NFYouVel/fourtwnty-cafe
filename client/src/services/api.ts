@@ -3,7 +3,7 @@ import type { OrderItem } from "../type/OrderItem";
 const BASE_URL = import.meta.env.VITE_API_URL
 
 export async function loginRequest(email: string, password: string) {
-    const response = await fetch(`${BASE_URL}/auth/login`, {
+    const response = await fetch(`${BASE_URL}/api/auth/login`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -21,7 +21,7 @@ export async function loginRequest(email: string, password: string) {
 }
 
 export async function getUser(email: string) {
-    const response = await fetch(`${BASE_URL}/auth/user?email=${encodeURIComponent(email)}`,{
+    const response = await fetch(`${BASE_URL}/api/auth/user?email=${encodeURIComponent(email)}`,{
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -42,7 +42,7 @@ export async function getUser(email: string) {
 
 
 export async function getAllMenuRequest() {
-    const response = await fetch(`${BASE_URL}/order/menu`);
+    const response = await fetch(`${BASE_URL}/api/order/menu`);
 
     if (!response.ok) {
         throw new Error("Failed get menu");
@@ -53,7 +53,7 @@ export async function getAllMenuRequest() {
 }
 
 export async function registerRequest(name: string, email: string, password: string, phone: string) {
-    const response = await fetch(`${BASE_URL}/auth/register`, {
+    const response = await fetch(`${BASE_URL}/api/auth/register`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -76,7 +76,7 @@ export async function createNewOrder(cartItems: OrderItem[]) {
 
     console.log("Cart items:", cartItems);
     try {
-        const response = await fetch(`${BASE_URL}/order/create`, {
+        const response = await fetch(`${BASE_URL}/api/order/create`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -102,7 +102,7 @@ export async function createNewOrder(cartItems: OrderItem[]) {
 export async function getAllProcessOrder() {
     try {
         const response = await fetch(
-            `${BASE_URL}/order/process`
+            `${BASE_URL}/api/order/process`
         );
 
         const data = await response.json();
@@ -127,7 +127,7 @@ export async function getAllProcessOrder() {
 
 export async function updatePaymentOrder(orderId: string, method: string) {
     try {
-        const response = await fetch(`${BASE_URL}/order/pay/${orderId}`, {
+        const response = await fetch(`${BASE_URL}/api/order/pay/${orderId}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -144,7 +144,7 @@ export async function updatePaymentOrder(orderId: string, method: string) {
 
 export async function getTableDineInAvailability() {
     try {
-        const response = await fetch(`${BASE_URL}/order/table-availability`);
+        const response = await fetch(`${BASE_URL}/api/order/table-availability`);
 
         const data = await response.json();
 
@@ -165,7 +165,7 @@ export async function getTableDineInAvailability() {
 
 export async function getAllTable() {
     try {
-        const response = await fetch(`${BASE_URL}/tableInformation/all`);
+        const response = await fetch(`${BASE_URL}/api/tableInformation/all`);
 
         const data = await response.json();
 

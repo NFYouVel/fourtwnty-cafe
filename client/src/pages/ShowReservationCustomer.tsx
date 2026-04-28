@@ -47,7 +47,7 @@ export default function ShowReservationCustomer() {
 
             try {
                 const response = await fetch(
-                    `/api/reservation/myReservation/${userId}`,
+                    `${import.meta.env.VITE_API_URL}/api/reservation/myReservation/${userId}`,
                     {
                         headers: {
                             Authorization: `Bearer ${token}`

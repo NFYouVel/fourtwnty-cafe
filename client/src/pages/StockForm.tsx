@@ -35,7 +35,7 @@ export default function StockForm() {
 
             try {
                 const res = await fetch(
-                    "/api/stock/all"
+                    `${import.meta.env.VITE_API_URL}/api/stock/all`
                 );
 
                 const data: Stock[] = await res.json();
@@ -76,8 +76,8 @@ export default function StockForm() {
         try {
             const response = await fetch(
                 isEdit
-                    ? `/api/stock/update/${id}`
-                    : `/api/stock/create`,
+                    ? `${import.meta.env.VITE_API_URL}/api/stock/update/${id}`
+                    : `${import.meta.env.VITE_API_URL}/api/stock/create`,
                 {
                     method: isEdit ? "PUT" : "POST",
                     headers: {

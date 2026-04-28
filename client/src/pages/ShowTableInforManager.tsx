@@ -44,7 +44,7 @@ export default function ShowTableInforManager() {
         setLoading(true);
         setTables([]);
         try {
-            const response = await fetch(`/api/tableInformation/availability?tanggal=${date}`);
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/tableInformation/availability?tanggal=${date}`);
             const data = await response.json();
 
             console.log("Data Meja dari Backend:", data);
@@ -82,7 +82,7 @@ export default function ShowTableInforManager() {
 
         if (window.confirm(`Yakin ingin menghapus meja #${table.table_number}?`)) {
             try {
-                await fetch(`/api/tableInformation/${table.id}`, { method: 'DELETE' });
+                await fetch(`${import.meta.env.VITE_API_URL}/api/tableInformation/${table.id}`, { method: 'DELETE' });
                 fetchTables(selectedDate);
             } catch (error) {
                 alert("gagal menghapus: " + error)
@@ -99,7 +99,7 @@ export default function ShowTableInforManager() {
     const handleEditStatus = async () => {
         if (!editData) return;
         try {
-            const response = await fetch(`/api/tableInformation/${editData.id}`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/tableInformation/${editData.id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ status: editData.status })

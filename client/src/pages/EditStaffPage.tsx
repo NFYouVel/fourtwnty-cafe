@@ -24,7 +24,7 @@ export default function EditStaffPage() {
     useEffect(() => {
         const fetchStaffDetail = async () => {
             try {
-                const response = await fetch(`/api/staff/${id}`);
+                const response = await fetch(`${import.meta.env.VITE_API_URL}/api/staff/${id}`);
                 const result = await response.json();
 
                 if (result.status === "Success") {
@@ -49,7 +49,7 @@ export default function EditStaffPage() {
     const handleUpdate = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const response = await fetch(`/api/staff/${id}`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/staff/${id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(form)

@@ -33,7 +33,7 @@ export default function StaffListReservationPage() {
     const fetchAll = async () => {
         setLoading(true);
         try {
-            const response = await fetch("/api/reservation/all");
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/reservation/all`);
             const result = await response.json();
             const dataToProcess = Array.isArray(result) ? result : result.data;
 
@@ -57,7 +57,7 @@ export default function StaffListReservationPage() {
 
     const handleUpdateStatus = async () => {
         if (!selectedRes) return;
-        await fetch(`/api/reservation/${selectedRes.id}`, {
+        await fetch(`${import.meta.env.VITE_API_URL}/api/reservation/${selectedRes.id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ status_reservation: selectedRes.status_reservation })

@@ -33,7 +33,7 @@ export default function StaffReportPage() {
         setLoading(true);
         try {
             const res = await fetch(
-                `/api/report?start=${startDate}&end=${endDate}`
+                `${import.meta.env.VITE_API_URL}/api/report?start=${startDate}&end=${endDate}`
             );
             const data = await res.json();
             setReport(data);
