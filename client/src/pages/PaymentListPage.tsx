@@ -74,6 +74,7 @@ function PaymentListPage() {
 
         try {
             await updatePaymentOrder(selectedOrder.id, paymentMethod);
+            alert("Payment Berhasil!")
 
             const updatedOrders = orders.filter(
                 (item) => item.id !== selectedOrder.id

@@ -196,7 +196,7 @@ function HeaderDashboard() {
                             </button>
 
                             <button onClick={() => navigate("/payment-list") }>
-                                📄 Order List
+                                Order List
                             </button>
 
                             <button onClick={() => navigate("/table-status") }>

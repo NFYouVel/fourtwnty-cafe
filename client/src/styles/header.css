@@ -45,7 +45,7 @@ body {
 }
 
 .wrapper-theme {
-    width: 45px;
+    width: 90px;
     height: 45px;
     border-radius: 50%;
     background: white;
@@ -72,7 +72,7 @@ body {
 }
 
 .wrapper-profile-picture {
-    width: 45px;
+    width: 85px;
     height: 45px;
     border-radius: 50%;
     overflow: hidden;

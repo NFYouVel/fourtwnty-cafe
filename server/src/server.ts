@@ -8,24 +8,12 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
 const app = express();
-const clientPath = path.join(__dirname, "../../client/dist");
 
 app.use(cors())
-
 app.use(express.json());
 
-app.use("/api", GlobalApi) // Ini buat ngambil API dari USERS
-
-app.use(express.static(clientPath)) // https://hansyulian.space/api/books
-
-app.get(/.*/, (req, res) => { // Ini buat ngambil build dari client
-  res.sendFile(path.join(clientPath, "index.html"));
-});
-
+app.use("/api", GlobalApi)
 
 sequelize.authenticate()
   .then(() => console.log("DB Successfully Connected"))

@@ -1,8 +1,8 @@
 'use strict';
-const { v4: uuidv4 } = require('uuid');
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
+    const { v4: uuidv4 } = await import('uuid');
     await queryInterface.bulkInsert('TableInformation', [
       // --- INDOOR (10 Meja) ---
       { id: uuidv4(), table_number: 1, seat_count: 2, area: 'Indoor', status: 'Available', createdAt: new Date(), updatedAt: new Date() },
@@ -28,6 +28,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkDelete('TableInformation', null, {});
+    await queryInterface.bulkDelete("Stock", null, {});
   }
 };
