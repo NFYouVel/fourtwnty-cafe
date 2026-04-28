@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { Order } from "../../models/Order.js";
 import { Op } from "sequelize";
+import { Payment } from "../../models/Payment.js";
 
 // Get Report
 export const getReport = async (req: Request, res: Response) => {
@@ -22,6 +23,15 @@ try {
                     [Op.between]: [startDate, endDate], // Op itu operator dari sequelize buat ngefilter data berdasarkan kondisi tertentu, dalam kasus ini kita pake Op.between buat ngefilter order yang createdAt nya berada di antara startDate dan endDate
                 },
             },
+            include: [
+                {
+                    model: Payment,
+                    required: true, //ini buat ngejoin table Payment, jadi nanti di hasil report kita bisa ngambil data payment nya juga, misalnya status payment nya apa, method payment nya apa, dll. Kita set required: true karena kita cuma mau ambil order yang punya payment, jadi kalau misalnya ada order yang belum punya payment maka order itu gak akan masuk ke hasil report
+                    where: {
+                        status: 'Paid', //ini buat ngefilter order yang payment status nya itu Paid, jadi nanti di hasil report kita cuma dapet order yang udah dibayar aja, kalau misalnya ada order yang payment status nya itu Unpaid atau Cancelled maka order itu gak akan masuk ke hasil report
+                    }
+                }
+            ]
         });
 
         const totalOrders = orders.length;
