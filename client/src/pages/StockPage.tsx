@@ -22,7 +22,7 @@ export default function StockPage() {
     const fetchStock = async () => {
         setLoading(true);
         try {
-            const res = await fetch("http://localhost:5000/api/stock/all");
+            const res = await fetch("/api/stock/all");
             const data = await res.json();
             setStock(data);
         } catch (error) {
@@ -39,7 +39,7 @@ export default function StockPage() {
     const handleDelete = async (e: React.MouseEvent, id: string) => {
         e.stopPropagation();
         if (window.confirm("Yakin hapus stock ini??")) {
-            await fetch(`http://localhost:5000/api/stock/delete/${id}`, {
+            await fetch(`/api/stock/delete/${id}`, {
                 method: "DELETE"
             });
             fetchStock();

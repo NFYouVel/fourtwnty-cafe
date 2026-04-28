@@ -44,7 +44,7 @@ export default function ShowTableInforManager() {
         setLoading(true);
         setTables([]);
         try {
-            const response = await fetch(`http://localhost:5000/api/tableInformation/availability?tanggal=${date}`);
+            const response = await fetch(`/api/tableInformation/availability?tanggal=${date}`);
             const data = await response.json();
 
             console.log("Data Meja dari Backend:", data);

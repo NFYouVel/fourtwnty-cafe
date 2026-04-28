@@ -16,7 +16,7 @@ export default function CreateStaffPage() {
 
     const handleCreate = async (e: React.FormEvent) => {
         e.preventDefault();
-        const response = await fetch('http://localhost:5000/api/staff/create', {
+        const response = await fetch('/api/staff/create', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(form)

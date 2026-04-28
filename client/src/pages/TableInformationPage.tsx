@@ -65,7 +65,7 @@ export default function TableInformationPage() {
 
         try {
             const response = await fetch(
-                `http://localhost:5000/api/tableInformation/availability?tanggal=${date}`
+                `/api/tableInformation/availability?tanggal=${date}`
             );
 
             const data: TableInformation[] =
@@ -126,7 +126,7 @@ export default function TableInformationPage() {
         ) {
             try {
                 await fetch(
-                    `http://localhost:5000/api/tableInformation/${table.id}`,
+                    `/api/tableInformation/${table.id}`,
                     {
                         method: "DELETE"
                     }
@@ -160,7 +160,7 @@ export default function TableInformationPage() {
             try {
                 const response =
                     await fetch(
-                        `http://localhost:5000/api/tableInformation/${editData.id}`,
+                        `/api/tableInformation/${editData.id}`,
                         {
                             method: "PUT",
                             headers: {

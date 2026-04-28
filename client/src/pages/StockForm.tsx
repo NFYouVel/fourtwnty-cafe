@@ -35,7 +35,7 @@ export default function StockForm() {
 
             try {
                 const res = await fetch(
-                    "http://localhost:5000/api/stock/all"
+                    "/api/stock/all"
                 );
 
                 const data: Stock[] = await res.json();

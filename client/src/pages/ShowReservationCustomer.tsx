@@ -47,7 +47,7 @@ export default function ShowReservationCustomer() {
 
             try {
                 const response = await fetch(
-                    `http://localhost:5000/api/reservation/myReservation/${userId}`,
+                    `/api/reservation/myReservation/${userId}`,
                     {
                         headers: {
                             Authorization: `Bearer ${token}`

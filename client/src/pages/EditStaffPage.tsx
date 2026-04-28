@@ -24,7 +24,7 @@ export default function EditStaffPage() {
     useEffect(() => {
         const fetchStaffDetail = async () => {
             try {
-                const response = await fetch(`http://localhost:5000/api/staff/${id}`);
+                const response = await fetch(`/api/staff/${id}`);
                 const result = await response.json();
 
                 if (result.status === "Success") {

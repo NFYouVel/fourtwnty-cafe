@@ -43,7 +43,7 @@ export default function ReservationPage() {
 
             try {
                 const response = await fetch(
-                    `http://localhost:5000/api/tableInformation/availability?tanggal=${form.tanggal_reservation}`
+                    `/api/tableInformation/availability?tanggal=${form.tanggal_reservation}`
                 );
 
                 const data: TableType[] = await response.json();

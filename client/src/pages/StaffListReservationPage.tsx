@@ -33,7 +33,7 @@ export default function StaffListReservationPage() {
     const fetchAll = async () => {
         setLoading(true);
         try {
-            const response = await fetch("http://localhost:5000/api/reservation/all");
+            const response = await fetch("/api/reservation/all");
             const result = await response.json();
             const dataToProcess = Array.isArray(result) ? result : result.data;
 

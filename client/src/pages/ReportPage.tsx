@@ -33,7 +33,7 @@ export default function StaffReportPage() {
         setLoading(true);
         try {
             const res = await fetch(
-                `http://localhost:5000/api/report?start=${startDate}&end=${endDate}`
+                `/api/report?start=${startDate}&end=${endDate}`
             );
             const data = await res.json();
             setReport(data);
