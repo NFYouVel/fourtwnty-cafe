@@ -57,7 +57,7 @@ export default function StaffListReservationPage() {
 
     const handleUpdateStatus = async () => {
         if (!selectedRes) return;
-        await fetch(`http://localhost:5000/api/reservation/${selectedRes.id}`, {
+        await fetch(`/api/reservation/${selectedRes.id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ status_reservation: selectedRes.status_reservation })

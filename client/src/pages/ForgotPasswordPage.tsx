@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "../styles/forgotpassword.css";
 
-const BASE_URL = "http://localhost:5000/api/auth";
+const BASE_URL = "/api/auth";
 
 export default function ForgotPasswordPage() {
     const [step, setStep] = useState(1);

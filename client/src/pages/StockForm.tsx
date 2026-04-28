@@ -76,8 +76,8 @@ export default function StockForm() {
         try {
             const response = await fetch(
                 isEdit
-                    ? `http://localhost:5000/api/stock/update/${id}`
-                    : `http://localhost:5000/api/stock/create`,
+                    ? `/api/stock/update/${id}`
+                    : `/api/stock/create`,
                 {
                     method: isEdit ? "PUT" : "POST",
                     headers: {

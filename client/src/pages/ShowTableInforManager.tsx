@@ -82,7 +82,7 @@ export default function ShowTableInforManager() {
 
         if (window.confirm(`Yakin ingin menghapus meja #${table.table_number}?`)) {
             try {
-                await fetch(`http://localhost:5000/api/tableInformation/${table.id}`, { method: 'DELETE' });
+                await fetch(`/api/tableInformation/${table.id}`, { method: 'DELETE' });
                 fetchTables(selectedDate);
             } catch (error) {
                 alert("gagal menghapus: " + error)
@@ -99,7 +99,7 @@ export default function ShowTableInforManager() {
     const handleEditStatus = async () => {
         if (!editData) return;
         try {
-            const response = await fetch(`http://localhost:5000/api/tableInformation/${editData.id}`, {
+            const response = await fetch(`/api/tableInformation/${editData.id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ status: editData.status })
