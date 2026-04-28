@@ -156,6 +156,14 @@ function HeaderDashboard() {
 
                             <button
                                 onClick={() =>
+                                    navigate("/menu")
+                                }
+                            >
+                                Menu Management
+                            </button>
+
+                            <button
+                                onClick={() =>
                                     navigate("/stock")
                                 }
                             >

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import HeaderDashboard from "../components/HeaderDashboard";
 import { getAllProcessOrder, updatePaymentOrder } from "../services/api";
+import ReceiptPopup from "../components/ReceiptPopup";
 
 import "../styles/paymentList.css";
 
@@ -50,6 +51,9 @@ function PaymentListPage() {
 
     const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("Cash");
 
+    const [showReceipt, setShowReceipt] = useState(false);
+    const [paidOrder, setPaidOrder] = useState<Order | null>(null);
+
     useEffect(() => {
         const fetchOrder = async () => {
             try {
@@ -74,7 +78,10 @@ function PaymentListPage() {
 
         try {
             await updatePaymentOrder(selectedOrder.id, paymentMethod);
-            alert("Payment Berhasil!")
+
+            // Simpan order yang dibayar untuk receipt
+            setPaidOrder(selectedOrder);
+            setShowReceipt(true);
 
             const updatedOrders = orders.filter(
                 (item) => item.id !== selectedOrder.id
@@ -82,7 +89,6 @@ function PaymentListPage() {
 
             setOrders(updatedOrders);
 
-            /* pilih order berikutnya */
             if (updatedOrders.length > 0) {
                 setSelectedOrder(updatedOrders[0]);
             } else {
@@ -316,7 +322,15 @@ function PaymentListPage() {
                                     Confirm Payment
                                 </button>
 
-                                <button className="btn secondary">
+                                <button
+                                    className="btn secondary"
+                                    onClick={() => {
+                                        if (selectedOrder) {
+                                            setPaidOrder(selectedOrder);
+                                            setShowReceipt(true);
+                                        }
+                                    }}
+                                >
                                     Print Receipt
                                 </button>
                             </div>
@@ -325,6 +339,17 @@ function PaymentListPage() {
 
                 </div>
             </div>
+            {/* RECEIPT POPUP */}
+            {showReceipt && paidOrder && (
+                <ReceiptPopup
+                    order={paidOrder}
+                    paymentMethod={paymentMethod}
+                    onClose={() => {
+                        setShowReceipt(false);
+                        setPaidOrder(null);
+                    }}
+                />
+            )}
         </>
     );
 }

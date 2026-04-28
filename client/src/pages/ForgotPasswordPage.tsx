@@ -13,7 +13,6 @@ export default function ForgotPasswordPage() {
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
 
-    // STEP 1
     const handleSendCode = async () => {
         try {
             setLoading(true);
@@ -34,7 +33,7 @@ export default function ForgotPasswordPage() {
 
             if (!res.ok) throw new Error(data.message);
 
-            setMessage("Verification code sent to email ✉️");
+            setMessage("Verification code sent to email");
             setStep(2);
         } catch (error: unknown) {
             if (error instanceof Error) {
@@ -45,7 +44,6 @@ export default function ForgotPasswordPage() {
         }
     };
 
-    // STEP 2
     const handleVerifyCode = async () => {
         try {
             setLoading(true);

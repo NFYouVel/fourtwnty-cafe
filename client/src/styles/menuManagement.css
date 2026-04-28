@@ -1,0 +1,433 @@
+/* =========================
+   MENU MANAGEMENT PAGE
+========================= */
+
+.menu-mgmt-page {
+    background-color: rgb(237 227 216);
+    min-height: 100vh;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.menu-mgmt-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 2rem;
+    padding-top: 1rem;
+}
+
+.menu-mgmt-title {
+    color: var(--potting-soil);
+    font-weight: bold;
+    font-size: 1.8rem;
+}
+
+.menu-mgmt-add-btn {
+    background-color: var(--potting-soil);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.menu-mgmt-add-btn:hover {
+    background-color: var(--spicy-coffee);
+    transform: translateY(-2px);
+}
+
+/* =========================
+   MENU TABLE
+========================= */
+
+.menu-mgmt-table-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.menu-mgmt-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(90, 61, 46, 0.08);
+}
+
+.menu-mgmt-table thead {
+    background: var(--potting-soil);
+    color: white;
+}
+
+.menu-mgmt-table th {
+    padding: 14px 18px;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.menu-mgmt-table td {
+    padding: 14px 18px;
+    font-size: 14px;
+    color: var(--potting-soil);
+    border-bottom: 1px solid #f0e6de;
+}
+
+.menu-mgmt-table tbody tr:hover {
+    background: #faf3ed;
+}
+
+.menu-mgmt-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Category Badge */
+.menu-mgmt-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.menu-mgmt-badge.main {
+    background: #fde8d8;
+    color: #9f533e;
+}
+
+.menu-mgmt-badge.appetizer {
+    background: #e8f0de;
+    color: #5a7a3a;
+}
+
+.menu-mgmt-badge.side {
+    background: #e0eaf5;
+    color: #3a5a7a;
+}
+
+.menu-mgmt-badge.dessert {
+    background: #f5e0f0;
+    color: #7a3a6a;
+}
+
+.menu-mgmt-badge.drink {
+    background: #daf0f0;
+    color: #2a6a6a;
+}
+
+/* Ingredient Tags */
+.menu-mgmt-ingredients {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.menu-mgmt-ing-tag {
+    background: #f4e8de;
+    color: var(--potting-soil);
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+/* Action Buttons */
+.menu-mgmt-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.menu-mgmt-edit-btn,
+.menu-mgmt-delete-btn {
+    border: none;
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.menu-mgmt-edit-btn {
+    background: #e8ddd4;
+    color: var(--potting-soil);
+}
+
+.menu-mgmt-edit-btn:hover {
+    background: #d9ccc2;
+    transform: translateY(-1px);
+}
+
+.menu-mgmt-delete-btn {
+    background: #f5d5d5;
+    color: #8b2020;
+}
+
+.menu-mgmt-delete-btn:hover {
+    background: #ebc0c0;
+    transform: translateY(-1px);
+}
+
+/* =========================
+   FORM PAGE (CREATE / EDIT)
+========================= */
+
+.menu-form-page {
+    background-color: rgb(237 227 216);
+    min-height: 100vh;
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+.menu-form-card {
+    width: 650px;
+    background: white;
+    border-radius: 20px;
+    padding: 36px;
+    box-shadow: 0 12px 30px rgba(90, 61, 46, 0.1);
+    height: fit-content;
+}
+
+.menu-form-title {
+    font-size: 1.6rem;
+    color: var(--potting-soil);
+    font-weight: bold;
+    margin-bottom: 28px;
+    text-align: center;
+}
+
+.menu-form-group {
+    margin-bottom: 18px;
+}
+
+.menu-form-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--potting-soil);
+    margin-bottom: 6px;
+}
+
+.menu-form-input,
+.menu-form-select,
+.menu-form-textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    font-size: 14px;
+    outline: none;
+    box-sizing: border-box;
+    transition: 0.2s ease;
+}
+
+.menu-form-input:focus,
+.menu-form-select:focus,
+.menu-form-textarea:focus {
+    border-color: var(--mocha-mousse);
+    box-shadow: 0 0 0 3px rgba(143, 98, 78, 0.1);
+}
+
+.menu-form-textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+.menu-form-row {
+    display: flex;
+    gap: 14px;
+}
+
+.menu-form-row .menu-form-group {
+    flex: 1;
+}
+
+/* =========================
+   INGREDIENT SECTION
+========================= */
+
+.menu-form-ing-section {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid #e8ddd4;
+}
+
+.menu-form-ing-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--potting-soil);
+    margin-bottom: 14px;
+}
+
+.menu-form-ing-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.menu-form-ing-select {
+    flex: 2;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 13px;
+    outline: none;
+}
+
+.menu-form-ing-qty {
+    flex: 1;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 13px;
+    outline: none;
+}
+
+.menu-form-ing-unit {
+    width: 80px;
+    font-size: 13px;
+    color: #777;
+    text-align: center;
+}
+
+.menu-form-ing-remove {
+    background: #f5d5d5;
+    color: #8b2020;
+    border: none;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.menu-form-ing-remove:hover {
+    background: #ebc0c0;
+}
+
+.menu-form-ing-add {
+    background: #e8ddd4;
+    color: var(--potting-soil);
+    border: none;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+    margin-top: 6px;
+}
+
+.menu-form-ing-add:hover {
+    background: #d9ccc2;
+}
+
+/* =========================
+   FORM BUTTONS
+========================= */
+
+.menu-form-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 28px;
+}
+
+.menu-form-submit {
+    flex: 1;
+    background: var(--potting-soil);
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.menu-form-submit:hover {
+    background: var(--spicy-coffee);
+    transform: translateY(-2px);
+}
+
+.menu-form-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.menu-form-cancel {
+    flex: 1;
+    background: #f0e6de;
+    color: var(--potting-soil);
+    border: none;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.menu-form-cancel:hover {
+    background: #e4d8ce;
+    transform: translateY(-2px);
+}
+
+/* =========================
+   LOADING
+========================= */
+
+.menu-mgmt-loading {
+    display: flex;
+    justify-content: center;
+    padding: 60px 0;
+}
+
+/* =========================
+   EMPTY STATE
+========================= */
+
+.menu-mgmt-empty {
+    text-align: center;
+    padding: 60px 0;
+    color: #999;
+    font-size: 15px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+    .menu-form-card {
+        width: 100%;
+        padding: 24px;
+    }
+
+    .menu-form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .menu-form-ing-row {
+        flex-wrap: wrap;
+    }
+
+    .menu-mgmt-table {
+        font-size: 12px;
+    }
+}

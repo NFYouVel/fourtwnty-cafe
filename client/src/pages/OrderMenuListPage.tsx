@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import HeaderDashboard from "../components/HeaderDashboard";
 import "../styles/orderMenuList.css";
-import { createNewOrder, getAllMenuRequest } from "../services/api";
+import { createNewOrder, getAllMenuRequest, getAllTable } from "../services/api";
 import type { Menu } from "../type/menuAttribute";
 
 import { useAppDispatch } from "../hooks/useAppDispatch";
@@ -77,17 +77,51 @@ function OrderMenuListPage() {
         setShowPopup(true);
     };
 
-    const handleStartOrder = () => {
-        if (!inputTable) {
-            alert("Input table number first");
+    const handleStartOrder = async () => {
+
+    if (!inputTable) {
+        alert("Input table number first");
+        return;
+    }
+
+    const tableNum = Number(inputTable);
+
+    if (isNaN(tableNum) || tableNum <= 0) {
+        alert("Please enter a valid table number");
+        return;
+    }
+
+    try {
+        const tables = await getAllTable();
+
+        const tableExists = tables.find(
+            (t: any) => t.table_number === tableNum
+        );
+
+        if (!tableExists) {
+            alert("Table number not found");
             return;
         }
 
+        // 4. Cek apakah table available
+        if (tableExists.status === "Unavailable") {
+            alert("Table is currently unavailable");
+            return;
+        }
+
+        // 5. Semua valid, navigate
         setShowTablePopup(false);
         setInputTable("");
+        navigate("/menu-list/" + tableNum);
 
-        navigate("/menu-list/" + inputTable);
-    };
+    } catch (error) {
+        if (error instanceof Error) {
+            alert("Failed to check table: " + error.message);
+        } else {
+            alert("Failed to check table");
+        }
+    }
+};
 
     const handleCreateOrder = async () => {
         try {

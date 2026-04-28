@@ -24,8 +24,8 @@ function RegisterPage() {
                 phone
             );
 
-            console.log(res);
-
+            alert("Register Success! Silakan Login Kembali.");
+            console.log(res)
             navigate("/");
         } catch (error) {
             console.error(error);
