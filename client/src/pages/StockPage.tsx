@@ -22,7 +22,7 @@ export default function StockPage() {
     const fetchStock = async () => {
         setLoading(true);
         try {
-            const res = await fetch("http://localhost:5000/api/stock/all");
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/stock/all`);
             const data = await res.json();
             setStock(data);
         } catch (error) {
@@ -39,7 +39,7 @@ export default function StockPage() {
     const handleDelete = async (e: React.MouseEvent, id: string) => {
         e.stopPropagation();
         if (window.confirm("Yakin hapus stock ini??")) {
-            await fetch(`http://localhost:5000/api/stock/delete/${id}`, {
+            await fetch(`${import.meta.env.VITE_API_URL}/api/stock/delete/${id}`, {
                 method: "DELETE"
             });
             fetchStock();
@@ -47,44 +47,60 @@ export default function StockPage() {
     };
 
     const renderTableGrid = () => (
-        <Box className='table-grid'>
+        <Box className="table-grid">
             {stocks.map((stock) => (
                 <Paper
                     key={stock.id}
                     elevation={4}
-                    className={`table-card status-available`}
+                    className="table-card status-available"
                     sx={{ position: 'relative', overflow: 'hidden' }}
                 >
-                    <Box sx={{ position: "absolute", top: 5, right: 5, display: 'flex' }}>
+                    <Box sx={{
+                        position: "absolute",
+                        top: 8,
+                        right: 8,
+                        display: 'flex',
+                        gap: '2px'
+                    }}>
                         <IconButton
-                            size='small'
+                            size="small"
                             onClick={(e) => {
                                 e.stopPropagation();
                                 navigate(`/stock/update/${stock.id}`);
                             }}
-                            sx={{ color: 'white' }}
+                            sx={{
+                                color: 'white',
+                                bgcolor: 'rgba(0,0,0,0.2)',
+                                '&:hover': { bgcolor: 'rgba(0,0,0,0.4)' },
+                                padding: '4px'
+                            }}
                         >
-                            <EditIcon fontSize="small" />
+                            <EditIcon sx={{ fontSize: 16 }} />
                         </IconButton>
 
                         <IconButton
-                            size='small'
+                            size="small"
                             onClick={(e) => handleDelete(e, stock.id)}
-                            sx={{ color: 'white' }}
+                            sx={{
+                                color: 'white',
+                                bgcolor: 'rgba(0,0,0,0.2)',
+                                '&:hover': { bgcolor: 'rgba(255,0,0,0.4)' },
+                                padding: '4px'
+                            }}
                         >
-                            <DeleteIcon fontSize="small" />
+                            <DeleteIcon sx={{ fontSize: 16 }} />
                         </IconButton>
                     </Box>
 
-                    <Typography variant='h5' className='table-number'>
+                    <Typography variant="h5" className="table-number">
                         {stock.ingredient_name}
                     </Typography>
 
-                    <Typography variant='caption' className='table-sub-info'>
+                    <Typography variant="caption" className="table-sub-info">
                         Qty: {stock.amount}
                     </Typography>
 
-                    <Typography variant='caption' className='table-sub-info'>
+                    <Typography variant="caption" className="table-sub-info">
                         Unit: {stock.unit}
                     </Typography>
                 </Paper>
@@ -97,15 +113,23 @@ export default function StockPage() {
             <Header />
             <HeaderDashboard />
 
-            <div className='layout-page'>
+            <div className="layout-page">
                 <Container sx={{ py: 4 }}>
-
-                    {/* TITLE (SAMA KAYA TEMEN LU) */}
-                    <Box sx={{ position: 'relative', mb: 6, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    <Box sx={{
+                        mb: 4,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        gap: 2,
+                        pt: 2
+                    }}>
                         <Typography
-                            variant='h4'
-                            className='page-title'
-                            sx={{ fontWeight: 'bold', textAlign: 'center', color: 'var(--potting-soil)' }}
+                            variant="h4"
+                            sx={{
+                                fontWeight: 'bold',
+                                textAlign: 'center',
+                                color: 'var(--potting-soil)'
+                            }}
                         >
                             Stock Management
                         </Typography>
@@ -115,11 +139,12 @@ export default function StockPage() {
                             startIcon={<AddIcon />}
                             onClick={() => navigate("/stock/create")}
                             sx={{
-                                position: 'absolute',
-                                right: 0,
                                 bgcolor: 'var(--potting-soil)',
                                 textTransform: 'none',
-                                borderRadius: '8px'
+                                borderRadius: '8px',
+                                '&:hover': {
+                                    bgcolor: 'var(--spicy-coffee)'
+                                }
                             }}
                         >
                             Add Stock
@@ -135,7 +160,6 @@ export default function StockPage() {
                     ) : (
                         renderTableGrid()
                     )}
-
                 </Container>
             </div>
         </>

@@ -15,18 +15,25 @@ export default function CreateStaffPage() {
     });
 
     const handleCreate = async (e: React.FormEvent) => {
-        e.preventDefault();
-        const response = await fetch('http://localhost:5000/api/staff/create', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(form)
-        });
+    e.preventDefault();
 
-        if (response.ok) {
-            alert("Staff berhasil didaftarkan!");
-            navigate("/staff");
+    const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/staff/create`,
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(form)
         }
+    );
+
+    if (response.ok) {
+        alert("Staff berhasil didaftarkan!");
+        navigate("/staff");
     }
+};
+
 
     return (
         <>

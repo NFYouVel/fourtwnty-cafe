@@ -1,5 +1,13 @@
-FROM node
+FROM node:18
+
 WORKDIR /app
+
+COPY package*.json ./
+
+RUN npm install
+
 COPY . .
-RUN pnpm install
-CMD pnpm start
+
+EXPOSE 5000
+
+CMD ["npx", "tsx", "src/server.ts"]

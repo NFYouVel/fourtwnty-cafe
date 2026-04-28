@@ -1,0 +1,323 @@
+/* =========================
+   RECEIPT OVERLAY
+========================= */
+
+.receipt-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(25, 18, 12, 0.5);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    animation: fadeIn 0.2s ease;
+}
+
+/* =========================
+   RECEIPT WRAPPER (untuk tombol luar)
+========================= */
+
+.receipt-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+}
+
+/* =========================
+   RECEIPT CARD (mirip struk thermal)
+========================= */
+
+.receipt-card {
+    width: 320px;
+    background: #fffdf8;
+    border-radius: 4px;
+    padding: 28px 24px;
+    font-family: 'Courier New', monospace;
+    color: #2a2a2a;
+    position: relative;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Efek sobek atas */
+.receipt-card::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(135deg,
+            transparent 33.33%,
+            #fffdf8 33.33%,
+            #fffdf8 66.66%,
+            transparent 66.66%);
+    background-size: 12px 6px;
+}
+
+/* Efek sobek bawah */
+.receipt-card::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(225deg,
+            transparent 33.33%,
+            #fffdf8 33.33%,
+            #fffdf8 66.66%,
+            transparent 66.66%);
+    background-size: 12px 6px;
+}
+
+/* =========================
+   RECEIPT HEADER
+========================= */
+
+.receipt-header {
+    text-align: center;
+    margin-bottom: 16px;
+    padding-bottom: 14px;
+    border-bottom: 2px dashed #ccc;
+}
+
+.receipt-header h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 18px;
+    color: #2f1b14;
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+}
+
+.receipt-header p {
+    font-size: 10px;
+    color: #888;
+    line-height: 1.5;
+}
+
+/* =========================
+   RECEIPT INFO
+========================= */
+
+.receipt-info {
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px dashed #ccc;
+}
+
+.receipt-info-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: #555;
+    margin-bottom: 4px;
+}
+
+/* =========================
+   RECEIPT ITEMS
+========================= */
+
+.receipt-items {
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px dashed #ccc;
+}
+
+.receipt-items-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    font-weight: bold;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #eee;
+}
+
+.receipt-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 6px;
+    font-size: 12px;
+}
+
+.receipt-item-name {
+    flex: 1;
+    color: #333;
+    font-weight: bold;
+}
+
+.receipt-item-note {
+    font-size: 10px;
+    color: #999;
+    font-style: italic;
+    margin-top: 1px;
+}
+
+.receipt-item-price {
+    text-align: right;
+    color: #333;
+    white-space: nowrap;
+    margin-left: 12px;
+}
+
+/* =========================
+   RECEIPT TOTALS
+========================= */
+
+.receipt-totals {
+    margin-bottom: 16px;
+    padding-bottom: 14px;
+    border-bottom: 2px dashed #ccc;
+}
+
+.receipt-total-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #555;
+    margin-bottom: 4px;
+}
+
+.receipt-total-row.grand {
+    font-size: 16px;
+    font-weight: bold;
+    color: #2f1b14;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #ddd;
+}
+
+/* =========================
+   RECEIPT PAYMENT INFO
+========================= */
+
+.receipt-payment {
+    text-align: center;
+    margin-bottom: 16px;
+    padding: 10px;
+    background: #f8f3ee;
+    border-radius: 6px;
+}
+
+.receipt-payment span {
+    font-size: 12px;
+    font-weight: bold;
+    color: #2f1b14;
+    letter-spacing: 1px;
+}
+
+/* =========================
+   RECEIPT FOOTER
+========================= */
+
+.receipt-footer {
+    text-align: center;
+}
+
+.receipt-footer p {
+    font-size: 11px;
+    color: #888;
+    line-height: 1.6;
+}
+
+.receipt-footer .receipt-thanks {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: #2f1b14;
+    margin-bottom: 4px;
+    letter-spacing: 1px;
+}
+
+/* =========================
+   ACTION BUTTONS (luar receipt)
+========================= */
+
+.receipt-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.receipt-print-btn {
+    padding: 12px 28px;
+    border: none;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: 'Cinzel', serif;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: #2f1b14;
+    color: white;
+}
+
+.receipt-print-btn:hover {
+    background: #4a2b21;
+}
+
+.receipt-close-btn {
+    padding: 12px 28px;
+    border: none;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: 'Cinzel', serif;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: rgba(255, 255, 255, 0.9);
+    color: #2f1b14;
+}
+
+.receipt-close-btn:hover {
+    background: white;
+}
+
+/* =========================
+   PRINT STYLES
+========================= */
+
+@media print {
+    body * {
+        visibility: hidden;
+    }
+
+    .receipt-card,
+    .receipt-card * {
+        visibility: visible;
+    }
+
+    .receipt-card {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 80mm;
+        box-shadow: none;
+        padding: 10px;
+    }
+
+    .receipt-card::before,
+    .receipt-card::after {
+        display: none;
+    }
+
+    .receipt-overlay,
+    .receipt-actions {
+        display: none;
+    }
+}
+
+/* =========================
+   ANIMATION
+========================= */
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}

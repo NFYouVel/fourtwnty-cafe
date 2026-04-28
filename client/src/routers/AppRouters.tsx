@@ -19,6 +19,11 @@ import ProtectedRoutes from "./ProtectedRoutes"
 import PaymentListPage from "../pages/PaymentListPage"
 import TableStatusPage from "../pages/TableStatusPage"
 import ReportPage from "../pages/ReportPage"
+import MenuManagementPage from "../pages/MenuManagementPage";
+import MenuFormPage from "../pages/MenuFormPage";
+
+// Tambahkan routes:
+
 
 const Router = () => {
   return (
@@ -67,6 +72,11 @@ const Router = () => {
 
         {/* Daily Report */}
         <Route path="/report" element={<ReportPage />} />
+
+        {/* Menu */}
+        <Route path="/menu" element={<MenuManagementPage />} />
+        <Route path="/menu/create" element={<MenuFormPage />} />
+        <Route path="/menu/update/:id" element={<MenuFormPage />} />
       </Route>
 
 

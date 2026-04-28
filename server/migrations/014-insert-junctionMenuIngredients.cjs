@@ -1,7 +1,7 @@
 'use strict';
-const { v4: uuidv4 } = require('uuid');
 module.exports = {
     up: async (queryInterface, Sequelize) => {
+        const { v4: uuidv4 } = await import('uuid');
         const menus = await queryInterface.sequelize.query(
             `SELECT id, name FROM "Menu";`,
             { type: Sequelize.QueryTypes.SELECT }

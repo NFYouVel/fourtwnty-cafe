@@ -44,7 +44,7 @@ export default function ShowTableInforManager() {
         setLoading(true);
         setTables([]);
         try {
-            const response = await fetch(`http://localhost:5000/api/tableInformation/availability?tanggal=${date}`);
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/tableInformation/availability?tanggal=${date}`);
             const data = await response.json();
 
             console.log("Data Meja dari Backend:", data);
@@ -66,12 +66,12 @@ export default function ShowTableInforManager() {
         fetchTables(selectedDate);
     }, [selectedDate]);
 
-    const handleTable = (table: TableInformation) => {
-        if (table.is_booked || table.status === 'Unavailable' || table.is_pending) {
-            alert("Meja tidak tersedia untuk dipilih");
-            return;
-        }
-    }
+    // const handleTable = (table: TableInformation) => {
+    //     if (table.is_booked || table.status === 'Unavailable' || table.is_pending) {
+    //         alert("Meja tidak tersedia untuk dipilih");
+    //         return;
+    //     }
+    // }
 
     const handleDelete = async (e: React.MouseEvent, table: TableInformation) => {
         e.stopPropagation();
@@ -82,10 +82,10 @@ export default function ShowTableInforManager() {
 
         if (window.confirm(`Yakin ingin menghapus meja #${table.table_number}?`)) {
             try {
-                await fetch(`http://localhost:5000/api/tableInformation/${table.id}`, { method: 'DELETE' });
+                await fetch(`${import.meta.env.VITE_API_URL}/api/tableInformation/${table.id}`, { method: 'DELETE' });
                 fetchTables(selectedDate);
             } catch (error) {
-                alert("gagal menghapus")
+                alert("gagal menghapus: " + error)
             }
         }
     }
@@ -99,7 +99,7 @@ export default function ShowTableInforManager() {
     const handleEditStatus = async () => {
         if (!editData) return;
         try {
-            const response = await fetch(`http://localhost:5000/api/tableInformation/${editData.id}`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/tableInformation/${editData.id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ status: editData.status })
@@ -110,7 +110,7 @@ export default function ShowTableInforManager() {
                 fetchTables(selectedDate);
             }
         } catch (error) {
-            alert("Gagal Update status")
+            alert("Gagal Update status: " + error)
         }
     }
 
@@ -296,7 +296,7 @@ export default function ShowTableInforManager() {
                                     <Select
                                         value={editData?.status || ''}
                                         label="Status Meja"
-                                        onChange={(e) => setEditData(prev => prev ? { ...prev, status: e.target.value as any } : null)}
+                                        onChange={(e) => setEditData(prev => prev ? { ...prev, status: e.target.value } : null)}
                                     >
                                         <MenuItem value="Available">Available</MenuItem>
                                         <MenuItem value="Unavailable">Unavailable</MenuItem>

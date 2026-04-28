@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+spec:
+  replicas: 2          # ← HERE, not inside template.spec
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+                       # ← REMOVE replicas: 2 from here
+      containers:
+        - name: backend
+          image: fourtwnty-cafe:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 5000
+          env:
+            - name: DB_HOST
+              value: postgres-service
+            - name: DB_USER
+              value: postgres
+            - name: DB_PASS
+              value: "123456"
+            - name: DB_NAME
+              value: fourtwnty_cafe
+            - name: PORT
+              value: "5000"

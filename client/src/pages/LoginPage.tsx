@@ -48,19 +48,30 @@ function Login() {
                 JSON.stringify(finalUser)
             );
 
-            document.cookie =
-                `token=${res.token}; path=/; max-age=86400`;
+            document.cookie = `token=${res.token}; path=/; max-age=86400`;
+
+            alert("Login Success!");
 
             if (finalUser.user_role === "Customer") {
                 navigate("/home");
-            } else if (finalUser.user_role === "Staff"){
+            } else if (finalUser.user_role === "Staff") {
                 navigate("/menu-list");
             } else {
                 navigate("/staff");
             }
 
-        } catch (error) {
+        } catch (error: any) {
             console.error(error);
+
+            if (error.response?.status === 401) {
+                alert("Email atau password salah.");
+            } else if (error.response?.status === 404) {
+                alert("Akun tidak ditemukan.");
+            } else if (error.response?.status === 500) {
+                alert("Server sedang bermasalah. Coba lagi nanti.");
+            } else {
+                alert("Login gagal. Silakan coba lagi.");
+            }
         }
     };
 

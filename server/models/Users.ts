@@ -40,6 +40,12 @@ export class Users extends Model {
         allowNull: false,
     })
     declare phone: string;
+    
+    @Column({
+        type: DataType.STRING,
+        allowNull: true,
+    })
+    declare reset_code: string;
 
     @Column({
         type: DataType.ENUM('Customer', 'Staff', 'Manager'),

@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -30,7 +31,8 @@ body {
     background-color: var(--dry-creek);
     align-items: center;
     justify-content: space-between;
-    padding: 0 10px;
+    padding: 0 16px;
+    border-bottom: 1px solid rgba(90, 61, 46, 0.12);
 }
 
 .wrapper-logo {
@@ -41,7 +43,13 @@ body {
     background-position: 60% 57%;
     background-repeat: no-repeat;
     background-size: cover;
-    display: flex;
+    cursor: pointer;
+    opacity: 0.92;
+    transition: opacity 0.2s ease;
+}
+
+.wrapper-logo:hover {
+    opacity: 1;
 }
 
 .wrapper-theme {
@@ -53,22 +61,42 @@ body {
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    transition: 0.3s ease;
+    transition: background 0.2s ease;
+    border: 1px solid rgba(90, 61, 46, 0.08);
 }
 
 .wrapper-theme:hover {
-    transform: scale(1.08);
+    background: var(--froth);
 }
 
 .wrapper-theme svg {
-    color: #5A3D2E;
+    color: var(--potting-soil);
     font-size: 26px;
 }
 
 .wrapper-header-profile {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 12px;
+}
+
+.wrapper-header-profile button {
+    margin-right: 4px;
+    padding: 8px 16px;
+    border: 1px solid rgba(90, 61, 46, 0.15);
+    border-radius: 8px;
+    cursor: pointer;
+    background: white;
+    color: var(--potting-soil);
+    font-size: 13px;
+    font-weight: 600;
+    font-family: 'Cinzel', serif;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.wrapper-header-profile button:hover {
+    background: var(--potting-soil);
+    color: white;
 }
 
 .wrapper-profile-picture {
@@ -77,14 +105,17 @@ body {
     border-radius: 50%;
     overflow: hidden;
     cursor: pointer;
-    border: 2px solid white;
-
+    border: 2px solid rgba(255, 255, 255, 0.8);
     display: flex;
     justify-content: center;
     align-items: center;
-
     padding: 5px;
     background: white;
+    transition: border-color 0.2s ease;
+}
+
+.wrapper-profile-picture:hover {
+    border-color: var(--potting-soil);
 }
 
 .wrapper-profile-picture img {
@@ -92,12 +123,10 @@ body {
     height: 100%;
     object-fit: contain;
 }
-.wrapper-profile-picture:hover{
-    transform: scale(1.08);
-    transition: 0.3s;
-}
 
-
+/* =========================
+   DARK THEME
+========================= */
 
 body.dark-theme {
     background: #1c1c1c;
@@ -106,12 +135,38 @@ body.dark-theme {
 
 body.dark-theme .wrapper-header {
     background: #2a2a2a;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 body.dark-theme .wrapper-theme {
+    background: #3a3a3a;
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+body.dark-theme .wrapper-theme:hover {
     background: #444;
 }
 
 body.dark-theme .wrapper-theme svg {
-    color: gold;
+    color: #e8c36a;
+}
+
+body.dark-theme .wrapper-header-profile button {
+    background: #3a3a3a;
+    color: #ddd;
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-theme .wrapper-header-profile button:hover {
+    background: #555;
+    color: white;
+}
+
+body.dark-theme .wrapper-profile-picture {
+    background: #3a3a3a;
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+body.dark-theme .wrapper-profile-picture:hover {
+    border-color: #e8c36a;
 }

@@ -1,12 +1,12 @@
 'use strict';
 
-const { v4: uuidv4 } = require('uuid');
-const bcrypt = require('bcrypt');
-
 module.exports = {
   async up(queryInterface, Sequelize) {
 
-    const password = await bcrypt.hash('123456', 10);
+    const { v4: uuidv4 } = await import('uuid');
+    const bcrypt = await import('bcrypt');
+
+    const password = await bcrypt.default.hash('123456', 10);
 
     await queryInterface.bulkInsert('Users', [
       {

@@ -6,7 +6,7 @@ import CreateStaffRoutes from './CreateStaffRoutes.js'
 import ReservationRoutes from './ReservationRoutes.js'
 import OrderRoutes from './OrderRoutes.js'
 import { authMiddleware } from "../middlewares/authMiddleware.js";
-
+import MenuRoutes from "./MenuRoutes.js";
 import ReportRoutes from "./ReportRoutes.js";
 
 const router: Router = Router();
@@ -22,5 +22,6 @@ router.use("/stock", StockRoutes)
 router.use("/staff", CreateStaffRoutes)
 router.use("/reservation", ReservationRoutes)
 router.use("/report", ReportRoutes)
+router.use("/menu", MenuRoutes)
 
 export default router; 

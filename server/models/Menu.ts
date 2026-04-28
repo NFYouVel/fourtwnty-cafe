@@ -37,7 +37,7 @@ export class Menu extends Model {
 
     @Column({
         type: DataType.ENUM("Coffee", "Non-Coffee", "Tea", "Frappe", "Juice", "Other"),
-        allowNull: false,
+        allowNull: true,
     })
     drink_category!: 'Coffee' | 'Non-Coffee' | 'Tea' | 'Frappe' | 'Juice' | 'Other';
 
