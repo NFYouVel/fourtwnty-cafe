@@ -1,13 +1,5 @@
-// ==========================================
-// ForgotPasswordPage.tsx
-// FULL FLOW:
-// 1. Input Email
-// 2. Verify Code
-// 3. Reset Password
-// ==========================================
-
 import { useState } from "react";
-import "../styles/forgotPassword.css";
+import "../styles/forgotpassword.css";
 
 const BASE_URL = "http://localhost:5000/api/auth";
 
@@ -50,11 +42,12 @@ export default function ForgotPasswordPage() {
                 "Verification code sent to email ✉️"
             );
             setStep(2);
-
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } catch (error: any) {
-            setMessage(error.message);
-        } finally {
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                setMessage(error.message);
+            }
+        }
+        finally {
             setLoading(false);
         }
     };
@@ -87,11 +80,12 @@ export default function ForgotPasswordPage() {
 
             setMessage("Code verified ✅");
             setStep(3);
-
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } catch (error: any) {
-            setMessage(error.message);
-        } finally {
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                setMessage(error.message);
+            }
+        }
+        finally {
             setLoading(false);
         }
     };
@@ -131,11 +125,12 @@ export default function ForgotPasswordPage() {
                 window.location.href =
                     "/";
             }, 1500);
-
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } catch (error: any) {
-            setMessage(error.message);
-        } finally {
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                setMessage(error.message);
+            }
+        }
+        finally {
             setLoading(false);
         }
     };
