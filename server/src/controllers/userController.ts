@@ -1,6 +1,7 @@
 import { Users } from "../../models/Users.js"
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
+import nodemailer from "nodemailer";
 import jwt from "jsonwebtoken";
 
 export const loginUser = async (req: Request, res: Response) => {
@@ -91,5 +92,150 @@ export const createUser = async (req: Request, res: Response) => {
     } catch (error) {
         console.error("ERROR DETAIL:", error);
         res.status(500).json({ message: "Error creating user" });
+    }
+};
+
+/* ===============================
+   SEND RESET CODE TO EMAIL
+================================= */
+export const forgotPassword = async (req: Request, res: Response) => {
+    try {
+        const { email } = req.body;
+
+        if (!email) {
+            return res.status(400).json({ message: "Email wajib diisi" });
+        }
+
+        const user = await Users.findOne({
+            where: { email }
+        });
+
+        if (!user) {
+            return res.status(404).json({ message: "Email tidak ditemukan" });
+        }
+
+        const resetCode = Math.floor(100000 + Math.random() * 900000).toString();
+
+        await user.update({ reset_code: resetCode });
+
+        const transporter =
+            nodemailer.createTransport({
+                service: "gmail",
+                auth: {
+                    user: process.env.EMAIL_USER,
+                    pass: process.env.EMAIL_PASS
+                }
+            });
+
+        await transporter.sendMail({
+            from: process.env.EMAIL_USER,
+            to: email,
+            subject:
+                "Fourtwnty Cafe Password Reset",
+            html: `
+                <div style="font-family:Arial;padding:20px">
+                    <h2>Password Reset</h2>
+                    <p>Your verification code:</p>
+                    <h1 style="letter-spacing:5px;color:#8f624e">
+                        ${resetCode}
+                    </h1>
+                    <p>This code is valid for 5 minutes.</p>
+                </div>
+            `
+        });
+
+        res.json({
+            success: true,
+            message:
+                "Kode verifikasi berhasil dikirim"
+        });
+
+    } catch (error: any) {
+        console.log(error)
+        res.status(500).json({ message: error.message });
+
+    }
+};
+
+/* ===============================
+   VERIFY CODE
+================================= */
+export const verifyResetCode = async (
+    req: Request,
+    res: Response
+) => {
+    try {
+        const { email, code } = req.body;
+
+        const user = await Users.findOne({
+            where: { email }
+        });
+
+        if (!user) {
+            return res.status(404).json({
+                message: "User tidak ditemukan"
+            });
+        }
+
+        if (
+            user.getDataValue("reset_code") !==
+            code
+        ) {
+            return res.status(400).json({
+                message: "Kode salah"
+            });
+        }
+
+        res.json({
+            success: true,
+            message: "Kode valid"
+        });
+
+    } catch (error: any) {
+        res.status(500).json({
+            message: error.message
+        });
+    }
+};
+
+/* ===============================
+   RESET PASSWORD
+================================= */
+export const resetPassword = async (
+    req: Request,
+    res: Response
+) => {
+    try {
+        const { email, password } =
+            req.body;
+
+        const user = await Users.findOne({
+            where: { email }
+        });
+
+        if (!user) {
+            return res.status(404).json({
+                message: "User tidak ditemukan"
+            });
+        }
+
+        const hashedPassword =
+            await bcrypt.hash(password, 10);
+
+        await user.update({
+            password: hashedPassword,
+            reset_code: null
+        });
+
+        res.json({
+            success: true,
+            message:
+                "Password berhasil diubah"
+        });
+
+    } catch (error: any) {
+        res.status(500).json({
+            message: error.message
+        });
     }
 };

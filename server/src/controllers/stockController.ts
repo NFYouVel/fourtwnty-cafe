@@ -7,6 +7,7 @@ export const getAllStock = async (req: Request, res: Response) => {
         const stock = await Stock.findAll(); // Find All itu bawaan dari sequelize (ORM) buat ngambil semua datanya
         res.json(stock); // Ini buat return semua stock dalam bentuk objek 
     } catch (error) {
+        console.log(error)
         res.status(500).json({ message: "Error fetching stock." });
     }
 }

@@ -1,6 +1,6 @@
 module.exports = {
     up: async (queryInterface, Sequelize) => {
-        
+
         await queryInterface.createTable('Users', {
             id: {
                 type: Sequelize.UUID,
@@ -26,12 +26,17 @@ module.exports = {
             },
 
             phone: {
-                type:Sequelize.STRING,
+                type: Sequelize.STRING,
                 allowNull: false
             },
 
+            reset_code: {
+                type: Sequelize.STRING,
+                // allowNull: false
+            },
+
             user_role: {
-                type:Sequelize.ENUM('Customer', 'Staff', 'Manager'),
+                type: Sequelize.ENUM('Customer', 'Staff', 'Manager'),
                 defaultValue: 'Customer',
                 allowNull: false
             },
@@ -53,7 +58,6 @@ module.exports = {
                 defaultValue: Sequelize.NOW,
             }
         })
-
     },
 
     async down(queryInterface, Sequelize) {

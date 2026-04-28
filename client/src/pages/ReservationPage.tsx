@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Container, Typography, TextField, Button, Paper, Stack, Box, FormControl, InputLabel, Select, MenuItem, ListSubheader } from "@mui/material";
+import { Container, Typography, TextField, Button, Paper, Stack, Box, ListSubheader } from "@mui/material";
 import { useNavigate } from "react-router";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { Popover } from "@mui/material";
@@ -74,7 +74,7 @@ export default function ReservationPage() {
                 alert(result.message || "Reservasi Gagal")
             }
         } catch (error) {
-            alert("Terjadi kesalahan koneksi");
+            alert("Terjadi kesalahan koneksi: " + error);
         }
     };
 
@@ -96,6 +96,10 @@ export default function ReservationPage() {
 
     const open = Boolean(anchorEl);
     const id = open ? 'table-popover' : undefined;
+
+    if(loading) {
+        return <div>Loading...</div>
+    }
 
     return (
         <>
