@@ -53,20 +53,19 @@
 }
 
 .status-available {
-    background-color: var(--pepper-rice) !important;
-    cursor: pointer;
+    background-color: #4caf50 !important; /* hijau */
+    color: white;
+}
+
+.status-booked {
+    background-color: #f44336 !important; /* merah */
+    color: white;
 }
 
 .status-available:hover {
     background-color: var(--pepper-rice) !important;
     transform: scale(1.05);
 }
-
-.status-booked {
-    background-color: var(--mocha-mousse) !important;
-    cursor: not-allowed;
-}
-
 .table-number {
     font-weight: 800 !important;
 }

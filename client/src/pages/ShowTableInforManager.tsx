@@ -119,13 +119,10 @@ export default function ShowTableInforManager() {
             {tables.filter(t => t.area === areaName).map((table) => {
                 let statusClass = 'status-available';
 
-                if (table.is_booked) {
-                    statusClass = 'status-booked'; 
-                } else if (table.is_pending) {
-                    statusClass = 'status-pending'; // ✨ Ini harus dicek sebelum status fisik
-                } else if (table.status === 'Unavailable') {
-                    statusClass = 'status-booked'; 
+                if (table.is_booked || table.is_pending || table.status === 'Unavailable') {
+                    statusClass = 'status-booked';
                 }
+
 
                 return (
                     <Paper
@@ -135,11 +132,11 @@ export default function ShowTableInforManager() {
                         sx={{
                             position: 'relative',
                             overflow: 'hidden',
-                            ...(table.is_pending && { 
-                                bgcolor: '#bdbdbd !important', 
+                            ...(table.is_pending && {
+                                bgcolor: '#bdbdbd !important',
                                 color: '#444 !important',
                                 border: '1px solid #999',
-                                opacity: 1 
+                                opacity: 1
                             })
                         }}
                     >

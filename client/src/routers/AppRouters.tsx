@@ -21,6 +21,8 @@ import TableStatusPage from "../pages/TableStatusPage"
 import ReportPage from "../pages/ReportPage"
 import MenuManagementPage from "../pages/MenuManagementPage";
 import MenuFormPage from "../pages/MenuFormPage";
+import ProfilePage from "../pages/ProfilePage";
+
 
 // Tambahkan routes:
 
@@ -33,6 +35,7 @@ const Router = () => {
       <Route path="/" element={<Login />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+      <Route path="/profile" element={<ProfilePage />} />
 
       {/* Only User Can Access */}
       <Route element={<ProtectedRoutes allowedRoles={["Customer"]} />}>

@@ -8,6 +8,13 @@ import OrderRoutes from './OrderRoutes.js'
 import { authMiddleware } from "../middlewares/authMiddleware.js";
 import MenuRoutes from "./MenuRoutes.js";
 import ReportRoutes from "./ReportRoutes.js";
+import {
+    changePassword,
+    updateProfile,
+    getProfile
+} from "../controllers/profileController.js";
+
+// Profile routes
 
 const router: Router = Router();
 
@@ -16,6 +23,9 @@ router.use("/auth", AuthenticationRoutes);
 
 // Private
 //router.use("/tableInformation", authMiddleware, TableInformationRoutes)
+router.get("/profile/:id", getProfile);
+router.put("/profile/update", updateProfile);
+router.put("/profile/change-password", changePassword);
 router.use("/order", OrderRoutes)
 router.use("/tableInformation", TableInformationRoutes)
 router.use("/stock", StockRoutes)

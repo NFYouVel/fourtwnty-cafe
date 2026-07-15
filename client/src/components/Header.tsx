@@ -55,11 +55,11 @@ function Header() {
                     Logout
                 </button>
 
-                <div className="wrapper-profile-picture">
-                    <img
-                        src={profilePicture}
-                        alt="Profile"
-                    />
+                <div
+                    className="wrapper-profile-picture"
+                    onClick={() => navigate("/profile")}
+                >
+                    <img src={profilePicture} alt="Profile" />
                 </div>
             </div>
         </div>

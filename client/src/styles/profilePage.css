@@ -1,0 +1,447 @@
+/* =========================
+   PROFILE PAGE
+========================= */
+
+.profile-page {
+    background-color: rgb(237 227 216);
+    min-height: 100vh;
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+.profile-container {
+    width: 580px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* =========================
+   PROFILE CARD
+========================= */
+
+.profile-card {
+    background: white;
+    border-radius: 18px;
+    padding: 30px;
+    border: 1px solid rgba(90, 61, 46, 0.06);
+}
+
+.profile-card-title {
+    font-size: 1.3rem;
+    color: var(--potting-soil);
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.profile-card-subtitle {
+    font-size: 0.85rem;
+    color: #999;
+    margin-bottom: 22px;
+}
+
+/* =========================
+   PROFILE INFO DISPLAY
+========================= */
+
+.profile-info-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.profile-info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0e6de;
+}
+
+.profile-info-item:last-child {
+    border-bottom: none;
+}
+
+.profile-info-label {
+    font-size: 13px;
+    color: #999;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.profile-info-value {
+    font-size: 14px;
+    color: var(--potting-soil);
+    font-weight: 600;
+}
+
+.profile-role-badge {
+    display: inline-block;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    background: #f4e8de;
+    color: var(--potting-soil);
+    letter-spacing: 0.5px;
+}
+
+/* =========================
+   FORM ELEMENTS
+========================= */
+
+.profile-form-group {
+    margin-bottom: 16px;
+}
+
+.profile-form-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--potting-soil);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.profile-form-input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    font-size: 14px;
+    font-family: 'Cinzel', serif;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease;
+    color: var(--potting-soil);
+}
+
+.profile-form-input:focus {
+    border-color: var(--mocha-mousse);
+}
+
+.profile-form-input:disabled {
+    background: #f8f4f0;
+    color: #aaa;
+    cursor: not-allowed;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.profile-btn {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Cinzel', serif;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 6px;
+}
+
+.profile-btn-primary {
+    background: var(--potting-soil);
+    color: white;
+}
+
+.profile-btn-primary:hover {
+    background: var(--spicy-coffee);
+}
+
+.profile-btn-primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* =========================
+   MESSAGE
+========================= */
+
+.profile-msg {
+    margin-top: 14px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.profile-msg.success {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.profile-msg.error {
+    background: #fce4ec;
+    color: #c62828;
+}
+
+/* =========================
+   PASSWORD STRENGTH
+========================= */
+
+.profile-password-hint {
+    font-size: 11px;
+    color: #aaa;
+    margin-top: 4px;
+}
+
+/* =========================
+   DIVIDER
+========================= */
+
+.profile-divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, #ddd, transparent);
+    margin: 4px 0;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 640px) {
+    .profile-container {
+        width: 100%;
+    }
+
+    .profile-card {
+        padding: 22px;
+    }
+
+    .profile-info-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+}/* =========================
+   PROFILE PAGE
+========================= */
+
+.profile-page {
+    background-color: rgb(237 227 216);
+    min-height: 100vh;
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+.profile-container {
+    width: 580px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* =========================
+   PROFILE CARD
+========================= */
+
+.profile-card {
+    background: white;
+    border-radius: 18px;
+    padding: 30px;
+    border: 1px solid rgba(90, 61, 46, 0.06);
+}
+
+.profile-card-title {
+    font-size: 1.3rem;
+    color: var(--potting-soil);
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.profile-card-subtitle {
+    font-size: 0.85rem;
+    color: #999;
+    margin-bottom: 22px;
+}
+
+/* =========================
+   PROFILE INFO DISPLAY
+========================= */
+
+.profile-info-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.profile-info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0e6de;
+}
+
+.profile-info-item:last-child {
+    border-bottom: none;
+}
+
+.profile-info-label {
+    font-size: 13px;
+    color: #999;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.profile-info-value {
+    font-size: 14px;
+    color: var(--potting-soil);
+    font-weight: 600;
+}
+
+.profile-role-badge {
+    display: inline-block;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    background: #f4e8de;
+    color: var(--potting-soil);
+    letter-spacing: 0.5px;
+}
+
+/* =========================
+   FORM ELEMENTS
+========================= */
+
+.profile-form-group {
+    margin-bottom: 16px;
+}
+
+.profile-form-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--potting-soil);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.profile-form-input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    font-size: 14px;
+    font-family: 'Cinzel', serif;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease;
+    color: var(--potting-soil);
+}
+
+.profile-form-input:focus {
+    border-color: var(--mocha-mousse);
+}
+
+.profile-form-input:disabled {
+    background: #f8f4f0;
+    color: #aaa;
+    cursor: not-allowed;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.profile-btn {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Cinzel', serif;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 6px;
+}
+
+.profile-btn-primary {
+    background: var(--potting-soil);
+    color: white;
+}
+
+.profile-btn-primary:hover {
+    background: var(--spicy-coffee);
+}
+
+.profile-btn-primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* =========================
+   MESSAGE
+========================= */
+
+.profile-msg {
+    margin-top: 14px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.profile-msg.success {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.profile-msg.error {
+    background: #fce4ec;
+    color: #c62828;
+}
+
+/* =========================
+   PASSWORD STRENGTH
+========================= */
+
+.profile-password-hint {
+    font-size: 11px;
+    color: #aaa;
+    margin-top: 4px;
+}
+
+/* =========================
+   DIVIDER
+========================= */
+
+.profile-divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, #ddd, transparent);
+    margin: 4px 0;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 640px) {
+    .profile-container {
+        width: 100%;
+    }
+
+    .profile-card {
+        padding: 22px;
+    }
+
+    .profile-info-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+}
