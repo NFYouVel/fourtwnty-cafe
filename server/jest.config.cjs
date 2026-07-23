@@ -1,20 +1,22 @@
 module.exports = {
-  preset: 'ts-jest/presets/default-esm',
-  testEnvironment: 'node',
+  testEnvironment: "node",
   extensionsToTreatAsEsm: ['.ts'],
+  transform: {
+    '^.+\\.tsx?$': ['ts-jest', { useESM: true }],
+  },
+  testMatch: ["**/tests/**/*.test.ts"],
+  collectCoverage: true,
+  coverageDirectory: "coverage",
+  collectCoverageFrom: [
+    "src/**/*.ts",
+    "!src/**/*.test.ts",
+    "!src/server.ts"
+  ],
   moduleNameMapper: {
     '^(\\.{1,2}/.*)\\.js$': '$1',
   },
-  transform: {
-    '^.+\\.tsx?$': [
-      'ts-jest',
-      {
-        useESM: true,
-        isolatedModules: true,
-      },
-    ],
+  coverageThreshold: {
+    global: { branches: 60, functions: 60, lines: 60, statements: 60 }
   },
-  testMatch: ['**/tests/**/*.test.ts'],
-  collectCoverage: true,
-  coverageReporters: ['text', 'html'],
+  testTimeout: 30000,
 };
