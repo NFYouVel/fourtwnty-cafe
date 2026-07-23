@@ -8,6 +8,7 @@ import { Payment } from "../../models/Payment.js";
 import { Stock } from "../../models/Stock.js";
 import { MenuIngredient } from "../../models/MenuIngredient.js";
 
+
 export const getAllMenu = async (req: Request, res: Response) => {
     try {
         const menu = await Menu.findAll({

@@ -1,96 +1,67 @@
 import {
-    Table,
-    Column,
-    Model,
-    DataType,
-    PrimaryKey,
-    CreatedAt,
-    UpdatedAt,
-    DeletedAt,
-    HasMany,
-    ForeignKey,
-    BelongsTo,
-    HasOne,
+  Table, Column, Model, DataType, PrimaryKey,
+  CreatedAt, UpdatedAt, DeletedAt
 } from 'sequelize-typescript';
-
-import { Users } from './Users.js';
-import { OrderMenu } from './OrderMenu.js';
-import { TableInformation } from './TableInformation.js';
-import { Payment } from './Payment.js';
+import type { Users } from './Users.js';
+import type { OrderMenu } from './OrderMenu.js';
+import type { Payment } from './Payment.js';
+import type { TableInformation } from './TableInformation.js';
 
 @Table({
-    tableName: 'Order',
-    timestamps: true,
-    paranoid: true,
+  tableName: 'Order',
+  timestamps: true,
+  paranoid: true,
 })
 export class Order extends Model {
+  @PrimaryKey
+  @Column({
+    type: DataType.UUID,
+    defaultValue: DataType.UUIDV4,
+    allowNull: false,
+  })
+  declare id: string;
 
-    @PrimaryKey
-    @Column({
-        type: DataType.UUID,
-        defaultValue: DataType.UUIDV4,
-        allowNull: false,
-    })
-    declare id: string;
+  @Column({
+    type: DataType.ENUM('Dine-in', 'Takeaway'),
+    allowNull: false,
+  })
+  declare order_type: 'Dine-in' | 'Takeaway';
 
-    @Column({
-        type: DataType.ENUM('Dine-in', 'Takeaway'),
-        allowNull: false,
-    })
-    order_type!: 'Dine-in' | 'Takeaway';
+  @Column({
+    type: DataType.ENUM('Process', 'Cancelled', 'Closed'),
+    allowNull: false,
+    defaultValue: 'Process',
+  })
+  declare status: 'Process' | 'Cancelled' | 'Closed';
 
-    @Column({
-        type: DataType.ENUM('Process', 'Cancelled', 'Closed'),
-        allowNull: false,
-        defaultValue: 'Process',
-    })
-    status!: 'Process' | 'Cancelled' | 'Closed';
+  @Column({
+    type: DataType.DECIMAL(10, 2),
+    allowNull: false,
+  })
+  declare total_price: number;
 
-    @Column({
-        type: DataType.DECIMAL(10, 2),
-        allowNull: false,
-    })
-    total_price!: number;
+  @Column({
+    type: DataType.UUID,
+    allowNull: false,
+  })
+  declare userId: string;
 
-    // 👇 USER RELATION
-    @ForeignKey(() => Users)
-    @Column({
-        type: DataType.UUID,
-        allowNull: false,
-    })
-    userId!: string;
+  @Column({
+    type: DataType.UUID,
+    allowNull: false,
+  })
+  declare tableId: string;
 
-    @BelongsTo(() => Users)
-    user!: Users;
+  @CreatedAt
+  declare createdAt: Date;
+  @UpdatedAt
+  declare updatedAt: Date;
+  @DeletedAt
+  declare deletedAt: Date;
 
-    // 👇 TABLE RELATION
-    @ForeignKey(() => TableInformation)
-    @Column({
-        type: DataType.UUID,
-        allowNull: false,
-    })
-    tableId!: string;
-
-    @BelongsTo(() => TableInformation)
-    table!: TableInformation;
-
-    // 👇 ORDER MENU
-    @HasMany(() => OrderMenu)
-    orderMenus!: OrderMenu[];
-
-    // 👇 PAYMENT RELATION
-    @HasOne(() => Payment, {
-        foreignKey: "orderId",
-        as: "payment"
-    })
-    payment!: Payment;
-
-    @CreatedAt
-    declare createdAt: Date;
-
-    @UpdatedAt
-    declare updatedAt: Date;
-
-    @DeletedAt
-    declare deletedAt: Date;
+  // Relasi (tipe)
+  declare user?: Users;
+  declare table?: TableInformation;
+  declare orderMenus?: OrderMenu[];
+  declare payment?: Payment;
 }
