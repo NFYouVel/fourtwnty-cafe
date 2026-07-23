@@ -16,12 +16,12 @@ router.use("/auth", AuthenticationRoutes);
 
 // Private
 //router.use("/tableInformation", authMiddleware, TableInformationRoutes)
-router.use("/order", OrderRoutes)
-router.use("/tableInformation", TableInformationRoutes)
-router.use("/stock", StockRoutes)
-router.use("/staff", CreateStaffRoutes)
-router.use("/reservation", ReservationRoutes)
-router.use("/report", ReportRoutes)
-router.use("/menu", MenuRoutes)
+router.use("/order", authMiddleware, OrderRoutes)
+router.use("/tableInformation", authMiddleware, TableInformationRoutes)
+router.use("/stock", authMiddleware, StockRoutes)
+router.use("/staff", authMiddleware, CreateStaffRoutes)
+router.use("/reservation", authMiddleware, ReservationRoutes)
+router.use("/report", authMiddleware, ReportRoutes)
+router.use("/menu", authMiddleware, MenuRoutes)
 
 export default router; 

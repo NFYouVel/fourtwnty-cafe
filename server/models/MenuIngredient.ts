@@ -1,7 +1,10 @@
-import {Table, Column, Model, DataType, PrimaryKey, BelongsTo, CreatedAt, UpdatedAt, DeletedAt, ForeignKey} from "sequelize-typescript";
-
-import { Menu } from "./Menu.js";
-import { Stock } from "./Stock.js";
+// models/MenuIngredient.ts
+import {
+  Table, Column, Model, DataType, PrimaryKey,
+  CreatedAt, UpdatedAt, DeletedAt
+} from 'sequelize-typescript';
+import type { Menu } from './Menu.js';   // hanya untuk type
+import type { Stock } from './Stock.js';
 
 @Table({
   tableName: "Junction_MenuIngredient",
@@ -23,14 +26,13 @@ export class MenuIngredient extends Model {
   })
   declare jumlah_pemakaian: number;
 
-  @ForeignKey(() => Menu)
+  // Kolom foreign key (tanpa dekorator @ForeignKey)
   @Column({
     type: DataType.UUID,
     allowNull: false
   })
   declare menuId: string;
 
-  @ForeignKey(() => Stock)
   @Column({
     type: DataType.UUID,
     allowNull: false
@@ -46,9 +48,7 @@ export class MenuIngredient extends Model {
   @DeletedAt
   declare deletedAt: Date;
 
-  @BelongsTo(() => Menu, "menuId")
-  declare menu: Menu;
-
-  @BelongsTo(() => Stock, "stockId")
-  declare stock: Stock;
+  // Properti relasi (hanya untuk type checking)
+  // declare menu?: Menu;
+  // declare stock?: Stock;
 }

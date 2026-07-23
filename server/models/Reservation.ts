@@ -1,71 +1,69 @@
-import { Table, Column, Model, DataType, PrimaryKey, BelongsTo, CreatedAt, UpdatedAt, DeletedAt, HasMany } from 'sequelize-typescript';
-import { Users } from './Users.js';
-import { TableInformation } from './TableInformation.js'
+import {
+  Table, Column, Model, DataType, PrimaryKey,
+  CreatedAt, UpdatedAt, DeletedAt
+} from 'sequelize-typescript';
+import type { Users } from './Users.js';
+import type { TableInformation } from './TableInformation.js';
 
 @Table({
-    tableName: 'Reservation',
-    timestamps: true,
-    paranoid: true,
+  tableName: 'Reservation',
+  timestamps: true,
+  paranoid: true,
 })
 export class Reservation extends Model {
-    @PrimaryKey
-    @Column({
-        type: DataType.UUID,
-        defaultValue: DataType.UUIDV4,
-        allowNull: false,
-    })
-    declare id: string;
+  @PrimaryKey
+  @Column({
+    type: DataType.UUID,
+    defaultValue: DataType.UUIDV4,
+    allowNull: false,
+  })
+  declare id: string;
 
-    @Column({
-        type: DataType.DATE,
-        allowNull: false,
-    })
-    tanggal_reservation!: Date;
+  @Column({
+    type: DataType.DATE,
+    allowNull: false,
+  })
+  declare tanggal_reservation: Date;
 
-    @Column({
-        type: DataType.INTEGER,
-        allowNull: false,
-    })
-    jumlah_orang!: number;
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: false,
+  })
+  declare jumlah_orang: number;
 
-    @Column({
-        type: DataType.ENUM('Pending', 'Approved', 'Reschedule', 'Rejected'),
-        allowNull: false,
-        defaultValue: 'Pending'
-    })
-    status_reservation!: 'Pending'| 'Approved'| 'Reschedule'| 'Rejected';
+  @Column({
+    type: DataType.ENUM('Pending', 'Approved', 'Reschedule', 'Rejected'),
+    allowNull: false,
+    defaultValue: 'Pending',
+  })
+  declare status_reservation: 'Pending' | 'Approved' | 'Reschedule' | 'Rejected';
 
-    @Column({
-        type: DataType.DATE,
-        allowNull: true,
-    })
-    tanggal_reschedule!: Date;
+  @Column({
+    type: DataType.DATE,
+    allowNull: true,
+  })
+  declare tanggal_reschedule: Date;
 
-    @Column({
-        type: DataType.UUIDV4,
-        allowNull: false,
-    })
-    userId!: string;
+  @Column({
+    type: DataType.UUID,
+    allowNull: false,
+  })
+  declare userId: string;
 
-    @Column({
-        type: DataType.UUIDV4,
-        allowNull: false,
-    })
-    tableId!: string;
+  @Column({
+    type: DataType.UUID,
+    allowNull: false,
+  })
+  declare tableId: string;
 
-    @CreatedAt
-    declare createdAt: Date;
+  @CreatedAt
+  declare createdAt: Date;
+  @UpdatedAt
+  declare updatedAt: Date;
+  @DeletedAt
+  declare deletedAt: Date;
 
-    @UpdatedAt
-    declare updatedAt: Date;
-
-    @DeletedAt
-    declare deletedAt: Date;
-
-    //satu User bisa memiliki banyak Resevation
-    @BelongsTo(() => Users, 'userId') //jadi diambil dari Users, kuncinya userId
-    user!: Users;
-
-    @BelongsTo(() => TableInformation, 'tableId') 
-    tableInformation!: TableInformation;
+  // Relasi
+  declare user?: Users;
+  declare tableInformation?: TableInformation;
 }

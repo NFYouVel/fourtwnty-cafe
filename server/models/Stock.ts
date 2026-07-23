@@ -1,34 +1,26 @@
 import {
-  Table,
-  Column,
-  Model,
-  DataType,
-  PrimaryKey,
-  CreatedAt,
-  UpdatedAt,
-  DeletedAt,
-  HasMany
-} from "sequelize-typescript";
-
-import { MenuIngredient } from "./MenuIngredient.js";
+  Table, Column, Model, DataType, PrimaryKey,
+  CreatedAt, UpdatedAt, DeletedAt
+} from 'sequelize-typescript';
+import type { MenuIngredient } from './MenuIngredient.js';
 
 @Table({
-  tableName: "Stock",
+  tableName: 'Stock',
   timestamps: true,
-  paranoid: true
+  paranoid: true,
 })
 export class Stock extends Model {
   @PrimaryKey
   @Column({
     type: DataType.UUID,
     defaultValue: DataType.UUIDV4,
-    allowNull: false
+    allowNull: false,
   })
   declare id: string;
 
   @Column({
     type: DataType.STRING,
-    allowNull: false
+    allowNull: false,
   })
   declare ingredient_name: string;
 
@@ -40,19 +32,17 @@ export class Stock extends Model {
 
   @Column({
     type: DataType.INTEGER,
-    allowNull: false
+    allowNull: false,
   })
   declare amount: number;
 
   @CreatedAt
   declare createdAt: Date;
-
   @UpdatedAt
   declare updatedAt: Date;
-
   @DeletedAt
   declare deletedAt: Date;
 
-  @HasMany(() => MenuIngredient, "stockId")
-  declare menuIngredient: MenuIngredient[];
+  // Relasi
+  // declare menuIngredient?: MenuIngredient[];
 }
