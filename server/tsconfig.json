@@ -2,8 +2,9 @@
   "compilerOptions": {
     "rootDir": ".",
     "outDir": "./dist",
-    "module": "nodenext",
+    "module": "NodeNext",
     "target": "esnext",
+    "esModuleInterop": true,
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
@@ -17,6 +18,12 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   },
-  "include": ["src/**/*", "models/**/*"],
-  "exclude": ["node_modules", "dist"]
+  "include": [
+    "src/**/*",
+    "models/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }
