@@ -139,14 +139,6 @@ const staffUserRecord = () => ({
   },
 });
 
-function buildRes(): Response {
-  const res: any = {};
-  res.status = jest.fn().mockReturnValue(res);
-  res.json = jest.fn().mockReturnValue(res);
-  return res as Response;
-}
-void buildRes; // helper disiapkan bila dibutuhkan test unit tambahan
-
 let staffToken: string;
 
 beforeAll(async () => {
@@ -165,13 +157,15 @@ describe("Staff Integration Tests", () => {
   /* -----------------------------------------------------------------------
      TC_STAFF_001 - Login Staff berhasil
   ----------------------------------------------------------------------- */
-  it("TC_STAFF_001: Staff berhasil login dan menerima token JWT", async () => {
+  test('TC_STAFF_001: Staff berhasil login dan menerima token JWT', async () => {
     mockUsersFindOne.mockResolvedValue(staffUserRecord() as any);
 
-    const res = await request(app).post("/api/auth/login").send({
-      email: "joko.staff@cafe.com",
-      password: STAFF_PASSWORD_PLAIN,
-    });
+    const res = await request(app)
+      .post("/api/auth/login")
+      .send({
+        email: "joko.staff@cafe.com",
+        password: STAFF_PASSWORD_PLAIN,
+      });
 
     expect(res.status).toBe(200);
     expect(res.body.message).toBe("Login success");
@@ -184,13 +178,15 @@ describe("Staff Integration Tests", () => {
   /* -----------------------------------------------------------------------
      TC_STAFF_002 - Login gagal, password salah
   ----------------------------------------------------------------------- */
-  it("TC_STAFF_002: Login gagal karena password salah", async () => {
+  test('TC_STAFF_002: Login gagal karena password salah', async () => {
     mockUsersFindOne.mockResolvedValue(staffUserRecord() as any);
 
-    const res = await request(app).post("/api/auth/login").send({
-      email: "joko.staff@cafe.com",
-      password: "password-salah",
-    });
+    const res = await request(app)
+      .post("/api/auth/login")
+      .send({
+        email: "joko.staff@cafe.com",
+        password: "password-salah",
+      });
 
     expect(res.status).toBe(401);
     expect(res.body.message).toBe("Wrong password");
@@ -199,13 +195,15 @@ describe("Staff Integration Tests", () => {
   /* -----------------------------------------------------------------------
      TC_STAFF_003 - Login gagal, email tidak terdaftar
   ----------------------------------------------------------------------- */
-  it("TC_STAFF_003: Login gagal karena email tidak ditemukan", async () => {
+  test('TC_STAFF_003: Login gagal karena email tidak ditemukan', async () => {
     mockUsersFindOne.mockResolvedValue(null);
 
-    const res = await request(app).post("/api/auth/login").send({
-      email: "tidakada@cafe.com",
-      password: "apapun",
-    });
+    const res = await request(app)
+      .post("/api/auth/login")
+      .send({
+        email: "tidakada@cafe.com",
+        password: "apapun",
+      });
 
     expect(res.status).toBe(404);
     expect(res.body.message).toBe("User with that email not found!");
@@ -214,7 +212,7 @@ describe("Staff Integration Tests", () => {
   /* -----------------------------------------------------------------------
      TC_STAFF_004 - Staff berhasil melihat daftar menu
   ----------------------------------------------------------------------- */
-  it("TC_STAFF_004: Staff berhasil mengambil daftar menu", async () => {
+  test('TC_STAFF_004: Staff berhasil mengambil daftar menu', async () => {
     // login dulu untuk mendapat token dummy (dipakai di header meskipun
     // route belum enforce authMiddleware, lihat catatan TC_STAFF_009/010)
     mockUsersFindOne.mockResolvedValue(staffUserRecord() as any);
@@ -240,7 +238,7 @@ describe("Staff Integration Tests", () => {
   /* -----------------------------------------------------------------------
      TC_STAFF_005 - Staff berhasil membuat order dine-in
   ----------------------------------------------------------------------- */
-  it("TC_STAFF_005: Staff berhasil membuat order dine-in baru", async () => {
+  test('TC_STAFF_005: Staff berhasil membuat order dine-in baru', async () => {
     mockTableFindOne.mockResolvedValue({ id: "table-uuid-5", table_number: 5 });
 
     const stockUpdate = jest.fn().mockResolvedValue(undefined);
@@ -288,7 +286,7 @@ describe("Staff Integration Tests", () => {
   /* -----------------------------------------------------------------------
      TC_STAFF_006 - Staff gagal membuat order, nomor meja tidak ditemukan
   ----------------------------------------------------------------------- */
-  it("TC_STAFF_006: Gagal membuat order karena nomor meja tidak ditemukan", async () => {
+  test('TC_STAFF_006: Gagal membuat order karena nomor meja tidak ditemukan', async () => {
     mockTableFindOne.mockResolvedValue(null);
 
     const res = await request(app)
@@ -304,7 +302,7 @@ describe("Staff Integration Tests", () => {
   /* -----------------------------------------------------------------------
      TC_STAFF_007 - Staff gagal membuat order, stok tidak cukup
   ----------------------------------------------------------------------- */
-  it("TC_STAFF_007: Gagal membuat order karena stok bahan tidak cukup", async () => {
+  test('TC_STAFF_007: Gagal membuat order karena stok bahan tidak cukup', async () => {
     mockTableFindOne.mockResolvedValue({ id: "table-uuid-5", table_number: 5 });
     mockMenuIngredientFindAll.mockResolvedValue([
       {
@@ -328,7 +326,7 @@ describe("Staff Integration Tests", () => {
   /* -----------------------------------------------------------------------
      TC_STAFF_008 - Staff berhasil memproses pembayaran order
   ----------------------------------------------------------------------- */
-  it("TC_STAFF_008: Staff berhasil memproses pembayaran (PayOrder)", async () => {
+  test('TC_STAFF_008: Staff berhasil memproses pembayaran (PayOrder)', async () => {
     const paymentInstance: any = {
       id: "payment-uuid-9",
       orderId: "order-uuid-9",
@@ -360,7 +358,7 @@ describe("Staff Integration Tests", () => {
   /* -----------------------------------------------------------------------
      TC_STAFF_009 (NEGATIVE) - Pembayaran gagal, data payment tidak ditemukan
   ----------------------------------------------------------------------- */
-  it("TC_STAFF_009: Gagal memproses pembayaran karena data payment tidak ditemukan", async () => {
+  test('TC_STAFF_009: Gagal memproses pembayaran karena data payment tidak ditemukan', async () => {
     mockPaymentFindOne.mockResolvedValue(null);
 
     const res = await request(app)
@@ -372,25 +370,11 @@ describe("Staff Integration Tests", () => {
     expect(res.body.success).toBe(false);
     expect(res.body.message).toBe("Data pembayaran tidak ditemukan");
   });
-
+  
   /* -----------------------------------------------------------------------
-     TC_STAFF_010 (OTORISASI) - Staff mengakses fitur create-staff (Manager only)
-     -------------------------------------------------------------------
-     ⚠️  CATATAN PENTING (lihat BUG_REPORT.md, BR-001):
-     Secara BISNIS, endpoint "POST /api/staff/create" seharusnya HANYA bisa
-     diakses oleh role Manager. Namun `authMiddleware` TIDAK dipasang pada
-     `CreateStaffRoutes.ts` maupun di `GlobalApi.ts` (lihat baris yang di-
-     comment: `// router.use("/tableInformation", authMiddleware, ...)`).
-     Tidak ada pengecekan `req.user.role` di controller manapun.
-
-     Akibatnya, request ini SAAT INI benar-benar berhasil (200) walaupun
-     dikirim dengan token Staff. Test di bawah ini SENGAJA mengasersikan
-     PERILAKU ASLI (yang salah secara bisnis) agar suite tetap hijau,
-     sekaligus menjadi bukti nyata untuk laporan bug. Setelah tim dev
-     menambahkan role-check, assert ini WAJIB diubah menjadi:
-        expect(res.status).toBe(403);
+     TC_STAFF_010 (OTORISASI/BUG) - Staff mengakses create-staff milik Manager
   ----------------------------------------------------------------------- */
-  it("TC_STAFF_010 [OTORISASI/BUG]: Staff SAAT INI masih bisa mengakses endpoint create-staff milik Manager", async () => {
+  test('TC_STAFF_010 [OTORISASI/BUG]: Staff SAAT INI masih bisa mengakses endpoint create-staff milik Manager', async () => {
     mockUsersCreate.mockResolvedValue({
       id: "new-staff-id",
       name: "Staff Baru",
@@ -416,9 +400,8 @@ describe("Staff Integration Tests", () => {
 
   /* -----------------------------------------------------------------------
      TC_STAFF_011 (OTORISASI) - Staff mengakses fitur report (Manager only)
-     Lihat catatan yang sama seperti TC_STAFF_010 (BR-001).
   ----------------------------------------------------------------------- */
-  it("TC_STAFF_011 [OTORISASI/BUG]: Staff SAAT INI masih bisa mengakses endpoint sales report milik Manager", async () => {
+  test('TC_STAFF_011 [OTORISASI/BUG]: Staff SAAT INI masih bisa mengakses endpoint sales report milik Manager', async () => {
     mockOrderFindAll.mockResolvedValue([] as any);
 
     const res = await request(app)
@@ -432,10 +415,9 @@ describe("Staff Integration Tests", () => {
   });
 
   /* -----------------------------------------------------------------------
-     TC_STAFF_012 (INTEGRATION / END-TO-END) - Flow lengkap Staff:
-     create order -> lihat daftar order process -> bayar order -> order closed
+     TC_STAFF_012 (INTEGRATION / END-TO-END) - Flow lengkap Staff
   ----------------------------------------------------------------------- */
-  it("TC_STAFF_012 [INTEGRATION]: Flow end-to-end order + payment oleh Staff", async () => {
+  test('TC_STAFF_012 [INTEGRATION]: Flow end-to-end order + payment oleh Staff', async () => {
     // ---------- STEP 1: create order ----------
     mockTableFindOne.mockResolvedValue({ id: "table-uuid-7", table_number: 7 });
 
@@ -521,7 +503,7 @@ describe("Staff Integration Tests", () => {
   /* -----------------------------------------------------------------------
      TC_STAFF_013 (NEGATIVE) - Server error saat membuat order (500)
   ----------------------------------------------------------------------- */
-  it("TC_STAFF_013: Mengembalikan 500 jika terjadi database error saat create order", async () => {
+  test('TC_STAFF_013: Mengembalikan 500 jika terjadi database error saat create order', async () => {
     mockTableFindOne.mockRejectedValue(new Error("Database connection failed"));
 
     const res = await request(app)
