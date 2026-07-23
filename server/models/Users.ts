@@ -1,6 +1,9 @@
-import { Table, Column, Model, DataType, PrimaryKey, BelongsTo, CreatedAt, UpdatedAt, DeletedAt, HasMany } from 'sequelize-typescript';
-import { Order } from './Order.js';
-import { Reservation } from './Reservation.js';
+import {
+    Table, Column, Model, DataType, PrimaryKey,
+    CreatedAt, UpdatedAt, DeletedAt
+} from 'sequelize-typescript';
+import type { Order } from './Order.js';
+import type { Reservation } from './Reservation.js';
 
 @Table({
     tableName: 'Users',
@@ -40,7 +43,7 @@ export class Users extends Model {
         allowNull: false,
     })
     declare phone: string;
-    
+
     @Column({
         type: DataType.STRING,
         allowNull: true,
@@ -56,17 +59,12 @@ export class Users extends Model {
 
     @CreatedAt
     declare createdAt: Date;
-
     @UpdatedAt
     declare updatedAt: Date;
-
     @DeletedAt
     declare deletedAt: Date;
 
-    //di userId ini bakal cari data (bisa lebih dari 1) di table Order
-    @HasMany(() => Order, 'userId') //1 userid bisa punya banyak order[]
-    orders! : Order[];
-
-    @HasMany(() => Reservation, 'userId')
-    resevations! : Reservation[];
+    // Relasi (hanya tipe)
+    declare orders?: Order[];
+    declare resevations?: Reservation[];
 }

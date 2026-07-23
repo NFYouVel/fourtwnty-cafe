@@ -23,30 +23,54 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
+<<<<<<< HEAD
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
                 <span class='fraction'>0/12</span>
+=======
+                <span class="strong">75% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>9/12</span>
+>>>>>>> 4768bb02bf5445a80b60023eb0368567ee4cf636
             </div>
         
             
             <div class='fl pad1y space-right2'>
+<<<<<<< HEAD
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
                 <span class='fraction'>0/4</span>
+=======
+                <span class="strong">50% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>2/4</span>
+>>>>>>> 4768bb02bf5445a80b60023eb0368567ee4cf636
             </div>
         
             
             <div class='fl pad1y space-right2'>
+<<<<<<< HEAD
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
                 <span class='fraction'>0/1</span>
+=======
+                <span class="strong">100% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>1/1</span>
+>>>>>>> 4768bb02bf5445a80b60023eb0368567ee4cf636
             </div>
         
             
             <div class='fl pad1y space-right2'>
+<<<<<<< HEAD
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
                 <span class='fraction'>0/12</span>
+=======
+                <span class="strong">75% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>9/12</span>
+>>>>>>> 4768bb02bf5445a80b60023eb0368567ee4cf636
             </div>
         
             
@@ -61,7 +85,11 @@
             </div>
         </template>
     </div>
+<<<<<<< HEAD
     <div class='status-line low'></div>
+=======
+    <div class='status-line high'></div>
+>>>>>>> 4768bb02bf5445a80b60023eb0368567ee4cf636
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -91,6 +119,7 @@
 <a name='L26'></a><a href='#L26'>26</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<<<<<<< HEAD
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -110,12 +139,34 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+=======
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">29x</span>
+<span class="cline-any cline-yes">29x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">29x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">29x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">29x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">29x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">29x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">29x</span>
+>>>>>>> 4768bb02bf5445a80b60023eb0368567ee4cf636
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 &nbsp;
+<<<<<<< HEAD
 export const authMiddleware = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(r</span>eq: Request, res: Response, next: NextFunction) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >  try {</span>
     const authHeader = <span class="cstat-no" title="statement not covered" >req.headers.authorization;</span>
@@ -135,6 +186,27 @@ export const authMiddleware = <span class="cstat-no" title="statement not covere
     (<span class="cstat-no" title="statement not covered" >req as any).user = decoded;</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    next();</span>
+=======
+export const authMiddleware = (req: Request, res: Response, next: NextFunction) =&gt; {
+  try {
+    const authHeader = req.headers.authorization;
+&nbsp;
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (!authHeader) {
+<span class="cstat-no" title="statement not covered" >      return res.status(401).json({ message: "No token" });</span>
+    }
+&nbsp;
+    const token = authHeader.split(" ")[1] as string;
+&nbsp;
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (!process.env.JWT_SECRET) {
+<span class="cstat-no" title="statement not covered" >      throw new Error("JWT_SECRET not defined");</span>
+    }
+&nbsp;
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+&nbsp;
+    (req as any).user = decoded;
+&nbsp;
+    next();
+>>>>>>> 4768bb02bf5445a80b60023eb0368567ee4cf636
   } catch (error) {
 <span class="cstat-no" title="statement not covered" >    return res.status(401).json({ message: "Invalid token" });</span>
   }
@@ -145,7 +217,11 @@ export const authMiddleware = <span class="cstat-no" title="statement not covere
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+<<<<<<< HEAD
                 at 2026-07-23T16:38:09.149Z
+=======
+                at 2026-07-23T16:38:35.227Z
+>>>>>>> 4768bb02bf5445a80b60023eb0368567ee4cf636
             </div>
         <script src="../prettify.js"></script>
         <script>

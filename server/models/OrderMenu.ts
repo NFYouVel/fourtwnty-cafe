@@ -1,54 +1,57 @@
-import { Table, Column, Model, DataType, PrimaryKey, BelongsTo, CreatedAt, UpdatedAt, DeletedAt, ForeignKey } from 'sequelize-typescript'; // Tambahkan ForeignKey di import
-import { Menu } from './Menu.js';
-import { Order } from './Order.js';
+import {
+  Table, Column, Model, DataType, PrimaryKey,
+  CreatedAt, UpdatedAt, DeletedAt
+} from 'sequelize-typescript';
+import type { Order } from './Order.js';
+import type { Menu } from './Menu.js';
 
 @Table({
-    tableName: 'Junction_orderMenu',
-    timestamps: true,
-    paranoid: true,
+  tableName: 'Junction_orderMenu',
+  timestamps: true,
+  paranoid: true,
 })
 export class OrderMenu extends Model {
-    @PrimaryKey
-    @Column({
-        type: DataType.UUID,
-        defaultValue: DataType.UUIDV4,
-        allowNull: false,
-    })
-    declare id: string;
+  @PrimaryKey
+  @Column({
+    type: DataType.UUID,
+    defaultValue: DataType.UUIDV4,
+    allowNull: false,
+  })
+  declare id: string;
 
-    @Column({
-        type: DataType.STRING,
-        allowNull: true, // Sebaiknya true jika user tidak memberikan catatan
-    })
-    declare customization: string;
-    
-    @CreatedAt
-    declare createdAt: Date;
-    
-    @UpdatedAt
-    declare updatedAt: Date;
-    
-    @DeletedAt
-    declare deletedAt: Date;
-    
-    @BelongsTo(() => Order, 'orderId')
-    order!: Order;
-    
-    @BelongsTo(() => Menu, 'menuId')
-    menu!: Menu;
-    // --- PERBAIKAN ---
-    @ForeignKey(() => Order)
-    @Column({
-        type: DataType.UUID, 
-        allowNull: false,
-    })
-    orderId!: string;
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  declare customization: string;
 
-    @ForeignKey(() => Menu)
-    @Column({
-        type: DataType.UUID,
-        allowNull: false,
-    })
-    menuId!: string;
-    // -------------------------
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: false,
+    defaultValue: 1,
+  })
+  declare quantity: number;
+
+  @Column({
+    type: DataType.UUID,
+    allowNull: false,
+  })
+  declare orderId: string;
+
+  @Column({
+    type: DataType.UUID,
+    allowNull: false,
+  })
+  declare menuId: string;
+
+  @CreatedAt
+  declare createdAt: Date;
+  @UpdatedAt
+  declare updatedAt: Date;
+  @DeletedAt
+  declare deletedAt: Date;
+
+  // Relasi
+  declare order?: Order;
+  declare menu?: Menu;
 }
