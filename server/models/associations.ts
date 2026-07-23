@@ -10,91 +10,39 @@ import { TableInformation } from './TableInformation.js';
 import { Payment } from './Payment.js';
 
 export function defineAssociations() {
-    // ─── Users → Order ───
-    Users.hasMany(Order, {
-        foreignKey: 'userId',
-        as: 'orders',
-    });
-    Order.belongsTo(Users, {
-        foreignKey: 'userId',
-        as: 'user',
-    });
+    // Users ↔ Order
+    Users.hasMany(Order, { foreignKey: 'userId' });
+    Order.belongsTo(Users, { foreignKey: 'userId' });
 
-    // ─── Users → Reservation ───
-    Users.hasMany(Reservation, {
-        foreignKey: 'userId',
-        as: 'resevations',
-    });
-    Reservation.belongsTo(Users, {
-        foreignKey: 'userId',
-        as: 'user',
-    });
+    // Users ↔ Reservation
+    Users.hasMany(Reservation, { foreignKey: 'userId' });
+    Reservation.belongsTo(Users, { foreignKey: 'userId' });
 
-    // ─── TableInformation → Order ───
-    TableInformation.hasMany(Order, {
-        foreignKey: 'tableId',
-        as: 'order',
-    });
-    Order.belongsTo(TableInformation, {
-        foreignKey: 'tableId',
-        as: 'table',
-    });
+    // TableInformation ↔ Order
+    TableInformation.hasMany(Order, { foreignKey: 'tableId' });
+    Order.belongsTo(TableInformation, { foreignKey: 'tableId' });
 
-    // ─── TableInformation → Reservation ───
-    TableInformation.hasMany(Reservation, {
-        foreignKey: 'tableId',
-        as: 'reservation',
-    });
-    Reservation.belongsTo(TableInformation, {
-        foreignKey: 'tableId',
-        as: 'tableInformation',
-    });
+    // TableInformation ↔ Reservation
+    TableInformation.hasMany(Reservation, { foreignKey: 'tableId' });
+    Reservation.belongsTo(TableInformation, { foreignKey: 'tableId' });
 
-    // ─── Order → OrderMenu ───
-    Order.hasMany(OrderMenu, {
-        foreignKey: 'orderId',
-        as: 'orderMenus',
-    });
-    OrderMenu.belongsTo(Order, {
-        foreignKey: 'orderId',
-        as: 'order',
-    });
+    // Order ↔ OrderMenu
+    Order.hasMany(OrderMenu, { foreignKey: 'orderId' });
+    OrderMenu.belongsTo(Order, { foreignKey: 'orderId' });
 
-    // ─── Menu → OrderMenu ───
-    Menu.hasMany(OrderMenu, {
-        foreignKey: 'menuId',
-        as: 'orderMenus',
-    });
-    OrderMenu.belongsTo(Menu, {
-        foreignKey: 'menuId',
-        as: 'menu',
-    });
+    // Menu ↔ OrderMenu
+    Menu.hasMany(OrderMenu, { foreignKey: 'menuId' });
+    OrderMenu.belongsTo(Menu, { foreignKey: 'menuId' });
 
-    // ─── Order → Payment ───
-    Order.hasOne(Payment, {
-        foreignKey: 'orderId',
-        as: 'payment',
-    });
-    Payment.belongsTo(Order, {
-        foreignKey: 'orderId',
-        as: 'order',
-    });
+    // Order ↔ Payment
+    Order.hasOne(Payment, { foreignKey: 'orderId' });
+    Payment.belongsTo(Order, { foreignKey: 'orderId' });
 
-    // ─── Menu ↔ MenuIngredient ───
-    // ❗ TANPA `as` agar cocok dengan `include` di controller (yang menggunakan nama model)
-    Menu.hasMany(MenuIngredient, {
-        foreignKey: 'menuId',
-    });
-    MenuIngredient.belongsTo(Menu, {
-        foreignKey: 'menuId',
-    });
+    // Menu ↔ MenuIngredient
+    Menu.hasMany(MenuIngredient, { foreignKey: 'menuId' });
+    MenuIngredient.belongsTo(Menu, { foreignKey: 'menuId' });
 
-    // ─── Stock ↔ MenuIngredient ───
-    // ❗ TANPA `as` agar cocok dengan `include` di controller (yang menggunakan nama model)
-    Stock.hasMany(MenuIngredient, {
-        foreignKey: 'stockId',
-    });
-    MenuIngredient.belongsTo(Stock, {
-        foreignKey: 'stockId',
-    });
+    // Stock ↔ MenuIngredient
+    Stock.hasMany(MenuIngredient, { foreignKey: 'stockId' });
+    MenuIngredient.belongsTo(Stock, { foreignKey: 'stockId' });
 }
