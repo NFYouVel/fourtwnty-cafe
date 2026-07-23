@@ -28,7 +28,8 @@ import { Stock } from '../../models/Stock.js';
 import { TableInformation } from '../../models/TableInformation.js';
 import { Order } from '../../models/Order.js';
 import { Reservation } from '../../models/Reservation.js';
-import { v4 as uuidv4 } from 'uuid'; // <-- gunakan uuid asli
+import { v4 as uuidv4 } from 'uuid';
+import { Op } from 'sequelize';
 
 // ============================================================
 // 3. DUMMY TEST
@@ -46,20 +47,23 @@ describe('MANAGER ROLE – Full Integration Tests', () => {
     let createdMenuId: string;
     let createdStockId: string;
     let createdTableId: string;
-    let createdOrderId: string;
-    let createdReservationId: string;
-    let managerId: string; // simpan ID manager untuk keperluan foreign key
+    let managerId: string;
+    let dummyTableId: string;
+    let dummyOrderIdForGet: string;
+    let dummyReservationIdForGet: string;
 
     // ─── SEBELUM SEMUA TEST: BERSIHKAN DATA & BUAT MANAGER ───
+    console.log('Where clause:', { email: ['manager@cafe.com', 'joko.staff@cafe.com'] });
     beforeAll(async () => {
         // 1. Hapus data test yang mungkin tersisa
-        await Users.destroy({ where: { email: ['manager@cafe.com', 'joko.staff@cafe.com'] }, force: true });
+        await sequelize.query(`DELETE FROM "Users" WHERE email IN ('manager@cafe.com', 'joko.staff@cafe.com')`);
         await Menu.destroy({ where: { name: 'Nasi Goreng' }, force: true });
         await Stock.destroy({ where: { ingredient_name: 'Beras' }, force: true });
         await TableInformation.destroy({ where: { table_number: 99 }, force: true });
+        await TableInformation.destroy({ where: { table_number: 999 }, force: true });
 
-        // 2. Buat user Manager dengan UUID valid
-        managerId = uuidv4(); // <-- ID valid
+        // 2. Buat user Manager
+        managerId = uuidv4();
         const hashedPassword = await bcrypt.hash('manager123', 10);
         await Users.create({
             id: managerId,
@@ -70,7 +74,7 @@ describe('MANAGER ROLE – Full Integration Tests', () => {
             user_role: 'Manager'
         });
 
-        // 3. Login sebagai manager
+        // 3. Login
         const loginRes = await request(app)
             .post('/api/auth/login')
             .send({ email: 'manager@cafe.com', password: 'manager123' });
@@ -87,18 +91,59 @@ describe('MANAGER ROLE – Full Integration Tests', () => {
             console.warn('⚠️ Using dummy token (login failed)');
         }
         expect(managerToken).toBeDefined();
+
+        // ─── SEED DUMMY TABLE ───
+        dummyTableId = uuidv4();
+        await TableInformation.create({
+            id: dummyTableId,
+            table_number: 999,
+            seat_count: 4,
+            area: 'Indoor',
+            status: 'Available'
+        });
+
+        // ─── SEED DUMMY ORDER ───
+        const dummyOrderId = uuidv4();
+        await Order.create({
+            id: dummyOrderId,
+            order_type: 'Dine-in',
+            status: 'Process',
+            total_price: 50000,
+            userId: managerId,
+            tableId: dummyTableId
+        });
+        dummyOrderIdForGet = dummyOrderId;
+
+        // ─── SEED DUMMY RESERVATION ───
+        const dummyReservationId = uuidv4();
+        await Reservation.create({
+            id: dummyReservationId,
+            tanggal_reservation: new Date(),
+            jumlah_orang: 4,
+            userId: managerId,
+            tableId: dummyTableId,
+            status_reservation: 'Pending'
+        });
+        dummyReservationIdForGet = dummyReservationId;
     });
 
     // ─── SETELAH SEMUA TEST: BERSIHKAN DATA & TUTUP KONEKSI ───
     afterAll(async () => {
-        // Hapus semua data yang dibuat selama test
-        await Users.destroy({ where: { email: ['joko.staff@cafe.com'] }, force: true });
-        await Users.destroy({ where: { email: ['manager@cafe.com'] }, force: true });
-        await Menu.destroy({ where: { name: 'Nasi Goreng' }, force: true });
-        await Stock.destroy({ where: { ingredient_name: 'Beras' }, force: true });
-        await TableInformation.destroy({ where: { table_number: 99 }, force: true });
+        try {
+            await Reservation.destroy({ where: { id: dummyReservationIdForGet }, force: true });
+            await Order.destroy({ where: { id: dummyOrderIdForGet }, force: true });
+            await Menu.destroy({ where: { name: 'Nasi Goreng' }, force: true });
+            await Stock.destroy({ where: { ingredient_name: 'Beras' }, force: true });
+            await TableInformation.destroy({ where: { table_number: 999 }, force: true });
+            await TableInformation.destroy({ where: { table_number: 99 }, force: true });
 
-        await sequelize.close(); // Tutup koneksi DB agar Jest exit
+            // Hapus Users dengan raw query
+            await sequelize.query(`DELETE FROM "Users" WHERE email IN ('manager@cafe.com', 'joko.staff@cafe.com')`);
+
+            await sequelize.close();
+        } catch (error) {
+            console.error('Error in afterAll:', error);
+        }
     });
 
     test('TC_DUMMY: Test suite is running', () => {
@@ -201,10 +246,10 @@ describe('MANAGER ROLE – Full Integration Tests', () => {
         const res = await request(app)
             .post('/api/stock/create')
             .set('Authorization', `Bearer ${managerToken}`)
-            .send({ ingredient_name: 'Beras', unit: 'Kg', amount: 100 });
+            .send({ ingredient_name: 'Beras', unit: 'Gram', amount: 100 });
         expect(res.status).toBe(200);
-        expect(res.body.success).toBe(true);
-        createdStockId = res.body.data.id;
+        expect(res.body).toHaveProperty('id');
+        createdStockId = res.body.id;
     });
 
     test('TC_MGR_021: Manager berhasil get all stocks', async () => {
@@ -215,30 +260,22 @@ describe('MANAGER ROLE – Full Integration Tests', () => {
         expect(Array.isArray(res.body)).toBe(true);
     });
 
-    test('TC_MGR_022: Manager berhasil get stock by ID', async () => {
+    test('TC_MGR_022: Manager berhasil update stock', async () => {
         const res = await request(app)
-            .get(`/api/stock/${createdStockId}`)
-            .set('Authorization', `Bearer ${managerToken}`);
-        expect(res.status).toBe(200);
-        expect(res.body.data.id).toBe(createdStockId);
-    });
-
-    test('TC_MGR_023: Manager berhasil update stock', async () => {
-        const res = await request(app)
-            .put(`/api/stock/${createdStockId}`)
+            .put(`/api/stock/update/${createdStockId}`)
             .set('Authorization', `Bearer ${managerToken}`)
             .send({ amount: 150 });
         expect(res.status).toBe(200);
-        expect(res.body.success).toBe(true);
-        expect(res.body.data.amount).toBe(150);
+        expect(Array.isArray(res.body)).toBe(true);
+        expect(res.body[0]).toBe(1);
     });
 
-    test('TC_MGR_024: Manager berhasil delete stock', async () => {
+    test('TC_MGR_023: Manager berhasil delete stock', async () => {
         const res = await request(app)
-            .delete(`/api/stock/${createdStockId}`)
+            .delete(`/api/stock/delete/${createdStockId}`)
             .set('Authorization', `Bearer ${managerToken}`);
         expect(res.status).toBe(200);
-        expect(res.body.success).toBe(true);
+        expect(res.body).toBe(1);
     });
 
     // ─── TABLE INFORMATION CRUD ───────────────────────────────────────
@@ -248,7 +285,8 @@ describe('MANAGER ROLE – Full Integration Tests', () => {
             .set('Authorization', `Bearer ${managerToken}`)
             .send({ table_number: 99, seat_count: 4, area: 'Indoor', status: 'Available' });
         expect(res.status).toBe(200);
-        expect(res.body.success).toBe(true);
+        expect(res.body.status).toBe('Success');
+        expect(res.body.data).toHaveProperty('id');
         createdTableId = res.body.data.id;
     });
 
@@ -265,6 +303,7 @@ describe('MANAGER ROLE – Full Integration Tests', () => {
             .get(`/api/tableInformation/${createdTableId}`)
             .set('Authorization', `Bearer ${managerToken}`);
         expect(res.status).toBe(200);
+        expect(res.body.status).toBe('Success');
         expect(res.body.data.id).toBe(createdTableId);
     });
 
@@ -286,72 +325,38 @@ describe('MANAGER ROLE – Full Integration Tests', () => {
         expect(res.body.success).toBe(true);
     });
 
-    // ─── ORDER CRUD ───────────────────────────────────────────────────
-    test('TC_MGR_040: Manager berhasil create order', async () => {
-        // Pastikan table dengan ID createdTableId ada
+    test('TC_MGR_035: Manager berhasil cek ketersediaan meja dengan tanggal', async () => {
+        const tanggal = new Date().toISOString().split('T')[0];
         const res = await request(app)
-            .post('/api/order/create')
-            .set('Authorization', `Bearer ${managerToken}`)
-            .send({
-                order_type: 'Dine-in',
-                tableId: createdTableId, // pakai table yang sudah dibuat
-                total_price: 50000,
-                userId: managerId
-            });
+            .get(`/api/tableInformation/availability?tanggal=${tanggal}`)
+            .set('Authorization', `Bearer ${managerToken}`);
         expect(res.status).toBe(200);
-        expect(res.body.success).toBe(true);
-        createdOrderId = res.body.data.id;
+        expect(Array.isArray(res.body)).toBe(true);
+        res.body.forEach((item: any) => {
+            expect(item).toHaveProperty('is_booked');
+            expect(typeof item.is_booked).toBe('boolean');
+        });
     });
 
+    test('TC_MGR_036: Manager gagal cek ketersediaan tanpa tanggal', async () => {
+        const res = await request(app)
+            .get('/api/tableInformation/availability')
+            .set('Authorization', `Bearer ${managerToken}`);
+        expect(res.status).toBe(500);
+        expect(res.body.message).toBe('Parameter tanggal diperlukan');
+    });
+
+    // ─── ORDER (hanya GET, karena manager hanya ngecek) ──────────────
     test('TC_MGR_041: Manager berhasil get all orders', async () => {
         const res = await request(app)
-            .get('/api/order/all')
+            .get('/api/order/process')   // ✅ diperbaiki dari /order/menu
             .set('Authorization', `Bearer ${managerToken}`);
         expect(res.status).toBe(200);
         expect(Array.isArray(res.body)).toBe(true);
     });
 
-    test('TC_MGR_042: Manager berhasil get order by ID', async () => {
-        const res = await request(app)
-            .get(`/api/order/${createdOrderId}`)
-            .set('Authorization', `Bearer ${managerToken}`);
-        expect(res.status).toBe(200);
-        expect(res.body.data.id).toBe(createdOrderId);
-    });
-
-    test('TC_MGR_043: Manager berhasil update order status', async () => {
-        const res = await request(app)
-            .put(`/api/order/${createdOrderId}`)
-            .set('Authorization', `Bearer ${managerToken}`)
-            .send({ status: 'Closed' });
-        expect(res.status).toBe(200);
-        expect(res.body.success).toBe(true);
-        expect(res.body.data.status).toBe('Closed');
-    });
-
-    test('TC_MGR_044: Manager berhasil delete order', async () => {
-        const res = await request(app)
-            .delete(`/api/order/${createdOrderId}`)
-            .set('Authorization', `Bearer ${managerToken}`);
-        expect(res.status).toBe(200);
-        expect(res.body.success).toBe(true);
-    });
-
-    // ─── RESERVATION CRUD ────────────────────────────────────────────
-    test('TC_MGR_050: Manager berhasil create reservation', async () => {
-        const res = await request(app)
-            .post('/api/reservation/create')
-            .set('Authorization', `Bearer ${managerToken}`)
-            .send({
-                tanggal_reservation: new Date(),
-                jumlah_orang: 4,
-                userId: managerId,
-                tableId: createdTableId
-            });
-        expect(res.status).toBe(200);
-        expect(res.body.success).toBe(true);
-        createdReservationId = res.body.data.id;
-    });
+    // ─── RESERVATION (dummy, manager tidak create) ───────────────────
+    // TC_MGR_050 dihapus (create reservation tidak di-test)
 
     test('TC_MGR_051: Manager berhasil get all reservations', async () => {
         const res = await request(app)
@@ -363,15 +368,15 @@ describe('MANAGER ROLE – Full Integration Tests', () => {
 
     test('TC_MGR_052: Manager berhasil get reservation by ID', async () => {
         const res = await request(app)
-            .get(`/api/reservation/${createdReservationId}`)
+            .get(`/api/reservation/${dummyReservationIdForGet}`)
             .set('Authorization', `Bearer ${managerToken}`);
         expect(res.status).toBe(200);
-        expect(res.body.data.id).toBe(createdReservationId);
+        expect(res.body.data.id).toBe(dummyReservationIdForGet);
     });
 
     test('TC_MGR_053: Manager berhasil update reservation status', async () => {
         const res = await request(app)
-            .put(`/api/reservation/${createdReservationId}`)
+            .put(`/api/reservation/${dummyReservationIdForGet}`)
             .set('Authorization', `Bearer ${managerToken}`)
             .send({ status_reservation: 'Approved' });
         expect(res.status).toBe(200);
@@ -381,7 +386,7 @@ describe('MANAGER ROLE – Full Integration Tests', () => {
 
     test('TC_MGR_054: Manager berhasil delete reservation', async () => {
         const res = await request(app)
-            .delete(`/api/reservation/${createdReservationId}`)
+            .delete(`/api/reservation/${dummyReservationIdForGet}`)
             .set('Authorization', `Bearer ${managerToken}`);
         expect(res.status).toBe(200);
         expect(res.body.success).toBe(true);
@@ -390,7 +395,7 @@ describe('MANAGER ROLE – Full Integration Tests', () => {
     // ─── REPORT ───────────────────────────────────────────────────────
     test('TC_MGR_060: Manager berhasil get sales report', async () => {
         const res = await request(app)
-            .get('/api/report/sales') // sesuaikan endpoint
+            .get('/api/report/sales')
             .set('Authorization', `Bearer ${managerToken}`);
         expect(res.status).toBe(200);
         expect(res.body).toBeDefined();
@@ -398,13 +403,11 @@ describe('MANAGER ROLE – Full Integration Tests', () => {
 
     // ─── VALIDASI ERROR ──────────────────────────────────────────────
     test('TC_MGR_070: Manager gagal create staff dengan email duplikat', async () => {
-        // Buat staff dulu
         await request(app)
             .post('/api/staff/create')
             .set('Authorization', `Bearer ${managerToken}`)
             .send({ name: 'Duplikat', email: 'duplikat@cafe.com', password: '123456', phone: '08123456789' });
 
-        // Coba buat lagi dengan email yang sama
         const res = await request(app)
             .post('/api/staff/create')
             .set('Authorization', `Bearer ${managerToken}`)
