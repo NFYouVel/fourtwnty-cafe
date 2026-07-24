@@ -166,3 +166,33 @@ export const getUserReservations = async (req:Request, res: Response) => {
         res.status(500).json({ message: "Gagal Memuat Reservation ", detail: error.message })
     }
 }
+
+export const deleteReservation = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+
+        const reservation = await Reservation.findByPk(id as string);
+        if (!reservation) {
+            return res.status(404).json({
+                success: false,
+                message: "Reservation tidak ditemukan"
+            });
+        }
+
+        await reservation.destroy();
+
+        return res.status(200).json({
+            success: true,
+            message: "Reservation berhasil dihapus",
+            data: reservation
+        });
+
+    } catch (error: any) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: "Gagal menghapus reservation",
+            detail: error.message
+        });
+    }
+};

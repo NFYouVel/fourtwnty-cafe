@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const app : express.Application = express();
+const app: express.Application = express();
 
 app.use(cors());
 app.use(express.json());
@@ -16,7 +16,7 @@ sequelize.authenticate()
   .then(() => console.log("DB Successfully Connected"))
   .catch(err => console.error("DB Error: ", err));
 
-// ✅ HANYA SATU LISTEN, dengan kondisi NODE_ENV
+// Jalankan server hanya jika bukan di environment test
 if (process.env.NODE_ENV !== 'test') {
   const PORT = process.env.PORT || 5000;
   app.listen(PORT, () => {
